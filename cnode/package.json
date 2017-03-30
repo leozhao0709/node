@@ -16,5 +16,8 @@
     "gulp-shell": "^0.6.3",
     "gulp-util": "^3.0.8",
     "gulp-watch": "^4.3.11"
+  },
+  "dependencies": {
+    "express": "^4.15.2"
   }
 }
