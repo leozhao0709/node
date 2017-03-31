@@ -1,0 +1,10 @@
+import * as express from "express";
+
+let router = express.Router();
+
+/* GET home page. */
+router.get("/", (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    res.render("index.html", {title: "Express"});
+});
+
+export = router;

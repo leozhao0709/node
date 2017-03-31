@@ -5,7 +5,7 @@
         "noImplicitAny": false,
         "sourceMap": false,
         "experimentalDecorators": true,
-        "outDir": "./build/js/",
+        "outDir": "./build/app/",
         "lib": [
             "es6",
             "dom"
