@@ -34,11 +34,11 @@ gulp.task("typescriptBuild", () => {
 
         gulp.src(["./app/**/*.ts"])
             .pipe(plumber())
-            // .on("end", () => {gutil.log(gutil.colors.italic.green(`compiling typescript file`))})
+            .on("end", () => {gutil.log(gutil.colors.italic.green(`compiling typescript file`))})
             .pipe(shell([
                 "tsc --rootDir app"
             ]))
-            // .on("end", () => {gutil.log(gutil.colors.italic.green(`typescript files compile finish`))})
+            .on("end", () => {gutil.log(gutil.colors.italic.green(`typescript files compile finish`))})
             ;
 });
 

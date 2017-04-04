@@ -1,12 +1,10 @@
 {
-  "name": "cnode",
-  "version": "1.0.0",
-  "description": "",
+  "name": "cnode_test",
   "main": "index.js",
   "scripts": {
     "start": "node ./bin/www"
   },
-  "author": "",
+  "author": "lzhao",
   "license": "ISC",
   "devDependencies": {
     "del": "^2.2.2",
@@ -26,5 +24,7 @@
     "morgan": "^1.8.1",
     "nunjucks": "^3.0.0",
     "serve-favicon": "^2.4.2"
-  }
+  },
+  "version": "0.0.1",
+  "description": ""
 }
