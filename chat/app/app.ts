@@ -7,12 +7,10 @@ import * as bodyParser from "body-parser";
 import * as nunjucks from "nunjucks";
 
 import * as index from "./routes/index";
-import * as webRouter from "./routes/web_router";
 
 const app = express();
 
-// view engine setup
-
+// // view engine setup
 app.set("view engine", "html");
 
 nunjucks.configure(path.join(__dirname, "views"), {
@@ -29,9 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use("/", index);
-
-app.use("/", webRouter);
+app.use("/", index);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

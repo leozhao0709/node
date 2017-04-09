@@ -7,6 +7,7 @@ const fs = require("fs");
 const path = require("path");
 const shell = require("gulp-shell");
 const watch = require("gulp-watch");
+const sass = require("gulp-sass");
 
 
 const pipelog = notify.withReporter(() => {
@@ -17,7 +18,7 @@ const pipelog = notify.withReporter(() => {
 
 // pipelog.logLevel(2);
 
-gulp.task("default", ["typescriptBuild", "modifyPublic", "modifyViews"]);
+gulp.task("default", ["typescriptBuild", "sassBuild", "modifyPublic", "modifyViews"]);
 
 const cleanFolder = (folderPath) => {
     try {
@@ -59,6 +60,35 @@ gulp.task("typescriptBuild", ["buildAllTypeScript"], () => {
         }
     })
 });
+
+gulp.task("buildAllSass", [], ()=>{
+    cleanFolder("./build/app/public/stylesheets/css");
+    gulp.src("./app/public/stylesheets/scss/**/*.scss")
+        .pipe(plumber())
+        .pipe(pipelog("compile sass file: <%= file.relative %>"))
+        .pipe(sass({outputStyle: "expanded"}))
+        .on("error", sass.logError)
+        .pipe(gulp.dest("./build/app/public/stylesheets/css"))
+        .pipe(pipelog({message: "all sass files compile finish", onLast: true}))
+        ;
+});
+
+gulp.task("sassBuild", ["buildAllSass"], ()=>{
+    watch("./app/public/stylesheets/scss/**/*.scss", (file) => {
+        if (file.event === "unlink") {
+            cleanFolder(`./build/app/${path.dirname(file.relative)}/${path.basename(file.relative, "scss")}css`);
+        }
+        else {
+            gulp.src(file.path)
+                .pipe(plumber())
+                .pipe(pipelog("compile sass file: <%= file.relative %>"))
+                .pipe(sass({outputStyle: "expanded"}))
+                .on("error", sass.logError)
+                .pipe(gulp.dest("./build/app/public/stylesheets/css"))
+                .pipe(pipelog({message: "sass file compile finish: <%= file.relative %>", onLast: true}))
+        }
+    })
+})
 
 gulp.task("copyAllPublic", () => {
     cleanFolder("./build/app/public");
