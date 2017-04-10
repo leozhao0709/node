@@ -19,13 +19,18 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+// var server = http.createServer(app);
+
+var server = app.listen(app.get("port"), ()=>{
+  debug("node_chat server Listening on port " + server.address().port)
+});
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+// server.listen(port);
+require("../build/app/serverchat")(server);
 server.on('error', onError);
 server.on('listening', onListening);
 
