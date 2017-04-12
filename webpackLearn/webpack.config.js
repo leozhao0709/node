@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry:{
         app: __dirname + "/src/js/index.js",
-        more: [__dirname + "/src/js/sub.js", __dirname + "/src/js/add.js"],
+        // more: [__dirname + "/src/js/sub.js", __dirname + "/src/js/add.js"],
         v: ["jquery"]
     } ,
     output: {
@@ -52,10 +52,7 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: "jquery"
         }),
-        // new webpack.optimize.CommonsChunkPlugin({name: "v", filename: "lib/jquery.min.js"})
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     names: ["add", "sub"]
-        // })
+        new webpack.optimize.CommonsChunkPlugin({name: "v", filename: "lib/jquery.min.js"})
     ],
     // watch: true
 }
