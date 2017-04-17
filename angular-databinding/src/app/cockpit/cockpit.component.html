@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-xs-12">
+    <p>Add new Servers or blueprints!</p>
+    <div class="form-group">
+      <label for="serverName">Server Name</label>
+      <!--<input type="text" id="serverName" class="form-control" [(ngModel)]="serverName">-->
+      <input type="text" id="serverName" class="form-control" #serverNameInput>
+    </div>
+    <!--{{serverNameInput.value}}-->
+    <div class="form-group">
+      <label for="serverContent">Server Content</label>
+      <!--<input type="text" id="serverContent" class="form-control" [(ngModel)]="serverContent">-->
+      <input type="text" id="serverContent" class="form-control" #serverContentInput>
+    </div>
+    <button class="btn btn-primary" (click)="onAddServer(serverNameInput)">Add Server</button>
+    <button class="btn btn-primary" (click)="onAddBlueprint(serverNameInput)">Add Server Blueprint</button>
+  </div>
+</div>
