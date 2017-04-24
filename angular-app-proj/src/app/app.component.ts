@@ -10,10 +10,5 @@ import {
 export class AppComponent {
 
   loadedFeature = 'recipe';
-  /**
-   * onNavigate
-   */
-  public onNavigate(feature: string) {
-    this.loadedFeature = feature;
-  }
+
 }
