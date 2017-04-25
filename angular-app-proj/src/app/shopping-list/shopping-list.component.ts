@@ -19,4 +19,8 @@ export class ShoppingListComponent implements OnInit {
     });
   }
 
+  onEditItem(index: number) {
+    this._shoppingListService.startedEditing.emit(index);
+  }
+
 }
