@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
       'userData': new FormGroup({
         // tslint:disable-next-line:max-line-length
         'username': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this) /*this is important, note to bind to this */]),
-        'email': new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails.bind(this))
+        'email': new FormControl(null, [Validators.required, Validators.email], [this.forbiddenEmails])
       }),
       'gender': new FormControl('male'),
       'hobbies': this.hobbiesArray
