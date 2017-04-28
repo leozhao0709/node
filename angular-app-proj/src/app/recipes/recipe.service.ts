@@ -27,8 +27,54 @@ export class RecipeService {
       ])
   ];
 
+  // private recipes: Recipe[] = [
+  //   {
+  //     name: 'Tasty Schnitzel',
+  //     description: 'A super-tasty Schnitzel - just awesome!',
+  //     imagePath: 'https://upload.wikimedia.org/wikipedia/commons/7/72/Schnitzel.JPG',
+  //     ingredients: [
+  //       // new Ingredient('Meat', 1),
+  //       // new Ingredient('French Fries', 20)
+  //       {
+  //         name: 'Meat',
+  //         amount: 1
+  //       },
+  //       {
+  //         name: 'French Fries',
+  //         amount: 20
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     name: 'Big Fat Burger',
+  //     description: 'What else you need to say?',
+  //     imagePath: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Burger_King_Angus_Bacon_%26_Cheese_Steak_Burger.jpg',
+  //     ingredients: [
+  //       // new Ingredient('Buns', 2),
+  //       // new Ingredient('Meat', 1)
+  //       {
+  //         name: 'Buns',
+  //         amount: 2
+  //       },
+  //       {
+  //         name: 'Meat',
+  //         amount: 1
+  //       }
+  //     ]
+  //   }
+  // ];
+
   constructor(private _shoppingListService: ShoppingListService) { }
 
+  /**
+   * setRecipes
+   */
+  public setRecipes(recipes: Recipe[]) {
+    console.log(this.recipes.slice());
+    this.recipes = recipes;
+    console.log(this.recipes.slice());
+    this.recipesChanged.emit(this.recipes.slice());
+  }
 
 	/**
    * getRecipes

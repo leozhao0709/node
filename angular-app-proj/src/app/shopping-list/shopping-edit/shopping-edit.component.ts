@@ -40,6 +40,7 @@ export class ShoppingEditComponent implements OnInit {
    */
   public onSubmit() {
     const newIngredient: Ingredient = new Ingredient(this.editForm.get('name').value, this.editForm.get('amount').value);
+
     if (this.editMode) {
       this._shoppingListService.updateIngredient(this.editItemIndex, newIngredient);
     } else {

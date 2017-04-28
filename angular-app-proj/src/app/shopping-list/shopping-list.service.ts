@@ -10,6 +10,17 @@ export class ShoppingListService {
     new Ingredient('Tomatoes', 10)
   ];
 
+  // private ingredients: Ingredient[] = [
+  //   {
+  //     name: 'Apple',
+  //     amount: 5
+  //   },
+  //   {
+  //     name: 'Tomatoes',
+  //     amount: 10
+  //   }
+  // ];
+
   constructor() { }
 
   getIngredients(): Ingredient[] {

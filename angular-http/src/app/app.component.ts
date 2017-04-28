@@ -26,6 +26,16 @@ export class AppComponent {
 
   constructor(private _serverService: ServerService) { };
 
+  onGetServer() {
+    this._serverService.getServers().subscribe(
+      (servers) => {
+        // console.log(servers);
+        this.servers = servers;
+      },
+      (error: Error) => console.log(error)
+    );
+  }
+  
   onSaveServer() {
     this._serverService.storeServers(this.servers).subscribe(
       (response: Response) => {
@@ -34,16 +44,6 @@ export class AppComponent {
       (error: Error) => {
         console.log(error);
       },
-    );
-  }
-
-  onGetServer() {
-    this._serverService.getServers().subscribe(
-      (servers) => {
-        // console.log(servers);
-        this.servers = servers;
-      },
-      (error: Error) => console.log(error)
     );
   }
 
