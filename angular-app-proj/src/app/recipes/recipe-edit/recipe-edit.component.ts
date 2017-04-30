@@ -60,6 +60,13 @@ export class RecipeEditComponent implements OnInit {
   }
 
   /**
+   * getIngredients
+   */
+  public getIngredients(): FormArray {
+    return <FormArray>this.recipeForm.get('ingredients');
+  }
+
+  /**
    * onSubmit
    */
   public onSubmit() {
@@ -95,7 +102,7 @@ export class RecipeEditComponent implements OnInit {
    * onCancel
    */
   public onCancel() {
-    this._router.navigate(['../'], { relativeTo: this._route })
+    this._router.navigate(['../'], { relativeTo: this._route });
   }
 
   /**
