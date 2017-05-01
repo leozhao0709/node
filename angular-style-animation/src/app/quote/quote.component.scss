@@ -1,0 +1,22 @@
+h1 {
+  color: red;
+}
+
+:host {
+  display: block; // Note default is inline
+  border: 1px black solid;
+  padding: 20px;
+}
+
+:host(.favorite) {
+  border: 1px solid red;
+}
+
+ :host-context(#very-boring) {
+  border: 1px solid #ccc;
+  color: #ccc;
+}
+
+:host-context(#very-boring)>>>h1 {
+  color: #ccc;
+}
