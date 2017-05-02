@@ -30,6 +30,6 @@ export class ProjectComponent implements OnInit {
       'label-success': this.project.status === 'active',
       'label-default': this.project.status === 'inactive',
       'label-danger': this.project.status === 'critical'
-    }
+    };
   }
 }
