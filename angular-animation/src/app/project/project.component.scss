@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  border: 1px solid black;
+  border-radius: 3px;
+  box-shadow: 3px 3px 2px #ccc;
+  margin: 20px 0;
+  padding: 20px;
+}
+
+:host(.inactive) {
+  border: 1px solid #ccc;
+  color: #ccc;
+}
+
+:host(.marked) {
+  border: 2px solid blue;
+  padding: 19px;
+}
+
+.form-control {
+  display: inline-block;
+  width: 50%;
+}
