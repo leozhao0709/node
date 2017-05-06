@@ -1,3 +1,4 @@
-<div [@clickedState]="clickInfo" (click)="onClickSimple()" (mousedown)="onMouseDown()">
+<div [@clickState]="clickInfo" (click)="onClickSimple()" (mousedown)="onMouseDown()"></div>
 
-</div>
+
+<p [@clickState]="clickInfo" (click)="paragraphClick = 'clicked'">Some text</p>
