@@ -2,11 +2,15 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { NgForm } from '@angular/forms';
 
 import { Project } from '../projects/project.model';
+import { buttonStateTrigger } from './animation';
 
 @Component({
   selector: 'app-new-project',
   templateUrl: './new-project.component.html',
   styleUrls: ['./new-project.component.scss'],
+  animations: [
+    buttonStateTrigger
+  ]
 })
 export class NewProjectComponent implements OnInit {
   @Output() creationCancelled = new EventEmitter<void>();
@@ -24,7 +28,7 @@ export class NewProjectComponent implements OnInit {
   }
 
   onCreateProject() {
-    this.projectCreated.emit({name: this.form.value.name, description: this.form.value.description, status: this.form.value.status});
+    this.projectCreated.emit({ name: this.form.value.name, description: this.form.value.description, status: this.form.value.status });
   }
 
   onCancel() {

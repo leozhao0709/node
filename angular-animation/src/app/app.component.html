@@ -20,6 +20,20 @@
       <span [@numberEnteredState]="numberEntered == 9 ? 'selected': 'unselected'">9</span>
       <span [@numberEnteredState]="numberEntered == 0 ? 'selected': 'unselected'">0</span>
 
+      <hr>
+
+      <button class="btn btn-primary" (click)="isShown = !isShown">Toggle element</button>
+      <p *ngIf="isShown" @showState>you can see me now</p>
+
+      <button class="btn btn-primary" (click)="width=width-50">Shrink</button>
+      <button class="btn btn-primary" (click)="animate=true">Animate me</button>
+      <p [@animateState]="animate? 'animate': 'noAnimate'" [ngStyle]="{'width.px': width}">Shrink me</p>
+      <hr>
+
+      <button (click)="onAddElement()" class="btn btn-primary">Add Element</button>
+      <div class="test-result" *ngFor="let testResult of testResults" @listState (@listState.start)="onAnimationStart($event)"
+        (@listState.done)="onAnimationDone($event)">
+        {{testResult}}
+      </div>
     </div>
   </div>
-</div>
