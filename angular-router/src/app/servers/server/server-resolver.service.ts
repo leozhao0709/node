@@ -13,7 +13,13 @@ interface Server {
 export class ServerResolverService implements Resolve<Server> {
   // tslint:disable-next-line:max-line-length
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Server | Observable<Server> | Promise<Server> {
-    return this._serversService.getServer(+route.params['id']);
+    return new Promise<Server>((resolve, reject) => {
+      setTimeout(() => {
+        resolve(this._serversService.getServer(+route.params['id']));
+      }, 2000);
+    });
+
+    // return this._serversService.getServer(+route.params['id']);
   }
 
 
