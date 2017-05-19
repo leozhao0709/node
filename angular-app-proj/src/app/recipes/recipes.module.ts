@@ -27,7 +27,7 @@ import { AuthGuardService } from '../auth/auth-guard.service';
     RecipeEditComponent,
   ],
   providers: [
-    AuthGuardService
+    AuthGuardService,
   ]
 })
 export class RecipesModule { }

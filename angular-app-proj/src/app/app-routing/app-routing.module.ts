@@ -7,7 +7,8 @@ import { HomeComponent } from '../core/home/home.component';
 const appRoutes: Routes = [
   // { path: '', redirectTo: 'recipes', pathMatch: 'full' },
   { path: '', component: HomeComponent },
-  { path: 'recipes', loadChildren: '../recipes/recipes.module#RecipesModule' }, // lazy load
+  // tslint:disable-next-line:max-line-length
+  { path: 'recipes', loadChildren: '../recipes/recipes.module#RecipesModule' }, // this is lazy load, if not using lazy loading, then please add Recipe module in appModule
   { path: 'shopping-list', component: ShoppingListComponent },
 ];
 

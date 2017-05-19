@@ -9,8 +9,9 @@ import { AuthGuardService } from '../../auth/auth-guard.service';
 
 const recipeRoutes: Routes = [
   {
-    // path: 'recipes', component: RecipesComponent, children: [
-    path: '', component: RecipesComponent, children: [
+    // tslint:disable-next-line:comment-format
+    // path: 'recipes', component: RecipesComponent, children: [ //not using lazy loading
+    path: '', component: RecipesComponent, children: [ //lzay load using
       { path: '', component: RecipeStartComponent },
       { path: 'new', component: RecipeEditComponent, canActivate: [AuthGuardService] },
       { path: ':id', component: RecipeDetailComponent },

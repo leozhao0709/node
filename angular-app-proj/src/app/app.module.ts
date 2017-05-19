@@ -7,6 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
+import { RecipesModule } from 'app/recipes/recipes.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { CoreModule } from './core/core.module';
     HttpModule,
     AppRoutingModule,
     ShoppingListModule,
-    // RecipesModule, //using lazy load
+    // RecipesModule, //using lazy load, then comment this
     AuthModule,
     SharedModule,
     CoreModule
