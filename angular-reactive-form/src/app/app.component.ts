@@ -17,13 +17,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
-      'userData': new FormGroup({
+      userData: new FormGroup({
         // tslint:disable-next-line:max-line-length
-        'username': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this) /*this is important, note to bind to this */]),
-        'email': new FormControl(null, [Validators.required, Validators.email], [this.forbiddenEmails])
+        username: new FormControl(null, [Validators.required, this.forbiddenNames.bind(this) /*this is important, note to bind to this */]),
+        email: new FormControl(null, [Validators.required, Validators.email], [this.forbiddenEmails])
       }),
-      'gender': new FormControl('male'),
-      'hobbies': this.hobbiesArray
+      gender: new FormControl('male'),
+      hobbies: this.hobbiesArray
     });
 
     // this.signupForm.valueChanges.subscribe((value) => {
