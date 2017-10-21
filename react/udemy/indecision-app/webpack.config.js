@@ -4,6 +4,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: __dirname + '/src/index.tsx',
+  // entry: __dirname + '/src/tsx/playground/counter-example.tsx',
   output: {
     filename: "bundle.js",
     path: __dirname + '/dist/',
