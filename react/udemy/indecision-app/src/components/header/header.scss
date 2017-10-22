@@ -1,0 +1,24 @@
+// Colors
+$background-color: #20222b;
+$subtitle-color: #a5afd7;
+$m-size: 1.6rem;
+$l-size: 3.2rem;
+$xl-size: 4.8rem;
+.header {
+  background: $background-color;
+  margin-bottom: $xl-size;
+  color: white;
+  padding: $m-size 0;
+}
+
+.header__title {
+  font-size: $l-size;
+  margin: 0;
+}
+
+.header__subtitle {
+  color: $subtitle-color;
+  font-size: $m-size;
+  font-weight: 500;
+  margin: 0;
+}
