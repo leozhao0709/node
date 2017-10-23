@@ -12,7 +12,9 @@ export default class Action extends React.Component<IActionProps, IActionState> 
 
   render() {
     return (
-      <button disabled={!this.props.hasOptions} onClick={this.props.handlePick}>What should I do</button>
+      <div>
+        <button className='big-button' disabled={!this.props.hasOptions} onClick={this.props.handlePick}>What should I do?</button>
+      </div>
     );
   }
 }
