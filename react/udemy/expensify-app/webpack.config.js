@@ -4,7 +4,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   // entry: __dirname + '/src/index.tsx',
-  entry: __dirname + '/src/playground/redux-101.tsx',
+  entry: __dirname + '/src/playground/redux-expensify.tsx',
   output: {
     filename: "bundle.js",
     path: __dirname + '/dist/',

@@ -36,7 +36,7 @@ interface ICountState {
   count: number;
 }
 
-const store = createStore((state: ICountState = { count: 0 }, action: ActionTypes): ICountState => {
+const countReducer = (state: ICountState = { count: 0 }, action: ActionTypes): ICountState => {
   switch (action.type) {
     case TypeKeys.INCREMENT:
       return {
@@ -59,7 +59,9 @@ const store = createStore((state: ICountState = { count: 0 }, action: ActionType
         count: state.count
       };
   }
-});
+};
+
+const store = createStore(countReducer);
 
 const unsubscribe = store.subscribe(() => {
   console.log(store.getState());
