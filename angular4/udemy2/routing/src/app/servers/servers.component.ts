@@ -7,7 +7,7 @@ import { ServersService } from './servers.service';
   styleUrls: ['./servers.component.scss']
 })
 export class ServersComponent implements OnInit {
-  private servers: {id: number, name: string, status: string}[] = [];
+  private servers: { id: number, name: string, status: string }[] = [];
 
   constructor(private serversService: ServersService) { }
 
