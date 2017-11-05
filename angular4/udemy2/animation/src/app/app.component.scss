@@ -1,0 +1,59 @@
+#div1 {
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  transition: all 2s ease-in-out 0.5s;
+}
+
+#div1.clicked {
+  width: 500px;
+}
+
+#div2 {
+  width: 150px;
+  height: 75px;
+  background-color: green;
+}
+
+.animate {
+  animation: moved 1s ease-in-out forwards;
+}
+
+@keyframes moved {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(300px) scale(1.2);
+  }
+  75% {
+    transform: translateX(400px) scale(1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(400px) scale(1);
+    opacity: 0.1;
+  }
+}
+
+#sample {
+  width: 100px;
+  height: 100px;
+  background-color: orange;
+}
+
+p {
+  border: 1px solid #000;
+  background-color: lightblue;
+  padding: 10px;
+  box-sizing: content-box;
+}
+
+#div3 {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  padding: 10px;
+  border: 1px solid #000;
+}

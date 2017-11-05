@@ -1,0 +1,14 @@
+<div class="container">
+  <h3>Css part</h3>
+  <div id="div1" (click)="divClicked = !divClicked" [ngClass]="{'clicked': divClicked}" [ngStyle]="{'background-color': divClicked?'red':'blue'}"></div>
+  <hr/>
+  <div id="div2" (click)="doAnimate = !doAnimate" [ngClass]="{'animate': doAnimate}"></div>
+  <hr/>
+  <h3>Angular Part</h3>
+  <div [@clickedState]="clickInfo" (mousedown)="clickInfo='mousedown'" (click)="onClickSample()"></div>
+  <hr/>
+  <button (click)="isShown = !isShown">Toggle</button>
+  <p *ngIf="isShown" @showState>You can see me now</p>
+
+  <!--<div id="div3"></div>-->
+</div>
