@@ -5,7 +5,8 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
   entry: {
     bundle: __dirname + '/src/index.ts',
-    main: __dirname + '/src/main.ts'
+    main: __dirname + '/src/main.ts',
+    add: __dirname + '/src/add.ts'
   },
   output: {
     filename: "[name].js",
@@ -73,9 +74,6 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new UglifyJSPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.FLUENTFFMPEG_COV': false
-    })
+    new UglifyJSPlugin()
   ]
 }
