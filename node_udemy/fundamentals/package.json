@@ -1,0 +1,36 @@
+{
+  "name": "fundamentals",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "build": "webpack",
+    "lint": "tslint --project tsconfig.json --config tslint.json",
+    "test": "npm run lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/minimist": "^1.2.0",
+    "@types/node": "^8.0.34",
+    "@types/superagent": "^3.5.6",
+    "file-loader": "^1.1.5",
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
+    "source-map-loader": "^0.2.2",
+    "ts-loader": "^3.0.2",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.3",
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
+    "webpack": "^3.7.1",
+    "webpack-dev-server": "^2.9.2",
+    "webpack-stream": "^4.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "minimist": "^1.2.0",
+    "node": "^8.3.0"
+  },
+  "description": ""
+}
