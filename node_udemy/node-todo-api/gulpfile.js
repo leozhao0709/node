@@ -100,7 +100,7 @@ gulp.task("modifyAssets", ["copyAllAssets"], () => {
 gulp.task('nodemon', function () {
     nodemon({
         script: './dist/app.js'
-        , ext: 'js'
+        , ext: 'ts'
         , env: { 'NODE_ENV': 'development' }
     })
 });

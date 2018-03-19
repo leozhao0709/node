@@ -1,8 +1,22 @@
 import * as express from 'express';
-
-const app = express();
+import * as bodyParser from 'body-parser';
+import Todo from './models/Todo';
 
 const port = process.env.PORT || 3000;
+const app = express();
+
+app.use(bodyParser.json());
+
+app.post('/todos', (req, res) => {
+    const todo = new Todo(req.body);
+
+    todo.save()
+        .then((result) => {
+            res.send(result);
+        }).catch(err => {
+            res.status(400).send(err);
+        });
+});
 
 app.listen(3000, () => {
     // tslint:disable-next-line:no-console

@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import mongoose from '../db/mongoose';
 
 const todoSchema = new mongoose.Schema({
     text: {
@@ -17,6 +17,6 @@ const todoSchema = new mongoose.Schema({
     }
 });
 
-const TodoModel = mongoose.model('Todo', todoSchema);
+const Todo = mongoose.model('Todo', todoSchema);
 
-export default TodoModel;
+export default Todo;
