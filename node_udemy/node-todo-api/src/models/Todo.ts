@@ -1,4 +1,4 @@
-import mongoose from '../db/mongoose';
+import mongoose from 'mongoose';
 
 const todoSchema = new mongoose.Schema({
     text: {
