@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import mongoose from '../db/mongoose';
 
 const userSchema = new mongoose.Schema({
     email: {
