@@ -19,6 +19,17 @@ app.post('/todos', (req, res) => {
         });
 });
 
+app.get('/todos', (_, res) => {
+    Todo.find()
+        .then(todos => {
+            res.send(todos);
+        })
+        .catch(err => {
+            res.send(err);
+        })
+        ;
+});
+
 app.listen(port, () => {
     // tslint:disable-next-line:no-console
     console.log(`Server is up on ${port}`);

@@ -1,18 +1,17 @@
 const gulp = require("gulp");
 const plumber = require("gulp-plumber");
+const del = require("del");
 const fs = require("fs");
 const path = require("path");
 const watch = require("gulp-watch");
 const ts = require('gulp-typescript');
 const gutil = require("gulp-util");
 const notify = require("gulp-notify");
-const nodemon = require("gulp-nodemon");
 
 
 gulp.task("default", [
     "typescriptBuild",
-    "modifyAssets",
-    "nodemon"
+    "modifyAssets"
 ]);
 
 const pipelog = notify.withReporter(() => {
@@ -33,6 +32,18 @@ const cleanFolder = (folderPath) => {
     };
 };
 
+const copyPackageJson = () => {
+    gulp.src(["package.json"])
+        .pipe(plumber())
+        .on('end', () => {
+            gutil.log(gutil.colors.yellow(`copy package.json now`))
+        })
+        .pipe(
+            gulp.dest("./dist")
+        )
+        ;
+}
+
 const buildAllTypeScript = () => {
     gulp.src(["./src/**/*.ts", "!./node_modules/**/*.ts"])
         .pipe(plumber())
@@ -49,12 +60,13 @@ const buildAllTypeScript = () => {
         }));
 };
 
-gulp.task("buildTypeScriptFirstTime", () => {
-    cleanFolder("./dist")
+gulp.task("build", () => {
+    cleanFolder("./dist");
+    copyPackageJson();
     buildAllTypeScript();
 });
 
-gulp.task("typescriptBuild", ["buildTypeScriptFirstTime"], () => {
+gulp.task("typescriptBuild", ["build"], () => {
     watch("./**/*.ts", (file) => {
 
         if (file.event === "unlink") {
@@ -94,13 +106,5 @@ gulp.task("modifyAssets", ["copyAllAssets"], () => {
                     onLast: true
                 }));
         }
-    })
-});
-
-gulp.task('nodemon', function () {
-    nodemon({
-        script: './dist/app.js'
-        , ext: 'ts'
-        , env: { 'NODE_ENV': 'development' }
     })
 });
