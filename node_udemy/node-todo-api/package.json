@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "nodemon",
+    "start": "node ./dist/app.js",
+    "postinstall": "npm run build",
+    "nodemon": "nodemon",
     "build": "gulp build",
     "lint": "tslint --project tsconfig.json --config tslint.json",
     "test": "npm run lint && mocha -r ts-node/register --exit src/**/*.test.ts",
@@ -15,6 +17,9 @@
     ],
     "exec": "ts-node src/app.ts",
     "ext": "ts"
+  },
+  "engines": {
+    "node": "8.9.4"
   },
   "author": "",
   "license": "ISC",
