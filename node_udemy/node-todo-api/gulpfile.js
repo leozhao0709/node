@@ -3,15 +3,13 @@ const plumber = require("gulp-plumber");
 const del = require("del");
 const fs = require("fs");
 const path = require("path");
-const watch = require("gulp-watch");
 const ts = require('gulp-typescript');
 const gutil = require("gulp-util");
 const notify = require("gulp-notify");
 
 
 gulp.task("default", [
-    "typescriptBuild",
-    "modifyAssets"
+    "build"
 ]);
 
 const pipelog = notify.withReporter(() => {
@@ -44,6 +42,17 @@ const copyPackageJson = () => {
         ;
 }
 
+const copyAssets = () => {
+    gulp.src(["./src/assets/**"])
+        .pipe(plumber())
+        .pipe(pipelog("copy assets static file: <%= file.relative %>"))
+        .pipe(gulp.dest(`./dist/assets`))
+        .pipe(pipelog({
+            message: "all assets static files compile finish",
+            onLast: true
+        }))
+};
+
 const buildAllTypeScript = () => {
     gulp.src(["./src/**/*.ts", "!./node_modules/**/*.ts"])
         .pipe(plumber())
@@ -63,48 +72,6 @@ const buildAllTypeScript = () => {
 gulp.task("build", () => {
     cleanFolder("./dist");
     copyPackageJson();
+    copyAssets();
     buildAllTypeScript();
-});
-
-gulp.task("typescriptBuild", ["build"], () => {
-    watch("./**/*.ts", (file) => {
-
-        if (file.event === "unlink") {
-            cleanFolder(`./dist/${path.dirname(file.relative)}/${path.basename(file.relative, "ts")}js`);
-        }
-        gutil.log(gutil.colors.italic.yellow(`recompiling all typescript now...`));
-        buildAllTypeScript();
-        gutil.log(gutil.colors.italic.yellow(`finish typescript compile now!`));
-
-    })
-});
-
-gulp.task("copyAllAssets", () => {
-    cleanFolder("./dist/assets");
-    gulp.src(["./src/assets/**"])
-        .pipe(plumber())
-        .pipe(pipelog("copy assets static file: <%= file.relative %>"))
-        .pipe(gulp.dest(`./dist/assets`))
-        .pipe(pipelog({
-            message: "all assets static files compile finish",
-            onLast: true
-        }))
-});
-
-gulp.task("modifyAssets", ["copyAllAssets"], () => {
-
-    watch(["./src/assets/**"], [], (file) => {
-        if (file.event === "unlink") {
-            cleanFolder(`./dist/assets/${path.dirname(file.relative)}/${path.basename(file.relative)}`);
-        } else {
-            gulp.src(file.path)
-                .pipe(plumber())
-                .pipe(pipelog("modify assets static file: <%= file.relative %>"))
-                .pipe(gulp.dest(`./dist/assets/${path.dirname(file.relative)}`))
-                .pipe(pipelog({
-                    message: "assets static file modify finish: <%= file.relative %>",
-                    onLast: true
-                }));
-        }
-    })
 });

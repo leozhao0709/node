@@ -57,6 +57,25 @@ describe('Get /todo/:id', () => {
     });
 
     it('should return 404 if non-object ids', async () => {
-        await request.get('/todo/123abc').expect(404);
+        await request.get('/todo/123abc');
+    });
+});
+
+describe('Delete /todo/:id', () => {
+    it('should remove a todo', async () => {
+        const res = await request.delete(`/todo/${todos[0]._id}`).expect(200);
+        expect(res.body.todo.text).equals(todos[0].text);
+
+        const todo = await Todo.findById(todos[0]._id);
+        // tslint:disable-next-line:no-unused-expression
+        expect(todo).to.not.exist;
+    });
+
+    it('should return 404 if todo not found', async () => {
+        await request.delete(`/todo/${new ObjectID()}`).expect(404);
+    });
+
+    it('should return 404 if object id is invalid', async () => {
+        await request.delete(`/todo/123add`).expect(404);
     });
 });
