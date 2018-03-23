@@ -71,6 +71,40 @@ app.delete('/todo/:id', (req, res) => {
         });
 });
 
+interface Test {
+    text: string;
+    completed?: boolean;
+    completedAt?: number | null;
+}
+
+app.patch('/todo/:id', (req, res) => {
+    const id = req.params.id;
+
+    if (!ObjectID.isValid(id)) {
+        res.status(404).send();
+    }
+
+    let { text, completed } = req.body;
+    let completedAt;
+
+    if (typeof (completed) === 'boolean' && completed) {
+        completedAt = new Date().getTime();
+    } else {
+        completed = false;
+        completedAt = null;
+    }
+
+    Todo.findByIdAndUpdate(id, { $set: { text, completed, completedAt } }, { new: true })
+        .then(todo => {
+            res.send(todo);
+        })
+        .catch(err => {
+            // tslint:disable-next-line:no-console
+            console.log(err);
+            res.status(404).send();
+        });
+});
+
 app.listen(port, () => {
     // tslint:disable-next-line:no-console
     console.log(`Server is up on ${port}`);
