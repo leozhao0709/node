@@ -1,8 +1,9 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import Todo from './models/Todo';
 import { ObjectID } from 'bson';
 import { environment } from './environment/environment';
+import { Todo } from './models/Todo';
+import User from './models/User';
 
 const port = process.env.PORT || environment.PORT;
 
@@ -96,6 +97,18 @@ app.patch('/todo/:id', (req, res) => {
         .catch(_ => {
             res.status(400).send();
         });
+});
+
+app.post('/users', (req, res) => {
+    const { email, password } = req.body;
+
+    const user = new User({ email, password });
+
+    user.save().then((doc) => {
+        res.send(doc);
+    }).catch(err => {
+        res.status(400).send(err);
+    });
 });
 
 app.listen(port, () => {
