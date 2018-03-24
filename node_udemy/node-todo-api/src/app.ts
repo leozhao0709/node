@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import Todo from './models/Todo';
 import { ObjectID } from 'bson';
-import { environment } from './config/environment';
+import { environment } from './environment/environment';
 
 const port = process.env.PORT || environment.PORT;
 

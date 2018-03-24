@@ -53,6 +53,17 @@ const copyAssets = () => {
         }))
 };
 
+const copyConfig = () => {
+    gulp.src(["./src/config/**"])
+        .pipe(plumber())
+        .pipe(pipelog("copy config file: <%= file.relative %>"))
+        .pipe(gulp.dest(`./dist/config`))
+        .pipe(pipelog({
+            message: "all config files compile finish",
+            onLast: true
+        }))
+};
+
 const buildAllTypeScript = () => {
     gulp.src(["./src/**/*.ts", "!./node_modules/**/*.ts"])
         .pipe(plumber())
@@ -72,6 +83,7 @@ const buildAllTypeScript = () => {
 gulp.task("build", () => {
     cleanFolder("./dist");
     copyPackageJson();
+    copyConfig();
     copyAssets();
     buildAllTypeScript();
 });
