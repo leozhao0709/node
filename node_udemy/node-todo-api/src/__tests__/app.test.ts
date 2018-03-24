@@ -13,7 +13,9 @@ const todos = [
     },
     {
         _id: new ObjectID(),
-        text: 'Second test todo'
+        text: 'Second test todo',
+        completed: true,
+        completedAt: 333
     }
 ];
 
@@ -77,5 +79,32 @@ describe('Delete /todo/:id', () => {
 
     it('should return 404 if object id is invalid', async () => {
         await request.delete(`/todo/123add`).expect(404);
+    });
+});
+
+describe('PATCH /todo/:id', () => {
+    it('should update todo', async () => {
+        const text = 'updated todo';
+        const res = await request.patch(`/todo/${todos[0]._id}`)
+            .send({ text, completed: true })
+            .expect(200);
+        expect(res.body.todo.text).eqls(text);
+        expect(res.body.todo.completed).to.be.true;
+        expect(res.body.todo.completedAt).to.be.a('number');
+    });
+
+    it('should clear completedAt when todo is not comleted', async () => {
+        const text = 'todo not finish';
+        const res = await request.patch(`/todo/${todos[1]._id}`).send({ text, completed: false }).expect(200);
+        expect(res.body.todo.text).eqls(text);
+        expect(res.body.todo.completed).to.be.false;
+        expect(res.body.todo.completedAt).to.be.not.exist;
+    });
+
+    it('should clear completedAt when send invalid completed', async () => {
+        const text = `test updated text`;
+        const res = await request.patch(`/todo/${todos[1]._id}`).send({ text, completed: 'false' }).expect(200);
+        expect(res.body.todo.completed).to.be.false;
+        expect(res.body.todo.completedAt).to.be.not.exist;
     });
 });

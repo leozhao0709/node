@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
-export const dbserverUrl = `mongodb://localhost:27017/`;
-export const dbName = 'TodoApp';
+import { environment } from '../config/environment';
 
-mongoose.connect(process.env.MONGODB_URI || `${dbserverUrl}${dbName}`);
+mongoose.connect(process.env.MONGODB_URI || environment.MONGODB_URI);
 
 export default mongoose;

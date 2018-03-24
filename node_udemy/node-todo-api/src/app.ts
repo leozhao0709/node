@@ -2,8 +2,9 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import Todo from './models/Todo';
 import { ObjectID } from 'bson';
+import { environment } from './config/environment';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || environment.PORT;
 
 export const app = express();
 
@@ -71,12 +72,6 @@ app.delete('/todo/:id', (req, res) => {
         });
 });
 
-interface Test {
-    text: string;
-    completed?: boolean;
-    completedAt?: number | null;
-}
-
 app.patch('/todo/:id', (req, res) => {
     const id = req.params.id;
 
@@ -96,12 +91,10 @@ app.patch('/todo/:id', (req, res) => {
 
     Todo.findByIdAndUpdate(id, { $set: { text, completed, completedAt } }, { new: true })
         .then(todo => {
-            res.send(todo);
+            res.send({ todo });
         })
-        .catch(err => {
-            // tslint:disable-next-line:no-console
-            console.log(err);
-            res.status(404).send();
+        .catch(_ => {
+            res.status(400).send();
         });
 });
 

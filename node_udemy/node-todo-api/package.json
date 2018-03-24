@@ -7,7 +7,7 @@
     "postinstall": "npm run build",
     "nodemon": "nodemon --exec 'ts-node src/app.ts'",
     "build": "gulp build",
-    "mocha": "mocha -r ts-node/register --exit src/**/*.test.ts || exit 0",
+    "mocha": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha -r ts-node/register --exit src/**/*.test.ts || exit 0",
     "lint": "tslint --project tsconfig.json --config tslint.json",
     "test": "npm run lint && npm run mocha",
     "test:watch": "nodemon --exec 'npm run mocha'",
