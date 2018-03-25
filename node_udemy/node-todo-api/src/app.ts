@@ -3,7 +3,8 @@ import * as bodyParser from 'body-parser';
 import { ObjectID } from 'bson';
 import { environment } from './environment/environment';
 import { Todo } from './models/Todo';
-import User from './models/User';
+import { User } from './models/User';
+import { auth } from './middleware/auth';
 
 const port = process.env.PORT || environment.PORT;
 
@@ -104,11 +105,31 @@ app.post('/users', (req, res) => {
 
     const user = new User({ email, password });
 
-    user.save().then((doc) => {
-        res.send(doc);
-    }).catch(err => {
-        res.status(400).send(err);
-    });
+    user.generateAuthToken()
+        .then(token => {
+            res.header('x-auth', token).send(user);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+
+app.get('/user/me', auth, (req, res) => {
+    res.send(req.params.user);
+});
+
+app.post('/user/login', (req, res) => {
+    const { email, password } = req.body;
+
+    User.findByCrediential(email, password)
+        .then(user => {
+            return user.generateAuthToken().then(token => {
+                res.header('x-auth', token).send(user);
+            });
+        })
+        .catch(_ => {
+            res.status(400).send();
+        });
 });
 
 app.listen(port, () => {

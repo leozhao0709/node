@@ -1,29 +1,16 @@
 import * as supertest from 'supertest';
 import { expect } from 'chai';
 import { app } from '../app';
-import Todo from '../models/Todo';
 import { ObjectID } from 'bson';
+import { Todo } from '../models/Todo';
+import { populateTodos, todos } from './seed/todo.seed';
+import { populateUers, users } from './seed/user.seed';
+import { User } from '../models/User';
 
 const request = supertest(app);
 
-const todos = [
-    {
-        _id: new ObjectID(),
-        text: 'First test todo'
-    },
-    {
-        _id: new ObjectID(),
-        text: 'Second test todo',
-        completed: true,
-        completedAt: 333
-    }
-];
-
-beforeEach(() => {
-    return Todo.remove({}).then(() => {
-        return Todo.insertMany(todos);
-    });
-});
+beforeEach(populateUers);
+beforeEach(populateTodos);
 
 describe('Post /todos', () => {
 
@@ -106,5 +93,43 @@ describe('PATCH /todo/:id', () => {
         const res = await request.patch(`/todo/${todos[1]._id}`).send({ text, completed: 'false' }).expect(200);
         expect(res.body.todo.completed).to.be.false;
         expect(res.body.todo.completedAt).to.be.not.exist;
+    });
+});
+
+describe('GET /user/me', () => {
+    it('should return user if authenticated', async () => {
+        const res = await request.get('/user/me').set('x-auth', users[0].tokens![0].token).expect(200);
+
+        expect(res.body._id).eqls(users[0]._id);
+        expect(res.body.email).eqls(users[0].email);
+    });
+
+    it('should return 401 if not authenticated', async () => {
+        const res = await request.get('/user/me').expect(401);
+        expect(res.body).to.be.empty;
+    });
+});
+
+describe('POST /users', () => {
+    it('should create a user', async () => {
+        const email = 'testExample@example.com';
+        const password = 'examplePassword';
+        const res = await request.post('/users').send({ email, password }).expect(200);
+        expect(res.header['x-auth']).to.be.exist;
+        expect(res.body._id).to.be.exist;
+        expect(res.body.email).eqls(email);
+
+        const user = await User.findOne({ email });
+        expect(user!.email).equals(email);
+        expect(user!._id.toString()).equal(res.body._id);
+        expect(user!.password).not.eqls(password);
+    });
+
+    it('should return validation error if request invalid', async () => {
+        await request.post('/users').send({ email: 'test123', password: '123456' }).expect(400);
+    });
+
+    it('should not create user if email in use', async () => {
+        await request.post('/users').send({ email: users[0]._id, password: users[0].password }).expect(400);
     });
 });

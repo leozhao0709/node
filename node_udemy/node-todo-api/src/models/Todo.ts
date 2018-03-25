@@ -1,5 +1,11 @@
 import mongoose from '../db/mongoose';
 
+export interface ITodo extends mongoose.Document {
+    text: string;
+    completed?: boolean;
+    completedAt?: number | null;
+}
+
 const todoSchema = new mongoose.Schema({
     text: {
         type: String,
@@ -17,4 +23,4 @@ const todoSchema = new mongoose.Schema({
     }
 });
 
-export const Todo = mongoose.model('Todo', todoSchema);
+export const Todo = mongoose.model<ITodo>('Todo', todoSchema);
