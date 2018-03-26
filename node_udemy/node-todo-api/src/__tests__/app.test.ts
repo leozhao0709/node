@@ -35,24 +35,24 @@ describe('Get /todos', () => {
     });
 });
 
-describe('Get /todo/:id', () => {
+describe('Get /todos/:id', () => {
     it('should return todo doc', async () => {
-        const res = await request.get(`/todo/${todos[0]._id}`).expect(200);
+        const res = await request.get(`/todos/${todos[0]._id}`).expect(200);
         expect(res.body.todo.text).equals(todos[0].text);
     });
 
     it('should return 404 if todo not found', async () => {
-        await request.get(`/todo/${new ObjectID()}`).expect(404);
+        await request.get(`/todos/${new ObjectID()}`).expect(404);
     });
 
     it('should return 404 if non-object ids', async () => {
-        await request.get('/todo/123abc');
+        await request.get('/todos/123abc');
     });
 });
 
-describe('Delete /todo/:id', () => {
+describe('Delete /todos/:id', () => {
     it('should remove a todo', async () => {
-        const res = await request.delete(`/todo/${todos[0]._id}`).expect(200);
+        const res = await request.delete(`/todos/${todos[0]._id}`).expect(200);
         expect(res.body.todo.text).equals(todos[0].text);
 
         const todo = await Todo.findById(todos[0]._id);
@@ -61,18 +61,18 @@ describe('Delete /todo/:id', () => {
     });
 
     it('should return 404 if todo not found', async () => {
-        await request.delete(`/todo/${new ObjectID()}`).expect(404);
+        await request.delete(`/todos/${new ObjectID()}`).expect(404);
     });
 
     it('should return 404 if object id is invalid', async () => {
-        await request.delete(`/todo/123add`).expect(404);
+        await request.delete(`/todos/123add`).expect(404);
     });
 });
 
-describe('PATCH /todo/:id', () => {
+describe('PATCH /todos/:id', () => {
     it('should update todo', async () => {
         const text = 'updated todo';
-        const res = await request.patch(`/todo/${todos[0]._id}`)
+        const res = await request.patch(`/todos/${todos[0]._id}`)
             .send({ text, completed: true })
             .expect(200);
         expect(res.body.todo.text).eqls(text);
@@ -82,7 +82,7 @@ describe('PATCH /todo/:id', () => {
 
     it('should clear completedAt when todo is not comleted', async () => {
         const text = 'todo not finish';
-        const res = await request.patch(`/todo/${todos[1]._id}`).send({ text, completed: false }).expect(200);
+        const res = await request.patch(`/todos/${todos[1]._id}`).send({ text, completed: false }).expect(200);
         expect(res.body.todo.text).eqls(text);
         expect(res.body.todo.completed).to.be.false;
         expect(res.body.todo.completedAt).to.be.not.exist;
@@ -90,22 +90,22 @@ describe('PATCH /todo/:id', () => {
 
     it('should clear completedAt when send invalid completed', async () => {
         const text = `test updated text`;
-        const res = await request.patch(`/todo/${todos[1]._id}`).send({ text, completed: 'false' }).expect(200);
+        const res = await request.patch(`/todos/${todos[1]._id}`).send({ text, completed: 'false' }).expect(200);
         expect(res.body.todo.completed).to.be.false;
         expect(res.body.todo.completedAt).to.be.not.exist;
     });
 });
 
-describe('GET /user/me', () => {
+describe('GET /users/me', () => {
     it('should return user if authenticated', async () => {
-        const res = await request.get('/user/me').set('x-auth', users[0].tokens![0].token).expect(200);
+        const res = await request.get('/users/me').set('x-auth', users[0].tokens![0].token).expect(200);
 
         expect(res.body._id).eqls(users[0]._id);
         expect(res.body.email).eqls(users[0].email);
     });
 
     it('should return 401 if not authenticated', async () => {
-        const res = await request.get('/user/me').expect(401);
+        const res = await request.get('/users/me').expect(401);
         expect(res.body).to.be.empty;
     });
 });
@@ -131,5 +131,39 @@ describe('POST /users', () => {
 
     it('should not create user if email in use', async () => {
         await request.post('/users').send({ email: users[0]._id, password: users[0].password }).expect(400);
+    });
+});
+
+describe('POST /users/login', () => {
+    it('should login user and return auth token', async () => {
+        const res = await request.post('/users/login')
+            .send({ email: users[1].email, password: users[1].password })
+            .expect(200);
+        expect(res.header['x-auth']).to.be.exist;
+
+        const user = await User.findById(users[1]._id);
+        expect(user!.tokens[0]).include({
+            access: 'auth',
+            token: res.header['x-auth']
+        });
+    });
+
+    it('should reject invalid login', async () => {
+        const res = await request.post('/users/login')
+            .send({ email: users[1].email, password: users[1].password + '1' })
+            .expect(400);
+        expect(res.header['x-auth']).to.be.not.exist;
+
+        const user = await User.findById(users[1]._id);
+        expect(user!.tokens.length).eqls(0);
+    });
+});
+
+describe('DELETE /users/me/token', () => {
+    it('should remove auth token on logout', async () => {
+        await request.delete('/users/me/token').set('x-auth', users[0].tokens![0].token).expect(200);
+
+        const user = await User.findById(users[0]._id);
+        expect(user!.tokens.length).eqls(0);
     });
 });

@@ -4,6 +4,7 @@ export interface ITodo extends mongoose.Document {
     text: string;
     completed?: boolean;
     completedAt?: number | null;
+    _creator: mongoose.Schema.Types.ObjectId;
 }
 
 const todoSchema = new mongoose.Schema({
@@ -20,6 +21,10 @@ const todoSchema = new mongoose.Schema({
     completedAt: {
         type: Number,
         default: null
+    },
+    _creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 });
 

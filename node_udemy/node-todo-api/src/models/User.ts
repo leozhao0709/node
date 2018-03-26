@@ -8,8 +8,9 @@ export interface IUser extends mongoose.Document {
     _id: string;
     email: string;
     password: string;
-    tokens: [{ _id: string, access: string, token: string }];
+    tokens: { access: string, token: string }[];
     generateAuthToken: () => Promise<string>;
+    removeToken: (token: string) => Promise<void>;
 }
 
 export interface IUserModel extends mongoose.Model<IUser> {
@@ -47,13 +48,14 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', function (this: IUser, next: mongoose.HookNextFunction) {
-    if (this.isModified('password')) {
+    const user: IUser = this;
+    if (user.isModified('password')) {
         bcrypt.genSalt(10)
             .then(salt => {
-                return bcrypt.hash(this.password, salt);
+                return bcrypt.hash(user.password, salt);
             })
             .then(hash => {
-                this.password = hash;
+                user.password = hash;
                 next();
             })
             .catch(err => {
@@ -65,17 +67,28 @@ userSchema.pre('save', function (this: IUser, next: mongoose.HookNextFunction) {
 });
 
 userSchema.methods.toJSON = function () {
-    const { _id, email } = this;
+    const user: IUser = this;
+    const { _id, email } = user;
 
     return { _id, email };
 };
 
-userSchema.methods.generateAuthToken = function () {
-    const access = 'auth';
-    const token = jwt.sign({ _id: this._id, access }, environment.AUTH_SECRET);
-    this.tokens = [...this.tokens, { access, token }];
+userSchema.methods.removeToken = function (token: string) {
+    const user: IUser = this;
+    return user.update({
+        $pull: {
+            tokens: { token }
+        }
+    });
+};
 
-    return this.save().then(() => {
+userSchema.methods.generateAuthToken = function () {
+    const user: IUser = this;
+    const access = 'auth';
+    const token = jwt.sign({ _id: user._id, access }, environment.AUTH_SECRET);
+    user.tokens = [...user.tokens, { access, token }];
+
+    return user.save().then(() => {
         return token;
     }).catch(err => {
         return Promise.reject(err);
@@ -83,6 +96,7 @@ userSchema.methods.generateAuthToken = function () {
 };
 
 userSchema.statics.findByToken = function (token: string) {
+    const user: IUserModel = this;
     let decode;
     try {
         decode = jwt.verify(token, environment.AUTH_SECRET);
@@ -90,9 +104,9 @@ userSchema.statics.findByToken = function (token: string) {
         return Promise.reject(error);
     }
 
-    const { _id, access } = decode as any;
+    const { _id, access } = decode;
 
-    return this.findOne({
+    return user.findOne({
         _id,
         'tokens.token': token,
         'tokens.access': access
@@ -100,16 +114,17 @@ userSchema.statics.findByToken = function (token: string) {
 };
 
 userSchema.statics.findByCrediential = function (email: string, password: string) {
+    const user: IUserModel = this;
     const notFoundMessage = { error: 'no user find' };
-    return User.findOne({ email }).then(user => {
-        if (!user) {
+    return user.findOne({ email }).then(doc => {
+        if (!doc) {
             return Promise.reject(notFoundMessage);
         }
 
-        return bcrypt.compare(password, user.password)
+        return bcrypt.compare(password, doc.password)
             .then(result => {
                 if (result) {
-                    return Promise.resolve(user);
+                    return Promise.resolve(doc);
                 }
                 return Promise.reject(notFoundMessage);
             }).catch(err => {

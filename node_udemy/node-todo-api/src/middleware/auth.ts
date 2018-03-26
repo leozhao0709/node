@@ -7,7 +7,7 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
     User.findByToken(token)
         .then(user => {
             if (!user) {
-                Promise.reject('');
+                throw 'user not found';
             }
 
             req.params.user = user;
