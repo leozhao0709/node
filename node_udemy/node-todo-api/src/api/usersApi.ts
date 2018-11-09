@@ -5,6 +5,8 @@ import { auth } from '../middleware/auth';
 export const usersApi = Router();
 
 usersApi.post('/', (req, res) => {
+    // tslint:disable-next-line:no-console
+    console.log('receive req....');
     const { email, password } = req.body;
 
     const user = new User({ email, password });
