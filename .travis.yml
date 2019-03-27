@@ -17,3 +17,9 @@ deploy:
   skip_cleanup: true
   on:
     branch: production
+
+after_deploy:
+  - git checkout master
+  - npm version patch
+  - git commit -am "bump version"
+  - git push
