@@ -6,20 +6,10 @@ node_js:
 before_install:
   - cd lz_test_lib
 
-before_deploy:
-  # - yarn version --patch
-  - npm version patch
-
 deploy:
-  provider: npm
-  email: $NPM_EMAIL
-  api_key: $NPM_API_KEY
-  skip_cleanup: true
-  on:
-    branch: production
-
-after_deploy:
-  - git checkout master
-  - npm version patch
-  - git commit -am "bump version"
-  - git push
+  - provider: npm
+    email: $NPM_EMAIL
+    api_key: $NPM_API_KEY
+    skip_cleanup: true
+    on:
+      tags: true
