@@ -1,0 +1,15 @@
+sudo: required
+language: node_js
+node_js:
+  - "node"
+
+before_install:
+  - cd lz_test_lib
+
+deploy:
+  provider: npm
+  email: $NPM_EMAIL
+  api_key: $NPM_API_KEY
+  skip_cleanup: true
+  on:
+    branch: production
