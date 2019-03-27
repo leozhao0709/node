@@ -5,6 +5,7 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
+    "test": "yarn lint",
     "build": "tsc",
     "lint": "tslint -p tsconfig.json",
     "prepublish": "npm run build"
