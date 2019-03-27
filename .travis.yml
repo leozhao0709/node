@@ -21,3 +21,5 @@ deploy:
 after_deploy:
   - git checkout master
   - npm version patch
+  - git commit -am "bump version"
+  - git push
