@@ -1,19 +1,12 @@
 {
-  "name": "lz_test_lib",
-  "version": "1.0.6",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "name": "test",
+  "version": "1.0.0",
+  "main": "index.js",
   "license": "MIT",
-  "scripts": {
-    "build": "tsc",
-    "lint": "tslint -p tsconfig.json",
-    "prepublish": "npm run build"
+  "dependencies": {
+    "lz_test_lib": "^1.0.6"
   },
   "devDependencies": {
-    "tslint": "^5.14.0",
     "typescript": "^3.3.4000"
-  },
-  "files": [
-    "dist/**/*"
-  ]
+  }
 }
