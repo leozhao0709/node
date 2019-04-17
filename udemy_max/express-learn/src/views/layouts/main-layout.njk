@@ -4,24 +4,31 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>
+      {% block title %}
+        Page Not Found
+      {% endblock %}
+    </title>
     <link rel="stylesheet" href="/css/main.css"/>
-    <title>Page Not Found</title>
+    {% block extraStyles %}{% endblock %}
   </head>
   <body>
     <header class="main-header">
       <nav class="main-header__nav">
         <ul class="main-header__item-list">
           <li class="main-header__item">
-            <a class="active" href="/">Shop</a>
+            <a href="/" class="{{ 'active' if path === '/' else '' }}">Shop</a>
           </li>
           <li class="main-header__item">
-            <a href="/admin/add-product">Add Product</a>
+            <a href="/admin/add-product" class="{{ 'active' if path === '/admin/add-product' else '' }}">Add Product</a>
           </li>
         </ul>
       </nav>
     </header>
     <main>
-      <h1>Page not found!</h1>
+      {% block mainContent %}
+        <h1>Page not found!</h1>
+      {% endblock %}
     </main>
   </body>
 </html>

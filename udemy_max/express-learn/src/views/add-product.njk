@@ -1,0 +1,17 @@
+{% extends "./layouts/main-layout.njk" %}
+{% block title %}
+  {{ pageTitle }}
+{% endblock %}
+{% block extraStyles %}
+  <link rel="stylesheet" href="/css/forms.css"/>
+  <link rel="stylesheet" href="/css/product.css"/>
+{% endblock %}
+{% block mainContent %}
+  <form class="product-form" action="/admin/add-product" method="POST">
+    <div class="form-control">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title"/>
+    </div>
+    <button class="btn" type="submit">Add Product</button>
+  </form>
+{% endblock %}

@@ -4,6 +4,7 @@ import nunjucks from 'nunjucks';
 import path from 'path';
 import adminRouter from './routes/adminRouter';
 import shopRouter from './routes/shopRouter';
+import { get404 } from './controllers/errorController';
 
 const app = express();
 
@@ -23,9 +24,7 @@ app.use(shopRouter);
 app.use('/admin', adminRouter);
 
 // setup 404 page, this must be the last middleware
-app.use((req, res, next) => {
-  res.status(404).render('404.html');
-});
+app.use(get404);
 
 const port = process.env.PORT || 5000;
 
