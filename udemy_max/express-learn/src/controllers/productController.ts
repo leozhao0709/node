@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Product } from '../models/product';
-
-const products: Product[] = [];
+import { fetchAllProducts, saveProduct } from '../services/productService';
 
 export const getAddProduct = (req: Request, res: Response, next: NextFunction) => {
   res.render('add-product.njk', {
@@ -10,14 +9,21 @@ export const getAddProduct = (req: Request, res: Response, next: NextFunction) =
   });
 };
 
-export const postAddProduct = (req: Request, res: Response, next: NextFunction) => {
+export const postAddProduct = async (req: Request, res: Response, next: NextFunction) => {
   const product = new Product(req.body.title);
-  products.push(product);
+  // saveProduct(product).then(() => res.redirect('/'));
+  await saveProduct(product);
   res.redirect('/');
 };
 
-export const getProduct = (req: Request, res: Response, next: NextFunction) => {
-  console.log(process.mainModule!);
+export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
+  // fetchAllProducts().then(products => {
+  //   res.render('shop.njk', {
+  //     products,
+  //     path: '/'
+  //   });
+  // });
+  const products = await fetchAllProducts();
   res.render('shop.njk', {
     products,
     path: '/'
