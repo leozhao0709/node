@@ -1,6 +1,7 @@
 import { Product } from '../models/product';
 import { Request, Response, NextFunction } from 'express';
-import { saveProduct, fetchAllProducts } from '../services/productService';
+import { addProduct, getAllProducts } from '../services/productService';
+import uuid from 'uuid';
 
 export const getAddProduct = (req: Request, res: Response, next: NextFunction) => {
   res.render('admin/add-product.njk', {
@@ -11,20 +12,14 @@ export const getAddProduct = (req: Request, res: Response, next: NextFunction) =
 
 export const postAddProduct = async (req: Request, res: Response, next: NextFunction) => {
   const { title, imageUrl, description, price } = req.body;
-  const product = new Product(title, imageUrl, description, price);
-  // saveProduct(product).then(() => res.redirect('/'));
-  await saveProduct(product);
+  const id = uuid();
+  const product = new Product(id, title, imageUrl, description, price);
+  addProduct(product);
   res.redirect('/');
 };
 
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
-  // fetchAllProducts().then(products => {
-  //   res.render('shop.njk', {
-  //     products,
-  //     path: '/'
-  //   });
-  // });
-  const products = await fetchAllProducts();
+  const products = await getAllProducts();
   res.render('admin/products.njk', {
     products,
     path: '/products'

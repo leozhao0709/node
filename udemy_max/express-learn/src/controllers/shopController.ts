@@ -1,22 +1,21 @@
 import { Request, Response, NextFunction, response } from 'express';
-import { fetchAllProducts } from '../services/productService';
+import { getAllProducts } from '../services/productService';
 
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
-  // fetchAllProducts().then(products => {
-  //   res.render('shop.njk', {
-  //     products,
-  //     path: '/'
-  //   });
-  // });
-  const products = await fetchAllProducts();
+  const products = await getAllProducts();
   res.render('shop/product-list.njk', {
     products,
     path: '/products'
   });
 };
 
+export const getProduct = (req: Request, res: Response, next) => {
+  console.log(req.params.productId);
+  res.redirect('/');
+};
+
 export const getIndex = async (req: Request, res: Response, next) => {
-  const products = await fetchAllProducts();
+  const products = await getAllProducts();
   res.render('shop/index.njk', {
     products,
     path: '/'
