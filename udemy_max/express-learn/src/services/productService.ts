@@ -13,27 +13,40 @@ const fetchAllProducts = async (): Promise<Product[]> => {
   }
 };
 
-let products;
+let products: Product[] | undefined;
 
-export const getAllProducts = async () => {
-  if (products) {
-    return products;
+export const getAllProducts = () => products;
+
+(async () => {
+  if (!products) {
+    products = await fetchAllProducts();
   }
-  products = await fetchAllProducts();
-  return products;
-};
+  products = await getAllProducts();
+})();
 
-// export const getProductById = (id: string) => products.find(product => product.id === id);
+export const getProductById = (id: string) => products!.find(product => product.id === id);
 
 export const addProduct = async (product: Product) => {
-  if (!products) {
-    products = await getAllProducts();
-  }
-  products.push(product);
+  products!.push(product);
   try {
-    if (!fs.existsSync(productFile)) {
+    if (!fs.existsSync(path.resolve(productFile, '..'))) {
       fs.mkdirSync(path.resolve(productFile, '..'), { recursive: true });
     }
+    fs.promises.writeFile(productFile, JSON.stringify(products));
+  } catch (error) {
+    // tslint:disable-next-line: no-console
+    console.log(error);
+  }
+};
+
+export const updateProduct = (product: Product) => {
+  const existingProductindex = products!.findIndex(prod => prod.id === product.id);
+
+  if (existingProductindex !== -1) {
+    products![existingProductindex] = product;
+  }
+
+  try {
     fs.promises.writeFile(productFile, JSON.stringify(products));
   } catch (error) {
     // tslint:disable-next-line: no-console

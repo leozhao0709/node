@@ -1,0 +1,32 @@
+{% extends "../layouts/main-layout.njk" %}
+{% block title %}
+  Edit Product
+{% endblock %}
+{% block extraStyles %}
+  <link rel="stylesheet" href="/css/forms.css"/>
+  <link rel="stylesheet" href="/css/product.css"/>
+{% endblock %}
+{% block mainContent %}
+  <form class="product-form" action="/admin/edit-product" method="POST">
+    <div class="form-control">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" value="{{product.title}}"/>
+    </div>
+    <div class="form-control">
+      <label for="imageUrl">Image Url</label>
+      <input type="text" name="imageUrl" id="imageUrl" value="{{product.imageUrl}}"/>
+    </div>
+    <div class="form-control">
+      <label for="price">Price</label>
+      <input type="number" name="price" id="price" step="0.01" value="{{product.price}}"/>
+    </div>
+    <div class="form-control">
+      <label for="description">Description</label>
+      <textarea name="description" id="description" rows="5">{{product.description}}</textarea>
+    </div>
+    <div class="form-control">
+      <input type="hidden" name="productId" value="{{product.id}}"/>
+    </div>
+    <button class="btn" type="submit">Update Product</button>
+  </form>
+{% endblock %}

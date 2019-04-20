@@ -23,7 +23,9 @@
             <p class="product__description">{{item.description}}</p>
           </div>
           <div class="card__actions">
-            <button class="btn">Add to Cart</button>
+            <a href="/products/{{item.id}}" class="btn">Details</a>
+            {% set product = item %}
+            {% include "../components/add-to-cart.njk" %}
           </div>
         </article>
       {% endfor %}
