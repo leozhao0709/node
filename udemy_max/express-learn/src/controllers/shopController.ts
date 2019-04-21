@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, response } from 'express';
 import { getAllProducts, getProductById } from '../services/productService';
-import { addToCart } from '../services/cartService';
+import { addToCart, getCartData, deleteProductFromCart } from '../services/cartService';
+import { Product } from '../models/product';
 
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   const products = await getAllProducts();
@@ -19,8 +20,8 @@ export const getProduct = (req: Request, res: Response, next) => {
   });
 };
 
-export const getIndex = async (req: Request, res: Response, next) => {
-  const products = await getAllProducts();
+export const getIndex = (req: Request, res: Response, next) => {
+  const products = getAllProducts();
   res.render('shop/index.njk', {
     products,
     path: '/'
@@ -28,9 +29,20 @@ export const getIndex = async (req: Request, res: Response, next) => {
 };
 
 export const getCart = (req, res: Response, next) => {
-  res.render('shop/cart.njk', {
-    path: '/cart'
-  });
+  const cart = getCartData();
+  if (cart) {
+    const cartProdData: Array<{ product: Product; qty: number }> = [];
+    cart.products.forEach(prod => {
+      const product = getProductById(prod.productId);
+      if (product) {
+        cartProdData.push({ product, qty: prod.qty });
+      }
+    });
+    res.render('shop/cart.njk', {
+      path: '/cart',
+      cartProdData
+    });
+  }
 };
 
 export const postCart = (req: Request, res: Response, next) => {
@@ -52,4 +64,13 @@ export const getCheckout = (req, res: Response, next) => {
   res.render('shop/checkout.njk', {
     path: '/checkout'
   });
+};
+
+export const postDeleteProductFormCart = async (req: Request, res: Response, next) => {
+  const { productId } = req.body;
+  const product = getProductById(productId);
+  if (product) {
+    await deleteProductFromCart(product);
+  }
+  res.redirect('/cart');
 };

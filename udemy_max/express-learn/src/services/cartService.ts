@@ -45,7 +45,7 @@ export const addToCart = async (product: Product) => {
     // existing product add to cart
     cart!.products[exsitingProductIndex].qty += 1;
   }
-  cart!.totalPrice += +product.price;
+  cart!.totalPrice = +(cart!.totalPrice + +product.price).toFixed(2);
 
   await saveCartToFile();
 };
@@ -55,7 +55,9 @@ export const deleteProductFromCart = async (product: Product) => {
   if (cartProd) {
     const cartProdQty = cartProd.qty;
     cart!.products = cart!.products.filter(prod => prod.productId !== product.id);
-    cart!.totalPrice -= product.price * cartProdQty;
+    cart!.totalPrice = +(cart!.totalPrice - product.price * cartProdQty).toFixed(2);
     await saveCartToFile();
   }
 };
+
+export const getCartData = () => cart;

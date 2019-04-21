@@ -6,7 +6,8 @@ import {
   getCheckout,
   getOrders,
   getProduct,
-  postCart
+  postCart,
+  postDeleteProductFormCart
 } from '../controllers/shopController';
 
 const shopRouter = Router();
@@ -18,6 +19,7 @@ shopRouter.get('/products/:productId', getProduct);
 
 shopRouter.get('/cart', getCart);
 shopRouter.post('/cart', postCart);
+shopRouter.post('/delete-product-from-cart', postDeleteProductFormCart);
 
 shopRouter.get('/orders', getOrders);
 
