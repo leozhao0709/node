@@ -16,6 +16,18 @@ const fetchCart = async (): Promise<Cart> => {
   }
 };
 
+const saveCartToFile = async () => {
+  if (!fs.existsSync(path.resolve(cartFile, '..'))) {
+    fs.mkdirSync(path.resolve(cartFile, '..'), { recursive: true });
+  }
+  try {
+    await fs.promises.writeFile(cartFile, JSON.stringify(cart));
+  } catch (error) {
+    // tslint:disable-next-line: no-console
+    console.log(error);
+  }
+};
+
 (async () => {
   if (!cart) {
     cart = await fetchCart();
@@ -35,10 +47,15 @@ export const addToCart = async (product: Product) => {
   }
   cart!.totalPrice += +product.price;
 
-  // write to file
-  if (!fs.existsSync(path.resolve(cartFile, '..'))) {
-    fs.mkdirSync(path.resolve(cartFile, '..'), { recursive: true });
-  }
+  await saveCartToFile();
+};
 
-  await fs.promises.writeFile(cartFile, JSON.stringify(cart));
+export const deleteProductFromCart = async (product: Product) => {
+  const cartProd = cart!.products.find(prod => prod.productId === product.id);
+  if (cartProd) {
+    const cartProdQty = cartProd.qty;
+    cart!.products = cart!.products.filter(prod => prod.productId !== product.id);
+    cart!.totalPrice -= product.price * cartProdQty;
+    await saveCartToFile();
+  }
 };
