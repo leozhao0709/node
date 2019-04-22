@@ -3,16 +3,16 @@
 <nav class="main-header__nav">
   <ul class="main-header__item-list">
     <li class="main-header__item">
-      <a href="/" class="{{ 'active' if path === '/' else '' }}">Shop</a>
+      <a href="/shop" class="{{ 'active' if path === '/shop' else '' }}">Shop</a>
     </li>
     <li class="main-header__item">
-      <a href="/products" class="{{ 'active' if path === '/products' else '' }}">Products</a>
+      <a href="/shop/products" class="{{ 'active' if path === '/shop/products' else '' }}">Products</a>
     </li>
     <li class="main-header__item">
-      <a href="/cart" class="{{ 'active' if path === '/cart' else '' }}">Cart</a>
+      <a href="/shop/cart" class="{{ 'active' if path === '/shop/cart' else '' }}">Cart</a>
     </li>
     <li class="main-header__item">
-      <a href="/orders" class="{{ 'active' if path === '/orders' else '' }}">Orders</a>
+      <a href="/shop/orders" class="{{ 'active' if path === '/shop/orders' else '' }}">Orders</a>
     </li>
     <li class="main-header__item">
       <a href="/admin/add-product" class="{{ 'active' if path === '/admin/add-product' else '' }}">Add Product</a>
@@ -26,16 +26,16 @@
 <nav class="mobile-nav">
   <ul class="mobile-nav__item-list">
     <li class="mobile-nav__item">
-      <a class="{{ 'active' if path === '/' else '' }}" href="/">Shop</a>
+      <a class="{{ 'active' if path === '/shop' else '' }}" href="/shop">Shop</a>
     </li>
     <li class="mobile-nav__item">
-      <a class="{{ 'active' if path === '/products' else '' }}" href="/products">Products</a>
+      <a class="{{ 'active' if path === '/shop/products' else '' }}" href="/shop/products">Products</a>
     </li>
     <li class="mobile-nav__item">
-      <a class="{{ 'active' if path === '/cart' else '' }}" href="/cart">Cart</a>
+      <a class="{{ 'active' if path === '/shop/cart' else '' }}" href="/shop/cart">Cart</a>
     </li>
     <li class="mobile-nav__item">
-      <a class="{{ 'active' if path === '/orders' else '' }}" href="/orders">Orders</a>
+      <a class="{{ 'active' if path === '/shop/orders' else '' }}" href="/shop/orders">Orders</a>
     </li>
     <li class="mobile-nav__item">
       <a class="{{ 'active' if path === '/admin/add-product' else '' }}" href="/admin/add-product">Add Product

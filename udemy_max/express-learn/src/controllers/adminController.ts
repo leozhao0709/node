@@ -38,8 +38,8 @@ export const postEditProduct = async (req: Request, res: Response, next) => {
     product.price = price;
     product.description = description;
     await updateProduct(product);
+    res.redirect('/admin/products');
   }
-  res.redirect('/admin/products');
 };
 
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {

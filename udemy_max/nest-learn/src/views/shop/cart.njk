@@ -12,7 +12,7 @@
           <p>
             {{ p.product.title }}({{p.qty}})
           </p>
-          <form action="/delete-product-from-cart" method="POST">
+          <form action="/shop/delete-product-from-cart" method="POST">
             <input type="hidden" name="productId" value="{{p.product.id}}"/>
             <button class="btn" type="submit">Delete</button>
           </form>

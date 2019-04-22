@@ -71,6 +71,6 @@ export const postDeleteProductFormCart = async (req: Request, res: Response, nex
   const product = getProductById(productId);
   if (product) {
     await deleteProductFromCart(product);
+    res.redirect('/cart');
   }
-  res.redirect('/cart');
 };
