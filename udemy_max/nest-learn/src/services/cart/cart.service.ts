@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
-import { Cart } from 'src/models/cart';
-import { Product } from 'src/models/product';
+import { Product } from '../../models/product';
+import { Cart } from '../../models/cart';
 
 @Injectable()
 export class CartService {
@@ -25,10 +25,10 @@ export class CartService {
     return this.cart;
   }
 
-  private async fetchCart(): Promise<Cart> {
+  private async fetchCart() {
     try {
       const content = await fs.promises.readFile(this.cartFile);
-      return JSON.parse(content.toString());
+      return JSON.parse(content.toString()) as Cart;
     } catch (error) {
       return new Cart([], 0);
     }

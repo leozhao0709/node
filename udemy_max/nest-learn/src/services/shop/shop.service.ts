@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Product } from 'src/models/product';
-import { CartService } from 'src/services/cart/cart.service';
+import { Product } from '../../models/product';
+import { CartService } from '../cart/cart.service';
 
 @Injectable()
 export class ShopService {

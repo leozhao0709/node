@@ -8,9 +8,9 @@ import {
   Res,
 } from '@nestjs/common';
 import { ShopService } from '../../services/shop/shop.service';
-import { CartService } from 'src/services/cart/cart.service';
-import { Product } from 'src/models/product';
 import { Response } from 'express';
+import { CartService } from '../../services/cart/cart.service';
+import { Product } from '../../models/product';
 
 @Controller('shop')
 export class ShopController {

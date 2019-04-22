@@ -5,7 +5,11 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "yarn build:clean && yarn build:typescript && yarn build:resource",
+    "build:clean": "rm -rf dist",
+    "build:typescript": "tsc -p tsconfig.build.json",
+    "build:resource": "cp -rf src/views src/public dist/",
+    "clean": "rm -rf node_modules dist",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",

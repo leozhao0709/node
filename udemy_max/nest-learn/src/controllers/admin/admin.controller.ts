@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import * as uuid from 'uuid/v4';
-import { Product } from 'src/models/product';
-import { ShopService } from 'src/services/shop/shop.service';
+import { ShopService } from '../../services/shop/shop.service';
+import { Product } from '../../models/product';
 
 @Controller('admin')
 export class AdminController {
