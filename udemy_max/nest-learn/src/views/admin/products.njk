@@ -1,0 +1,38 @@
+{% extends "../layouts/main-layout.njk" %}
+{% block title %}
+  product list
+{% endblock %}
+{% block extraStyles %}
+  <link rel="stylesheet" href="/css/product.css">
+{% endblock %}
+{% block mainContent %}
+  {% if products.length === 0 %}
+    <h1>No Product</h1>
+  {% else %}
+    <div class="grid">
+      {% for item in products %}
+        <article class="card product-item">
+          <header class="card__header">
+            <h1 class="product__title">{{ item.title }}</h1>
+          </header>
+          <div class="card__image">
+            <img src="{{item.imageUrl}}" alt="A Book">
+          </div>
+          <div class="card__content">
+            <h2 class="product__price">{{item.price}}</h2>
+            <p class="product__description">{{item.description}}</p>
+          </div>
+          <div class="card__actions">
+            <a class="btn" href="/admin/edit-product/{{item.id}}">edit product</a>
+          </div>
+          <div class="card__actions">
+            <form action="/admin/delte-product" method="POST">
+              <button class="btn" type="submit">delete product</button>
+              <input type="hidden" name="productId" value="{{item.id}}"/>
+            </form>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

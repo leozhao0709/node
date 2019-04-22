@@ -1,0 +1,25 @@
+{% extends "../layouts/main-layout.njk" %}
+
+{% block title %}
+  cart
+{% endblock %}
+
+{% block mainContent %}
+  {% if cartProdData.length > 0 %}
+    <ul>
+      {% for p in cartProdData %}
+        <li>
+          <p>
+            {{ p.product.title }}({{p.qty}})
+          </p>
+          <form action="/delete-product-from-cart" method="POST">
+            <input type="hidden" name="productId" value="{{p.product.id}}"/>
+            <button class="btn" type="submit">Delete</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <h1>No product in cart yet!</h1>
+  {% endif %}
+{% endblock %}

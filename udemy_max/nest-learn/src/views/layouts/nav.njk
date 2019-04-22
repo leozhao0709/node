@@ -1,0 +1,49 @@
+<div class="backdrop"></div>
+<button id="side-menu-toggle">Menu</button>
+<nav class="main-header__nav">
+  <ul class="main-header__item-list">
+    <li class="main-header__item">
+      <a href="/" class="{{ 'active' if path === '/' else '' }}">Shop</a>
+    </li>
+    <li class="main-header__item">
+      <a href="/products" class="{{ 'active' if path === '/products' else '' }}">Products</a>
+    </li>
+    <li class="main-header__item">
+      <a href="/cart" class="{{ 'active' if path === '/cart' else '' }}">Cart</a>
+    </li>
+    <li class="main-header__item">
+      <a href="/orders" class="{{ 'active' if path === '/orders' else '' }}">Orders</a>
+    </li>
+    <li class="main-header__item">
+      <a href="/admin/add-product" class="{{ 'active' if path === '/admin/add-product' else '' }}">Add Product</a>
+    </li>
+    <li class="main-header__item">
+      <a href="/admin/products" class="{{ 'active' if path === '/admin/products' else '' }}">Admin Products</a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="mobile-nav">
+  <ul class="mobile-nav__item-list">
+    <li class="mobile-nav__item">
+      <a class="{{ 'active' if path === '/' else '' }}" href="/">Shop</a>
+    </li>
+    <li class="mobile-nav__item">
+      <a class="{{ 'active' if path === '/products' else '' }}" href="/products">Products</a>
+    </li>
+    <li class="mobile-nav__item">
+      <a class="{{ 'active' if path === '/cart' else '' }}" href="/cart">Cart</a>
+    </li>
+    <li class="mobile-nav__item">
+      <a class="{{ 'active' if path === '/orders' else '' }}" href="/orders">Orders</a>
+    </li>
+    <li class="mobile-nav__item">
+      <a class="{{ 'active' if path === '/admin/add-product' else '' }}" href="/admin/add-product">Add Product
+      </a>
+    </li>
+    <li class="mobile-nav__item">
+      <a class="{{ 'active' if path === '/admin/products' else '' }}" href="/admin/products">Admin Products
+      </a>
+    </li>
+  </ul>
+</nav>
