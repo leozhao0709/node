@@ -12,8 +12,12 @@ import { Response } from 'express';
 import * as uuid from 'uuid/v4';
 import { ShopService } from '../../services/shop/shop.service';
 import { Product } from '../../models/product';
+import { ApiUseTags, ApiImplicitBody } from '@nestjs/swagger';
+import { EditProductDto } from '../../dto/product/edit-product.dto';
+import { AddProductDto } from '../../dto/product/add-product.dto';
 
 @Controller('admin')
+@ApiUseTags('admin')
 export class AdminController {
   constructor(private readonly shopService: ShopService) {}
 
@@ -26,10 +30,12 @@ export class AdminController {
   }
 
   @Post('/add-product')
-  async postAddProduct(@Body() body, @Res() res: Response) {
-    const { title, imageUrl, description, price } = body;
+  async postAddProduct(@Body() body: AddProductDto, @Res() res: Response) {
     const id = uuid();
-    const product = new Product(id, title, imageUrl, description, price);
+    const product: Product = {
+      id,
+      ...body,
+    };
     await this.shopService.addProduct(product);
     res.redirect('/admin/products');
   }
@@ -54,20 +60,20 @@ export class AdminController {
   }
 
   @Post('/edit-product')
-  async postEditProduct(@Body() body, @Res() res: Response) {
-    const { productId, imageUrl, title, price, description } = body;
-    const product = this.shopService.getProductById(productId);
+  async postEditProduct(@Body() body: EditProductDto, @Res() res: Response) {
+    let product = this.shopService.getProductById(body.id);
     if (product) {
-      product.imageUrl = imageUrl;
-      product.title = title;
-      product.price = price;
-      product.description = description;
+      product = {
+        ...product,
+        ...body,
+      };
       await this.shopService.updateProduct(product);
       res.redirect('/admin/products');
     }
   }
 
   @Post('/delte-product')
+  @ApiImplicitBody({ name: 'productId', type: String })
   async postDeleteProduct(
     @Body('productId') productId: string,
     @Res() res: Response,

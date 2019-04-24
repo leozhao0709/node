@@ -11,7 +11,9 @@ import { ShopService } from '../../services/shop/shop.service';
 import { Response } from 'express';
 import { CartService } from '../../services/cart/cart.service';
 import { Product } from '../../models/product';
+import { ApiUseTags, ApiImplicitBody, ApiModelProperty } from '@nestjs/swagger';
 
+@ApiUseTags('shop')
 @Controller('shop')
 export class ShopController {
   constructor(
@@ -69,8 +71,9 @@ export class ShopController {
   }
 
   @Post('/cart')
-  async postCart(@Body('productId') productId: string, @Res() res: Response) {
-    const product = this.shopService.getProductById(productId);
+  @ApiImplicitBody({ name: 'body', type: {productId: String} })
+  async postCart(@Body() body: {productId: string}, @Res() res: Response) {
+    const product = this.shopService.getProductById(body.productId);
     if (product) {
       await this.cartService.addToCart(product);
       res.redirect('/shop/cart');
@@ -78,6 +81,7 @@ export class ShopController {
   }
 
   @Post('/delete-product-from-cart')
+  @ApiImplicitBody({ name: 'productId', type: String })
   async deleteProductFromCart(
     @Body('productId') productId: string,
     @Res() res: Response,
