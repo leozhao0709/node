@@ -15,6 +15,7 @@ import { Product } from '../../models/product';
 import { ApiUseTags, ApiImplicitBody } from '@nestjs/swagger';
 import { EditProductDto } from '../../dto/product/edit-product.dto';
 import { AddProductDto } from '../../dto/product/add-product.dto';
+import { ProductIdDto } from '../../dto/product/product-id.dto';
 
 @Controller('admin')
 @ApiUseTags('admin')
@@ -73,12 +74,8 @@ export class AdminController {
   }
 
   @Post('/delte-product')
-  @ApiImplicitBody({ name: 'productId', type: String })
-  async postDeleteProduct(
-    @Body('productId') productId: string,
-    @Res() res: Response,
-  ) {
-    await this.shopService.deleteProductById(productId);
+  async postDeleteProduct(@Body() body: ProductIdDto, @Res() res: Response) {
+    await this.shopService.deleteProductById(body.productId);
     res.redirect('/admin/products');
   }
 }

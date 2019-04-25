@@ -12,6 +12,7 @@ import { Response } from 'express';
 import { CartService } from '../../services/cart/cart.service';
 import { Product } from '../../models/product';
 import { ApiUseTags, ApiImplicitBody, ApiModelProperty } from '@nestjs/swagger';
+import { ProductIdDto } from '../../dto/product/product-id.dto';
 
 @ApiUseTags('shop')
 @Controller('shop')
@@ -71,8 +72,7 @@ export class ShopController {
   }
 
   @Post('/cart')
-  @ApiImplicitBody({ name: 'body', type: {productId: String} })
-  async postCart(@Body() body: {productId: string}, @Res() res: Response) {
+  async postCart(@Body() body: ProductIdDto, @Res() res: Response) {
     const product = this.shopService.getProductById(body.productId);
     if (product) {
       await this.cartService.addToCart(product);
@@ -81,12 +81,11 @@ export class ShopController {
   }
 
   @Post('/delete-product-from-cart')
-  @ApiImplicitBody({ name: 'productId', type: String })
   async deleteProductFromCart(
-    @Body('productId') productId: string,
+    @Body() body: ProductIdDto,
     @Res() res: Response,
   ) {
-    const product = this.shopService.getProductById(productId);
+    const product = this.shopService.getProductById(body.productId);
     if (product) {
       await this.cartService.deleteProductFromCart(product);
       res.redirect('/shop/cart');
