@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as path from 'path';
 import * as nunjucks from 'nunjucks';
-import { HttpExceptionFilter } from './filters/httpException/http-exception.filter';
+import { HttpExceptionFilter } from './modules/shared/filters/httpException/http-exception.filter';
 import { swaggerSetup } from './swagger/swaggerSetup';
 
 async function bootstrap() {
