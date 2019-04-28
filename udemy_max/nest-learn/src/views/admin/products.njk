@@ -23,12 +23,12 @@
             <p class="product__description">{{item.description}}</p>
           </div>
           <div class="card__actions">
-            <a class="btn" href="/admin/edit-product/{{item.id}}">edit product</a>
+            <a class="btn" href="/admin/edit-product/{{item.productId}}">edit product</a>
           </div>
           <div class="card__actions">
             <form action="/admin/delte-product" method="POST">
               <button class="btn" type="submit">delete product</button>
-              <input type="hidden" name="productId" value="{{item.id}}"/>
+              <input type="hidden" name="productId" value="{{item.productId}}"/>
             </form>
           </div>
         </article>

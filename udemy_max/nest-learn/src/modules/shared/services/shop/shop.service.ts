@@ -32,22 +32,13 @@ export class ShopService {
     }
   }
 
-  private async saveProducts() {
-    try {
-      this.productRepository.save(this.products);
-    } catch (error) {
-      // tslint:disable-next-line: no-console
-      console.log(error);
-    }
-  }
-
   getProductById(productId: string) {
     return this.products.find(product => product.productId === productId);
   }
 
   async addProduct(product: Product) {
+    await this.productRepository.insert(product);
     this.products.push(product);
-    await this.saveProducts();
   }
 
   async updateProduct(product: Product) {
@@ -56,18 +47,26 @@ export class ShopService {
     );
 
     if (existingProductindex !== -1) {
+      await this.productRepository.update(
+        { productId: product.productId },
+        product,
+      );
       this.products[existingProductindex] = product;
+    } else {
+      throw new Error(`product ${product} doesn't exist during update`);
     }
-
-    await this.saveProducts();
   }
 
   async deleteProductByProductId(productId: string) {
     const product = this.getProductById(productId);
     if (product) {
+      await this.productRepository.delete({ productId });
       this.cartService.deleteProductFromCart(product);
+      this.products = this.products.filter(
+        prod => prod.productId !== productId,
+      );
+    } else {
+      throw new Error(`product ${product} doesn't exist during delete`);
     }
-    this.products = this.products.filter(prod => prod.productId !== productId);
-    await this.saveProducts();
   }
 }

@@ -16,6 +16,7 @@ const dbOptions: TypeOrmModuleOptions = {
     ),
   ],
   synchronize: true,
+  logging: true,
 };
 
 @Global()
