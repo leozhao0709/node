@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { Product } from './product.entity';
+import { Cart } from './cart.entity';
 
 /**
  * User
@@ -13,6 +20,9 @@ export class User {
   @Column()
   name: string;
 
-  @OneToMany(() => Product, product => product.user)
+  @OneToMany(() => Product, product => product.user, { cascade: true })
   products: Product[];
+
+  @OneToOne(() => Cart, cart => cart.user, { cascade: true })
+  cart: Cart;
 }

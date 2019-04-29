@@ -1,5 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  ManyToMany,
+  OneToMany,
+} from 'typeorm';
 import { User } from './user.entity';
+import { CartItem } from './cartItem.entity';
 
 /**
  * Product
@@ -26,4 +34,7 @@ export class Product {
 
   @ManyToOne(() => User, user => user.products, { onDelete: 'CASCADE' })
   user: User;
+
+  @OneToMany(() => CartItem, cartItem => cartItem.product, { cascade: true })
+  cartItems?: CartItem[];
 }

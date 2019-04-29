@@ -3,6 +3,7 @@ import { Product } from '../../../database/entities/product.entity';
 import { CartService } from '../cart/cart.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { User } from '../../../database/entities/user.entity';
 
 @Injectable()
 export class ShopService {
@@ -57,11 +58,11 @@ export class ShopService {
     }
   }
 
-  async deleteProductByProductId(productId: string) {
+  async deleteProductByProductId(user: User, productId: string) {
     const product = this.getProductById(productId);
     if (product) {
       await this.productRepository.delete({ productId });
-      this.cartService.deleteProductFromCart(product);
+      this.cartService.deleteProductFromCart(user, product);
       this.products = this.products.filter(
         prod => prod.productId !== productId,
       );

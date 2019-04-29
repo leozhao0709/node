@@ -1,25 +1,29 @@
 {% extends "../layouts/main-layout.njk" %}
 
 {% block title %}
-  cart
+    cart
+{% endblock %}
+
+{% block extraStyles %}
+    <link rel="stylesheet" href="/css/cart.css">
 {% endblock %}
 
 {% block mainContent %}
-  {% if cartProdData.length > 0 %}
-    <ul>
-      {% for p in cartProdData %}
-        <li>
-          <p>
-            {{ p.product.title }}({{p.qty}})
-          </p>
-          <form action="/shop/delete-product-from-cart" method="POST">
-            <input type="hidden" name="productId" value="{{p.product.productId}}"/>
-            <button class="btn" type="submit">Delete</button>
-          </form>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <h1>No product in cart yet!</h1>
-  {% endif %}
+    {% if cartItems.length > 0 %}
+        <ul class="cart__item-list">
+            {% for item in cartItems %}
+                <li class="cart__item">
+                    <p>
+                        {{ item.product.title }}({{item.quantity}})
+                    </p>
+                    <form action="/shop/delete-product-from-cart" method="POST">
+                        <input type="hidden" name="productId" value="{{item.product.productId}}"/>
+                        <button class="btn" type="submit">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No product in cart yet!</h1>
+    {% endif %}
 {% endblock %}

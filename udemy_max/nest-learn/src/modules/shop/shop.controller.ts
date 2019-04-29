@@ -6,11 +6,11 @@ import {
   Post,
   Body,
   Res,
+  Req,
 } from '@nestjs/common';
 import { ShopService } from '../shared/services/shop/shop.service';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { CartService } from '../shared/services/cart/cart.service';
-import { Product } from '../database/entities/product.entity';
 import { ApiUseTags } from '@nestjs/swagger';
 import { ProductIdDto } from '../shared/dto/product/product-id.dto';
 
@@ -54,28 +54,27 @@ export class ShopController {
 
   @Get('/cart')
   @Render('shop/cart.njk')
-  getCart() {
-    const cart = this.cartService.$cart;
+  getCart(@Req() req: Request) {
+    const cart = req.user.cart;
     if (cart) {
-      const cartProdData: Array<{ product: Product; qty: number }> = [];
-      cart.products.forEach(prod => {
-        const product = this.shopService.getProductById(prod.productId);
-        if (product) {
-          cartProdData.push({ product, qty: prod.qty });
-        }
-      });
+      const cartItems = cart.cartItems;
+      console.log(cartItems);
       return {
-        cartProdData,
+        cartItems,
         path: '/shop/cart',
       };
     }
   }
 
   @Post('/cart')
-  async postCart(@Body() body: ProductIdDto, @Res() res: Response) {
+  async postCart(
+    @Body() body: ProductIdDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
     const product = this.shopService.getProductById(body.productId);
     if (product) {
-      await this.cartService.addToCart(product);
+      await this.cartService.addToCart(req.user.cart, product);
       res.redirect('/shop/cart');
     }
   }
@@ -83,11 +82,12 @@ export class ShopController {
   @Post('/delete-product-from-cart')
   async deleteProductFromCart(
     @Body() body: ProductIdDto,
+    @Req() req: Request,
     @Res() res: Response,
   ) {
     const product = this.shopService.getProductById(body.productId);
     if (product) {
-      await this.cartService.deleteProductFromCart(product);
+      await this.cartService.deleteProductFromCart(req.user.cart, product);
       res.redirect('/shop/cart');
     }
   }

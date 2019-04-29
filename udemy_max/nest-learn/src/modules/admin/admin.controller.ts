@@ -6,8 +6,9 @@ import {
   Render,
   Body,
   Res,
+  Req,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import * as uuid from 'uuid/v4';
 import { ShopService } from '../shared/services/shop/shop.service';
 import { Product } from '../database/entities/product.entity';
@@ -30,9 +31,14 @@ export class AdminController {
   }
 
   @Post('/add-product')
-  async postAddProduct(@Body() body: AddProductDto, @Res() res: Response) {
+  async postAddProduct(
+    @Body() body: AddProductDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
     const productId = uuid();
     const product: Product = {
+      user: req.user,
       productId,
       ...body,
     };
@@ -42,8 +48,8 @@ export class AdminController {
 
   @Get('/products')
   @Render('admin/products.njk')
-  getProducts() {
-    const products = this.shopService.$products;
+  getProducts(@Req() req: Request) {
+    const products = req.user.products;
     return {
       products,
       path: '/admin/products',
@@ -73,8 +79,12 @@ export class AdminController {
   }
 
   @Post('/delte-product')
-  async postDeleteProduct(@Body() body: ProductIdDto, @Res() res: Response) {
-    await this.shopService.deleteProductByProductId(body.productId);
+  async postDeleteProduct(
+    @Body() body: ProductIdDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    await this.shopService.deleteProductByProductId(req.user, body.productId);
     res.redirect('/admin/products');
   }
 }

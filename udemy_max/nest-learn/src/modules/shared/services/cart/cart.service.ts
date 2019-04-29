@@ -1,85 +1,48 @@
 import { Injectable } from '@nestjs/common';
-import * as path from 'path';
-import * as fs from 'fs';
 import { Product } from '../../../database/entities/product.entity';
-import { Cart } from '../../../../models/cart';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CartItem } from '../../../database/entities/cartItem.entity';
+import { Cart } from '../../../database/entities/cart.entity';
 
 @Injectable()
 export class CartService {
-  private cartFile = path.resolve(
-    process.mainModule!.filename,
-    '../data/cart.json',
-  );
+  constructor(
+    @InjectRepository(CartItem)
+    private readonly cartItemRepository: Repository<CartItem>,
+    @InjectRepository(Cart)
+    private readonly cartRepository: Repository<Cart>,
+  ) {}
 
-  private cart: Cart;
-
-  constructor() {
-    this.fetchCart().then(cart => (this.cart = cart));
-  }
-
-  /**
-   * Getter $cart
-   * @return {Cart}
-   */
-  public get $cart(): Cart {
-    return this.cart;
-  }
-
-  private async fetchCart() {
-    try {
-      const content = await fs.promises.readFile(this.cartFile);
-      return JSON.parse(content.toString()) as Cart;
-    } catch (error) {
-      return new Cart([], 0);
-    }
-  }
-
-  private async saveCartToFile() {
-    if (!fs.existsSync(path.resolve(this.cartFile, '..'))) {
-      fs.mkdirSync(path.resolve(this.cartFile, '..'), { recursive: true });
-    }
-    try {
-      await fs.promises.writeFile(this.cartFile, JSON.stringify(this.cart));
-    } catch (error) {
-      // tslint:disable-next-line: no-console
-      console.log(error);
-    }
-  }
-
-  async addToCart(product: Product) {
-    const exsitingProductIndex = this.cart!.products.findIndex(
-      productInCart => productInCart.productId === product.productId,
+  async addToCart(cart: Cart, product: Product) {
+    const existingProductIndex = cart.cartItems.findIndex(
+      cartItem => cartItem.productId === product.id,
     );
 
-    if (exsitingProductIndex === -1) {
-      // new product add to cart
-      this.cart.products = [
-        ...this.cart.products,
-        { productId: product.productId, qty: 1 },
-      ];
+    if (existingProductIndex === -1) {
+      // no existing product
+      const newCartItem = new CartItem();
+      newCartItem.quantity = 1;
+      newCartItem.product = product;
+      cart.cartItems.push(newCartItem);
+      await this.cartRepository.save(cart);
     } else {
-      // existing product add to cart
-      this.cart.products[exsitingProductIndex].qty += 1;
+      // product already in cart
+      cart.cartItems[existingProductIndex].quantity += 1;
+      await this.cartItemRepository.save(cart.cartItems);
     }
-    this.cart.totalPrice = +(this.cart!.totalPrice + +product.price).toFixed(2);
-
-    await this.saveCartToFile();
   }
 
-  async deleteProductFromCart(product: Product) {
-    const cartProd = this.cart.products.find(
-      prod => prod.productId === product.productId,
+  async deleteProductFromCart(cart: Cart, product: Product) {
+    const productInCart = cart.cartItems.some(
+      cartItem => cartItem.productId === product.id,
     );
-    if (cartProd) {
-      const cartProdQty = cartProd.qty;
-      this.cart.products = this.cart.products.filter(
-        prod => prod.productId !== product.productId,
+    if (productInCart) {
+      cart.cartItems = cart.cartItems.filter(
+        cartItem => cartItem.productId !== product.id,
       );
-      this.cart.totalPrice = +(
-        this.cart.totalPrice -
-        product.price * cartProdQty
-      ).toFixed(2);
-      await this.saveCartToFile();
+      // await this.cartItemRepository.save(cart.cartItems);
+      await this.cartItemRepository.delete({ productId: product.id });
     }
   }
 }
