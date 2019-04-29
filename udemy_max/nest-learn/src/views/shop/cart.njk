@@ -13,12 +13,12 @@
         <ul class="cart__item-list">
             {% for item in cartItems %}
                 <li class="cart__item">
-                    <p>
-                        {{ item.product.title }}({{item.quantity}})
-                    </p>
+                    <h1>{{ item.product.title }}</h1>
+                    <h2>Quantity:
+                        {{item.quantity}}</h2>
                     <form action="/shop/delete-product-from-cart" method="POST">
                         <input type="hidden" name="productId" value="{{item.product.productId}}"/>
-                        <button class="btn" type="submit">Delete</button>
+                        <button class="btn danger" type="submit">Delete</button>
                     </form>
                 </li>
             {% endfor %}

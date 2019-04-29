@@ -58,7 +58,6 @@ export class ShopController {
     const cart = req.user.cart;
     if (cart) {
       const cartItems = cart.cartItems;
-      console.log(cartItems);
       return {
         cartItems,
         path: '/shop/cart',
