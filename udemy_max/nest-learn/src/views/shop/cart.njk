@@ -23,6 +23,12 @@
                 </li>
             {% endfor %}
         </ul>
+        <hr/>
+        <div class="centered">
+            <form action="/shop/create-order" method="POST">
+                <button type="submit" class="btn">Order Now!</button>
+            </form>
+        </div>
     {% else %}
         <h1>No product in cart yet!</h1>
     {% endif %}

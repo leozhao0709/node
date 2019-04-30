@@ -8,24 +8,26 @@ import {
   Res,
   Req,
 } from '@nestjs/common';
-import { ShopService } from '../shared/services/shop/shop.service';
+import { ProductService } from '../shared/services/product/product.service';
 import { Request, Response } from 'express';
 import { CartService } from '../shared/services/cart/cart.service';
 import { ApiUseTags } from '@nestjs/swagger';
 import { ProductIdDto } from '../shared/dto/product/product-id.dto';
+import { OrderService } from '../shared/services/order/order.service';
 
 @ApiUseTags('shop')
 @Controller('shop')
 export class ShopController {
   constructor(
-    private readonly shopService: ShopService,
+    private readonly productService: ProductService,
     private readonly cartService: CartService,
+    private readonly orderService: OrderService,
   ) {}
 
   @Get()
   @Render('shop/index.njk')
-  getIndex() {
-    const products = this.shopService.$products;
+  getIndex(@Req() req: Request) {
+    const products = req.user.products;
     return {
       products,
       path: '/shop',
@@ -34,8 +36,8 @@ export class ShopController {
 
   @Get('/products')
   @Render('shop/product-list.njk')
-  getProducts() {
-    const products = this.shopService.$products;
+  getProducts(@Req() req: Request) {
+    const products = req.user.products;
     return {
       products,
       path: '/shop/products',
@@ -44,8 +46,8 @@ export class ShopController {
 
   @Get('/products/:productId')
   @Render('shop/product-detail.njk')
-  getProductById(@Param('productId') productId: string) {
-    const product = this.shopService.getProductById(productId);
+  getProductById(@Param('productId') productId: string, @Req() req: Request) {
+    const product = this.productService.getProductById(productId);
     return {
       product,
       path: '/shop/products',
@@ -71,9 +73,9 @@ export class ShopController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const product = this.shopService.getProductById(body.productId);
+    const product = this.productService.getProductById(body.productId);
     if (product) {
-      await this.cartService.addToCart(req.user.cart, product);
+      await this.cartService.addToCart(product);
       res.redirect('/shop/cart');
     }
   }
@@ -81,12 +83,11 @@ export class ShopController {
   @Post('/delete-product-from-cart')
   async deleteProductFromCart(
     @Body() body: ProductIdDto,
-    @Req() req: Request,
     @Res() res: Response,
   ) {
-    const product = this.shopService.getProductById(body.productId);
+    const product = this.productService.getProductById(body.productId);
     if (product) {
-      await this.cartService.deleteProductFromCart(req.user.cart, product);
+      await this.cartService.deleteProductFromCart(product);
       res.redirect('/shop/cart');
     }
   }
@@ -94,9 +95,17 @@ export class ShopController {
   @Get('/orders')
   @Render('shop/orders.njk')
   getOrders() {
+    const orders = this.orderService.user.orders;
     return {
+      orders,
       path: '/shop/orders',
     };
+  }
+
+  @Post('/create-order')
+  async postOrders(@Res() res: Response) {
+    await this.orderService.createOrderFromCart();
+    res.redirect('/shop/orders');
   }
 
   @Get('/checkout')

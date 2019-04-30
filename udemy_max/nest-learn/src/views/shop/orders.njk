@@ -5,5 +5,23 @@
 {% endblock %}
 
 {% block mainContent %}
-  <h1>nothing here</h1>
+  {% if not orders or orders.length == 0 %}
+    <h1>nothing here</h1>
+  {% else %}
+    <ul>
+      {% for order in orders %}
+        <li>
+          <h1>#
+            {{order.id}}</h1>
+          <ul>
+            {% for orderItem in order.orderItems %}
+              <li>
+                {{orderItem.product.title}}({{orderItem.quantity}})
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 {% endblock %}

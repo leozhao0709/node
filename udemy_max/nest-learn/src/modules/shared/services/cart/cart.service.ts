@@ -7,41 +7,42 @@ import { Cart } from '../../../database/entities/cart.entity';
 
 @Injectable()
 export class CartService {
+  cart: Cart;
+
   constructor(
     @InjectRepository(CartItem)
     private readonly cartItemRepository: Repository<CartItem>,
-    @InjectRepository(Cart)
-    private readonly cartRepository: Repository<Cart>,
   ) {}
 
-  async addToCart(cart: Cart, product: Product) {
-    const existingProductIndex = cart.cartItems.findIndex(
+  async addToCart(product: Product) {
+    const existingProductIndex = this.cart.cartItems.findIndex(
       cartItem => cartItem.productId === product.id,
     );
 
     if (existingProductIndex === -1) {
       // no existing product
-      const newCartItem = new CartItem();
+      const newCartItem = this.cartItemRepository.create();
       newCartItem.quantity = 1;
       newCartItem.product = product;
-      cart.cartItems.push(newCartItem);
-      await this.cartRepository.save(cart);
+      newCartItem.cart = this.cart;
+
+      this.cart.cartItems.push(newCartItem);
+      await this.cartItemRepository.save(newCartItem);
     } else {
       // product already in cart
-      cart.cartItems[existingProductIndex].quantity += 1;
-      await this.cartItemRepository.save(cart.cartItems);
+      this.cart.cartItems[existingProductIndex].quantity += 1;
+      await this.cartItemRepository.save(this.cart.cartItems);
     }
   }
 
-  async deleteProductFromCart(cart: Cart, product: Product) {
-    const productInCart = cart.cartItems.some(
+  async deleteProductFromCart(product: Product) {
+    const productInCart = this.cart.cartItems.some(
       cartItem => cartItem.productId === product.id,
     );
     if (productInCart) {
-      cart.cartItems = cart.cartItems.filter(
+      this.cart.cartItems = this.cart.cartItems.filter(
         cartItem => cartItem.productId !== product.id,
       );
-      // await this.cartItemRepository.save(cart.cartItems);
       await this.cartItemRepository.delete({ productId: product.id });
     }
   }

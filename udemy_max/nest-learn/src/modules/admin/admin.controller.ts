@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import * as uuid from 'uuid/v4';
-import { ShopService } from '../shared/services/shop/shop.service';
+import { ProductService } from '../shared/services/product/product.service';
 import { Product } from '../database/entities/product.entity';
 import { ApiUseTags } from '@nestjs/swagger';
 import { EditProductDto } from '../shared/dto/product/edit-product.dto';
@@ -20,7 +20,7 @@ import { ProductIdDto } from '../shared/dto/product/product-id.dto';
 @Controller('admin')
 @ApiUseTags('admin')
 export class AdminController {
-  constructor(private readonly shopService: ShopService) {}
+  constructor(private readonly shopService: ProductService) {}
 
   @Get('/add-product')
   @Render('admin/add-product.njk')
@@ -58,7 +58,7 @@ export class AdminController {
 
   @Get('/edit-product/:productId')
   @Render('admin/edit-product.njk')
-  getEditProduct(@Param('productId') productId: string) {
+  getEditProduct(@Param('productId') productId: string, @Req() req: Request) {
     const product = this.shopService.getProductById(productId);
     return {
       product,
@@ -66,7 +66,11 @@ export class AdminController {
   }
 
   @Post('/edit-product')
-  async postEditProduct(@Body() body: EditProductDto, @Res() res: Response) {
+  async postEditProduct(
+    @Body() body: EditProductDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
     let product = this.shopService.getProductById(body.productId);
     if (product) {
       product = {
@@ -84,7 +88,7 @@ export class AdminController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    await this.shopService.deleteProductByProductId(req.user, body.productId);
+    await this.shopService.deleteProductByProductId(body.productId);
     res.redirect('/admin/products');
   }
 }

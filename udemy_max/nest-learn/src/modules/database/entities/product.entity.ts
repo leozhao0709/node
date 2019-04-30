@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { CartItem } from './cartItem.entity';
+import { OrderItem } from './orderItem.entity';
 
 /**
  * Product
@@ -32,9 +33,12 @@ export class Product {
   @Column('float')
   price: number;
 
-  @ManyToOne(() => User, user => user.products, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, user => user.products)
   user: User;
 
   @OneToMany(() => CartItem, cartItem => cartItem.product, { cascade: true })
   cartItems?: CartItem[];
+
+  @OneToMany(() => OrderItem, orderItem => orderItem.product, { cascade: true })
+  orderItems?: OrderItem[];
 }

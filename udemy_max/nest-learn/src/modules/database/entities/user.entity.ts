@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Product } from './product.entity';
 import { Cart } from './cart.entity';
+import { Order } from './order.entity';
 
 /**
  * User
@@ -23,6 +24,9 @@ export class User {
   @OneToMany(() => Product, product => product.user, { cascade: true })
   products: Product[];
 
-  @OneToOne(() => Cart, cart => cart.user, { cascade: true })
+  @OneToOne(() => Cart, cart => cart.user)
   cart: Cart;
+
+  @OneToMany(() => Order, order => order.user)
+  orders: Order[];
 }
