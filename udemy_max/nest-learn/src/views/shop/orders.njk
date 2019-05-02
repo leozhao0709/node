@@ -4,18 +4,22 @@
   your orders
 {% endblock %}
 
+{% block extraStyles %}
+  <link rel="stylesheet" href="/css/orders.css">
+{% endblock %}
+
 {% block mainContent %}
   {% if not orders or orders.length == 0 %}
     <h1>nothing here</h1>
   {% else %}
-    <ul>
+    <ul class="orders">
       {% for order in orders %}
-        <li>
+        <li class="orders__item">
           <h1>#
             {{order.id}}</h1>
-          <ul>
+          <ul class="orders__products">
             {% for orderItem in order.orderItems %}
-              <li>
+              <li class="orders__products-item">
                 {{orderItem.product.title}}({{orderItem.quantity}})
               </li>
             {% endfor %}

@@ -33,7 +33,7 @@ export class Product {
   @Column('float')
   price: number;
 
-  @ManyToOne(() => User, user => user.products)
+  @ManyToOne(() => User, user => user.products, { onDelete: 'CASCADE' })
   user: User;
 
   @OneToMany(() => CartItem, cartItem => cartItem.product, { cascade: true })
