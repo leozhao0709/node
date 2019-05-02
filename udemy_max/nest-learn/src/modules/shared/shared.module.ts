@@ -1,20 +1,21 @@
 import { Module, Global } from '@nestjs/common';
 import { ProductService } from './services/product/product.service';
 import { CartService } from './services/cart/cart.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from '../database/entities/product.entity';
-import { Cart } from '../database/entities/cart.entity';
-import { CartItem } from '../database/entities/cartItem.entity';
 import { OrderService } from './services/order/order.service';
-import { Order } from '../database/entities/order.entity';
-import { OrderItem } from '../database/entities/orderItem.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { productSchema } from '../mongo-db/schemas/product.schema';
+import { UserService } from './services/user/user.service';
+import { userSchema } from '../mongo-db/schemas/user.schema';
 
 @Global()
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Product, Cart, CartItem, Order, OrderItem]),
+    MongooseModule.forFeature([
+      { name: 'Product', schema: productSchema },
+      { name: 'User', schema: userSchema },
+    ]),
   ],
-  providers: [ProductService, CartService, OrderService],
+  providers: [ProductService, CartService, OrderService, UserService],
   controllers: [],
   exports: [ProductService, CartService, OrderService],
 })

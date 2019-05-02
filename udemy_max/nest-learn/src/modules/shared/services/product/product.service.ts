@@ -1,55 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { Product } from '../../../database/entities/product.entity';
-import { CartService } from '../cart/cart.service';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from '../../../database/entities/user.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Product } from '../../../mongo-db/schemas/product.schema';
 
 @Injectable()
 export class ProductService {
-  user: User;
-
   constructor(
-    private readonly cartService: CartService,
-    @InjectRepository(Product)
-    private readonly productRepository: Repository<Product>,
+    @InjectModel('Product') private readonly productModel: Model<Product>,
   ) {}
 
-  getProductById(productId: string) {
-    return this.user.products.find(product => product.productId === productId);
+  async getProductById(productId: string) {
+    return await this.productModel.findById(productId).exec();
   }
 
   async addProduct(product: Product) {
-    await this.productRepository.insert(product);
-    this.user.products.push(product);
+    await this.productModel.create(product);
   }
 
   async updateProduct(product: Product) {
-    const existingProductindex = this.user.products!.findIndex(
-      prod => prod.productId === product.productId,
-    );
-
-    if (existingProductindex !== -1) {
-      await this.productRepository.update(
-        { productId: product.productId },
-        product,
-      );
-      this.user.products[existingProductindex] = product;
-    } else {
-      throw new Error(`product ${product} doesn't exist during update`);
+    try {
+      await this.productModel.findByIdAndUpdate(product.id, product).exec();
+    } catch (error) {
+      throw error;
     }
   }
 
   async deleteProductByProductId(productId: string) {
-    const product = this.getProductById(productId);
-    if (product) {
-      await this.productRepository.delete({ productId });
-      this.cartService.deleteProductFromCart(product);
-      this.user.products = this.user.products.filter(
-        prod => prod.productId !== productId,
-      );
-    } else {
-      throw new Error(`product ${product} doesn't exist during delete`);
-    }
+    return await this.productModel.findByIdAndRemove(productId).exec();
   }
 }

@@ -1,18 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Product } from '../../../database/entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CartItem } from '../../../database/entities/cartItem.entity';
-import { Cart } from '../../../database/entities/cart.entity';
 
 @Injectable()
 export class CartService {
   cart: Cart;
 
-  constructor(
-    @InjectRepository(CartItem)
-    private readonly cartItemRepository: Repository<CartItem>,
-  ) {}
+  constructor() {}
 
   async addToCart(product: Product) {
     const existingProductIndex = this.cart.cartItems.findIndex(

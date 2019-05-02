@@ -23,4 +23,4 @@ const dbOptions: TypeOrmModuleOptions = {
 @Module({
   imports: [TypeOrmModule.forRoot(dbOptions)],
 })
-export class DatabaseModule {}
+export class MysqlDbModule {}
