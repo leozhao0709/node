@@ -3,9 +3,9 @@ import { ApiModelProperty } from '@nestjs/swagger';
 /**
  * productDTO
  */
-export class EditProductDto {
+export class ProductDto {
   @ApiModelProperty()
-  readonly productId: string;
+  readonly id: string;
   @ApiModelProperty()
   readonly title: string;
   @ApiModelProperty()

@@ -9,18 +9,16 @@ import {
   Req,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
-import * as uuid from 'uuid/v4';
 import { ProductService } from '../shared/services/product/product.service';
-import { Product } from '../database/entities/product.entity';
 import { ApiUseTags } from '@nestjs/swagger';
-import { EditProductDto } from '../shared/dto/product/edit-product.dto';
-import { AddProductDto } from '../shared/dto/product/add-product.dto';
+import { ProductDto } from '../shared/dto/product/product.dto';
+import { CreateProductDto } from '../shared/dto/product/create-product.dto';
 import { ProductIdDto } from '../shared/dto/product/product-id.dto';
 
 @Controller('admin')
 @ApiUseTags('admin')
 export class AdminController {
-  constructor(private readonly shopService: ProductService) {}
+  constructor(private readonly productService: ProductService) {}
 
   @Get('/add-product')
   @Render('admin/add-product.njk')
@@ -31,25 +29,15 @@ export class AdminController {
   }
 
   @Post('/add-product')
-  async postAddProduct(
-    @Body() body: AddProductDto,
-    @Req() req: Request,
-    @Res() res: Response,
-  ) {
-    const productId = uuid();
-    const product: Product = {
-      user: req.user,
-      productId,
-      ...body,
-    };
-    await this.shopService.addProduct(product);
+  async postAddProduct(@Body() body: CreateProductDto, @Res() res: Response) {
+    await this.productService.createProduct(body);
     res.redirect('/admin/products');
   }
 
   @Get('/products')
   @Render('admin/products.njk')
-  getProducts(@Req() req: Request) {
-    const products = req.user.products;
+  async getProducts() {
+    const products = await this.productService.getAllProducts();
     return {
       products,
       path: '/admin/products',
@@ -58,37 +46,22 @@ export class AdminController {
 
   @Get('/edit-product/:productId')
   @Render('admin/edit-product.njk')
-  getEditProduct(@Param('productId') productId: string, @Req() req: Request) {
-    const product = this.shopService.getProductById(productId);
+  async getEditProduct(@Param('productId') productId: string) {
+    const product = await this.productService.getProductById(productId);
     return {
       product,
     };
   }
 
   @Post('/edit-product')
-  async postEditProduct(
-    @Body() body: EditProductDto,
-    @Req() req: Request,
-    @Res() res: Response,
-  ) {
-    let product = this.shopService.getProductById(body.productId);
-    if (product) {
-      product = {
-        ...product,
-        ...body,
-      };
-      await this.shopService.updateProduct(product);
-      res.redirect('/admin/products');
-    }
+  async postEditProduct(@Body() body: ProductDto, @Res() res: Response) {
+    await this.productService.updateProduct(body);
+    res.redirect('/admin/products');
   }
 
   @Post('/delte-product')
-  async postDeleteProduct(
-    @Body() body: ProductIdDto,
-    @Req() req: Request,
-    @Res() res: Response,
-  ) {
-    await this.shopService.deleteProductByProductId(body.productId);
+  async postDeleteProduct(@Body() body: ProductIdDto, @Res() res: Response) {
+    await this.productService.deleteProductByProductId(body.productId);
     res.redirect('/admin/products');
   }
 }

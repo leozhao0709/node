@@ -18,7 +18,7 @@
           <h1>#
             {{order.id}}</h1>
           <ul class="orders__products">
-            {% for orderItem in order.orderItems %}
+            {% for orderItem in order.products %}
               <li class="orders__products-item">
                 {{orderItem.product.title}}({{orderItem.quantity}})
               </li>

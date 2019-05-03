@@ -23,7 +23,7 @@
             <p class="product__description">{{item.description}}</p>
           </div>
           <div class="card__actions">
-            <a href="/shop/products/{{item.productId}}" class="btn">Details</a>
+            <a href="/shop/products/{{item.id}}" class="btn">Details</a>
             {% set product = item %}
             {% include "../components/add-to-cart.njk" %}
           </div>

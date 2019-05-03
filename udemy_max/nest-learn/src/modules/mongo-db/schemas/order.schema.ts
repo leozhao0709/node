@@ -22,5 +22,8 @@ export const orderSchema = new Schema({
 
 export interface Order extends Document {
   products: Array<{ products: Product; quantity: number }>;
-  userId: string;
+  user: {
+    userId: string;
+    name: string;
+  };
 }

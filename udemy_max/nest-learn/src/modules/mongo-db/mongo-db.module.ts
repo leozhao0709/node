@@ -8,6 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       `mongodb+srv://${process.env.MONGO_USER}:${
         process.env.MONGO_PASSWORD
       }@cluster0-sizbw.mongodb.net/shop?retryWrites=true`,
+      { useNewUrlParser: true, useFindAndModify: false },
     ),
   ],
 })

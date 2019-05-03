@@ -1,21 +1,41 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Order } from '../../../mongo-db/schemas/order.schema';
+import { UserService } from '../user/user.service';
+import { User } from '../../../mongo-db/schemas/user.schema';
 
 @Injectable()
 export class OrderService {
-  user: User;
+  constructor(
+    @InjectModel('Order') private readonly orderModel: Model<Order>,
+    @InjectModel('User') private readonly userModel: Model<User>,
+    private readonly userService: UserService,
+  ) {}
 
-  constructor() {}
+  async getOrders() {
+    return await this.orderModel
+      .find({
+        'user.userId': this.userService.getCurrentUser().id,
+      })
+      .exec();
+  }
 
   async createOrderFromCart() {
-    const order = this.orderRepository.create();
-    order.user = this.user;
-    order.orderItems = this.user.cart.cartItems.map(cartItem => {
-      const orderItem = this.orderItemRepository.create(cartItem);
-      return orderItem;
+    const orderProducts = (await this.userModel
+      .findById(this.userService.getCurrentUser().id)
+      .populate('cart.productId')).cart.map(item => {
+      return { quantity: item.quantity, product: item.productId };
     });
-    await this.orderRepository.save(order);
-    await this.cartItemRepository.remove(this.user.cart.cartItems);
-    this.user.cart.cartItems = null;
-    this.user.orders.push(order);
+    await this.orderModel.create({
+      user: {
+        name: this.userService.getCurrentUser().name,
+        userId: this.userService.getCurrentUser().id,
+      },
+      products: orderProducts,
+    });
+
+    this.userService.getCurrentUser().cart = [];
+    await this.userService.getCurrentUser().save();
   }
 }
