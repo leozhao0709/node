@@ -6,10 +6,9 @@ import {
   Post,
   Body,
   Res,
-  Req,
 } from '@nestjs/common';
 import { ProductService } from '../shared/services/product/product.service';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { ApiUseTags } from '@nestjs/swagger';
 import { ProductIdDto } from '../shared/dto/product/product-id.dto';
 import { UserService } from '../shared/services/user/user.service';

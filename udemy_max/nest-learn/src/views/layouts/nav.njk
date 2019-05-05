@@ -21,6 +21,16 @@
       <a href="/admin/products" class="{{ 'active' if path === '/admin/products' else '' }}">Admin Products</a>
     </li>
   </ul>
+  <ul class="main-header__item-list">
+    <li class="main-header__item">
+      <a class="{{ 'active' if path === '/login' else '' }}" href="/login">Login</a>
+    </li>
+    <li class="main-header__item">
+      <form action="/logout" method="post">
+        <button type="submit">Logout</button>
+      </form>
+    </li>
+  </ul>
 </nav>
 
 <nav class="mobile-nav">
@@ -44,6 +54,14 @@
     <li class="mobile-nav__item">
       <a class="{{ 'active' if path === '/admin/products' else '' }}" href="/admin/products">Admin Products
       </a>
+    </li>
+    <li class="mobile-nav__item">
+      <a class="{{ 'active' if path === '/login' else '' }}" href="/login">Login</a>
+    </li>
+    <li class="mobile-nav__item">
+      <form action="/logout" method="post">
+        <button type="submit">Logout</button>
+      </form>
     </li>
   </ul>
 </nav>

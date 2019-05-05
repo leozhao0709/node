@@ -6,9 +6,10 @@ import { ShopModule } from './modules/shop/shop.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { MiddlewaresModule } from './modules/middlewares/middlewares.module';
 import { MongoDbModule } from './modules/mongo-db/mongo-db.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [SharedModule, ShopModule, AdminModule, MiddlewaresModule, MongoDbModule],
+  imports: [SharedModule, ShopModule, AdminModule, MiddlewaresModule, MongoDbModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
