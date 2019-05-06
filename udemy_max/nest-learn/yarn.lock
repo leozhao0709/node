@@ -100,6 +100,15 @@
   dependencies:
     "@types/node" "*"
 
+"@types/connect-mongodb-session@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@types/connect-mongodb-session/-/connect-mongodb-session-0.0.0.tgz#cbc7aad65508744b600299b06062990bfe6b0200"
+  integrity sha512-GX3zzBGMN+ELRZm7wajU32NGxY/T5JIcDRF8RYpEClyJJkH3SQ2XMPifd0gqBzJHfq76r9yXCSTxOKAShlU/5Q==
+  dependencies:
+    "@types/express" "*"
+    "@types/express-session" "*"
+    "@types/mongodb" "*"
+
 "@types/connect@*":
   version "3.4.32"
   resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.32.tgz#aa0e9616b9435ccad02bc52b5b454ffc2c70ba28"
@@ -120,7 +129,7 @@
     "@types/node" "*"
     "@types/range-parser" "*"
 
-"@types/express-session@^1.15.12":
+"@types/express-session@*", "@types/express-session@^1.15.12":
   version "1.15.12"
   resolved "https://registry.yarnpkg.com/@types/express-session/-/express-session-1.15.12.tgz#1126704826e80f8381da4fbbb35a199f550d1433"
   integrity sha512-DHZXzWy6Nu5Ng0syXUiVFRpZ6/1DOXoTCWa6RG3itGrub2ioBYvgtDbkT6VHHNo3iOdHRROyWANsMBJVaflblQ==

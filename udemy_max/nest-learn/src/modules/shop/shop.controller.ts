@@ -6,13 +6,16 @@ import {
   Post,
   Body,
   Res,
+  UseGuards,
+  Session,
 } from '@nestjs/common';
 import { ProductService } from '../shared/services/product/product.service';
 import { Response } from 'express';
-import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiUseTags } from '@nestjs/swagger';
 import { ProductIdDto } from '../shared/dto/product/product-id.dto';
 import { UserService } from '../shared/services/user/user.service';
 import { OrderService } from '../shared/services/order/order.service';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiUseTags('shop')
 @Controller('shop')
@@ -25,9 +28,11 @@ export class ShopController {
 
   @Get()
   @Render('shop/index.njk')
-  async getIndex() {
+  async getIndex(@Session() session: Express.Session) {
     const products = await this.productService.getAllProducts();
+    const isLoggedIn = session.isLoggedIn;
     return {
+      isLoggedIn,
       products,
       path: '/shop',
     };
@@ -35,9 +40,11 @@ export class ShopController {
 
   @Get('/products')
   @Render('shop/product-list.njk')
-  async getProducts() {
+  async getProducts(@Session() session: Express.Session) {
     const products = await this.productService.getAllProducts();
+    const isLoggedIn = session.isLoggedIn;
     return {
+      isLoggedIn,
       products,
       path: '/shop/products',
     };
@@ -54,11 +61,13 @@ export class ShopController {
   }
 
   @Get('/cart')
+  @UseGuards(AuthGuard)
   @Render('shop/cart.njk')
-  async getCart() {
+  async getCart(@Session() session: Express.Session) {
     const cart = await this.userService.getCart();
     if (cart) {
       return {
+        isLoggedIn: session.isLoggedIn,
         cart,
         path: '/shop/cart',
       };
@@ -66,6 +75,7 @@ export class ShopController {
   }
 
   @Post('/cart')
+  @UseGuards(AuthGuard)
   async postCart(@Body() body: ProductIdDto, @Res() res: Response) {
     await this.userService.addProductToCartById(body.productId);
     res.redirect('/shop/cart');
@@ -81,10 +91,12 @@ export class ShopController {
   }
 
   @Get('/orders')
+  @UseGuards(AuthGuard)
   @Render('shop/orders.njk')
-  async getOrders() {
+  async getOrders(@Session() session: Express.Session) {
     const orders = await this.orderService.getOrders();
     return {
+      isLoggedIn: session.isLoggedIn,
       orders,
       path: '/shop/orders',
     };
@@ -98,8 +110,9 @@ export class ShopController {
 
   @Get('/checkout')
   @Render('shop/checkout.njk')
-  getCheckout() {
+  getCheckout(@Session() session: Express.Session) {
     return {
+      isLoggedIn: session.isLoggedIn,
       path: '/shop/checkout',
     };
   }

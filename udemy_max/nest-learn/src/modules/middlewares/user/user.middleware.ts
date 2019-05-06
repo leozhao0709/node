@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request } from 'express';
-import { User } from '../../mongo-db/schemas/user.schema';
 import { UserService } from '../../shared/services/user/user.service';
+import { User } from '../../mongo-db/schemas/user.schema';
 
 @Injectable()
 export class UserMiddleware implements NestMiddleware {
@@ -23,6 +23,7 @@ export class UserMiddleware implements NestMiddleware {
       }
       this.user = user;
     }
+
     this.userService.user = this.user;
     next();
   }

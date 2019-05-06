@@ -23,6 +23,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     if (exception instanceof UnauthorizedException) {
       return res.render('auth/login.njk', {
         unAuthorized: true,
+        path: '/login',
       });
     }
 

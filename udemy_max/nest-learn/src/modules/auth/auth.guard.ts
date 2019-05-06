@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest() as Express.Request;
-    if (req.session.isAuthenticated) {
+    if (req.session.isLoggedIn) {
       return true;
     }
     throw new UnauthorizedException('You need to login first!');

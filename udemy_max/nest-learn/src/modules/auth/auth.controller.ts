@@ -15,13 +15,17 @@ export class AuthController {
 
   @Post('/login')
   postLogin(@Session() session: Express.Session, @Res() res: Response) {
-    session.isAuthenticated = true;
+    session.isLoggedIn = true;
     res.redirect('/');
   }
 
   @Post('/logout')
   postLogout(@Session() session: Express.Session, @Res() res: Response) {
-    session.isAuthenticated = null;
-    res.redirect('/');
+    session.destroy(err => {
+      if (err) {
+        throw Error(err);
+      }
+      res.redirect('/');
+    });
   }
 }

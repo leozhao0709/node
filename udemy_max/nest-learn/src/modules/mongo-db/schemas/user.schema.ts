@@ -28,5 +28,4 @@ export interface User extends Document {
   name: string;
   email: string;
   cart: Array<{ productId: string; quantity: number }>;
-  test: () => void;
 }

@@ -7,15 +7,26 @@ import { HttpExceptionFilter } from './modules/shared/filterExceptions/httpExcep
 import { swaggerSetup } from './swagger/swaggerSetup';
 import * as session from 'express-session';
 import { environment } from './environment/environment';
+import connectMongodbSession = require('connect-mongodb-session');
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  const mongodbStore = connectMongodbSession(session);
+  const store = new mongodbStore({
+    uri: environment.MONGODB_URI,
+    collection: 'sessions',
+  });
 
   app.use(
     session({
       secret: 'secret',
       resave: false,
       saveUninitialized: false,
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+      },
+      store,
     }),
   );
 
