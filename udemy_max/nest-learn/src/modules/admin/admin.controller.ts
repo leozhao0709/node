@@ -7,6 +7,7 @@ import {
   Body,
   Res,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { ProductService } from '../shared/services/product/product.service';
@@ -14,8 +15,10 @@ import { ApiUseTags } from '@nestjs/swagger';
 import { ProductDto } from '../shared/dto/product/product.dto';
 import { CreateProductDto } from '../shared/dto/product/create-product.dto';
 import { ProductIdDto } from '../shared/dto/product/product-id.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('admin')
+@UseGuards(AuthGuard)
 @ApiUseTags('admin')
 export class AdminController {
   constructor(private readonly productService: ProductService) {}

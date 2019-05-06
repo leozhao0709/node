@@ -4,6 +4,7 @@ import {
   ExceptionFilter,
   NotFoundException,
   HttpException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
@@ -17,6 +18,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     if (exception instanceof NotFoundException) {
       return res.render('404.njk');
+    }
+
+    if (exception instanceof UnauthorizedException) {
+      return res.render('auth/login.njk', {
+        unAuthorized: true,
+      });
     }
 
     return res.status(status).json({

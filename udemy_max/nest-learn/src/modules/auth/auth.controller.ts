@@ -20,5 +20,8 @@ export class AuthController {
   }
 
   @Post('/logout')
-  postLogout() {}
+  postLogout(@Session() session: Express.Session, @Res() res: Response) {
+    session.isAuthenticated = null;
+    res.redirect('/');
+  }
 }

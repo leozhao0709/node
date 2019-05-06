@@ -1,15 +1,14 @@
 import { Module, Global } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { environment } from '../../environment/environment';
 
 @Global()
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      `mongodb+srv://${process.env.MONGO_USER}:${
-        process.env.MONGO_PASSWORD
-      }@cluster0-sizbw.mongodb.net/shop?retryWrites=true`,
-      { useNewUrlParser: true, useFindAndModify: false },
-    ),
+    MongooseModule.forRoot(environment.MONGODB_URI, {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+    }),
   ],
 })
 export class MongoDbModule {}

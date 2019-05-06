@@ -3,9 +3,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as path from 'path';
 import * as nunjucks from 'nunjucks';
-import { HttpExceptionFilter } from './modules/shared/filters/httpException/http-exception.filter';
+import { HttpExceptionFilter } from './modules/shared/filterExceptions/httpException/http-exception.filter';
 import { swaggerSetup } from './swagger/swaggerSetup';
 import * as session from 'express-session';
+import { environment } from './environment/environment';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -24,14 +25,14 @@ async function bootstrap() {
     express: app,
   });
 
-  app.useGlobalFilters(new HttpExceptionFilter());
-
   // swagger setup
   swaggerSetup(app);
 
+  app.useGlobalFilters(new HttpExceptionFilter());
+
   // app.use(userMiddleware);
 
-  const port = process.env.PORT || 5000;
+  const port = environment.PORT;
   await app.listen(port);
 }
 bootstrap();

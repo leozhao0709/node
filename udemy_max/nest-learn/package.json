@@ -9,7 +9,7 @@
     "build:clean": "rm -rf dist",
     "build:typescript": "tsc -p tsconfig.build.json",
     "build:resource": "cp -rf src/views src/public dist/",
-    "clean": "rm -rf node_modules dist",
+    "clean": "rm -rf node_modules dist yarn.lock",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "nodemon",
     "start:dev": "nodemon",
