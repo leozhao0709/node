@@ -13,29 +13,29 @@ export class OrderService {
     private readonly userService: UserService,
   ) {}
 
-  async getOrders() {
+  async getOrders(user: User) {
     return await this.orderModel
       .find({
-        'user.userId': this.userService.getCurrentUser().id,
+        'user.userId': user.id,
       })
       .exec();
   }
 
-  async createOrderFromCart() {
+  async createOrderFromCart(user: User) {
     const orderProducts = (await this.userModel
-      .findById(this.userService.getCurrentUser().id)
+      .findById(user.id)
       .populate('cart.productId')).cart.map(item => {
       return { quantity: item.quantity, product: item.productId };
     });
     await this.orderModel.create({
       user: {
-        email: this.userService.getCurrentUser().email,
-        userId: this.userService.getCurrentUser().id,
+        email: user.email,
+        userId: user.id,
       },
       products: orderProducts,
     });
 
-    this.userService.getCurrentUser().cart = [];
-    await this.userService.getCurrentUser().save();
+    user.cart = [];
+    await user.save();
   }
 }

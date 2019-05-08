@@ -8,9 +8,10 @@ import {
   Res,
   UseGuards,
   Session,
+  Req,
 } from '@nestjs/common';
 import { ProductService } from '../shared/services/product/product.service';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { ApiUseTags } from '@nestjs/swagger';
 import { UserService } from '../shared/services/user/user.service';
 import { OrderService } from '../shared/services/order/order.service';
@@ -63,8 +64,8 @@ export class ShopController {
   @Get('/cart')
   @UseGuards(AuthGuard)
   @Render('shop/cart.njk')
-  async getCart(@Session() session: Express.Session) {
-    const cart = await this.userService.getCart();
+  async getCart(@Session() session: Express.Session, @Req() req: Request) {
+    const cart = await this.userService.getCart(req.user);
     if (cart) {
       return {
         isLoggedIn: session.isLoggedIn,
@@ -76,25 +77,33 @@ export class ShopController {
 
   @Post('/cart')
   @UseGuards(AuthGuard)
-  async postCart(@Body() body: ProductIdDto, @Res() res: Response) {
-    await this.userService.addProductToCartById(body.productId);
+  async postCart(
+    @Body() body: ProductIdDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    await this.userService.addProductToCartById(req.user, body.productId);
     res.redirect('/shop/cart');
   }
 
   @Post('/delete-product-from-cart')
   async deleteProductFromCart(
     @Body() body: ProductIdDto,
+    @Req() req: Request,
     @Res() res: Response,
   ) {
-    await this.userService.deleteProductFromCartById(body.productId);
+    await this.userService.deleteProductFromCartByProductId(
+      req.user,
+      body.productId,
+    );
     res.redirect('/shop/cart');
   }
 
   @Get('/orders')
   @UseGuards(AuthGuard)
   @Render('shop/orders.njk')
-  async getOrders(@Session() session: Express.Session) {
-    const orders = await this.orderService.getOrders();
+  async getOrders(@Session() session: Express.Session, @Req() req: Request) {
+    const orders = await this.orderService.getOrders(req.user);
     return {
       isLoggedIn: session.isLoggedIn,
       orders,
@@ -103,8 +112,8 @@ export class ShopController {
   }
 
   @Post('/create-order')
-  async postOrders(@Res() res: Response) {
-    await this.orderService.createOrderFromCart();
+  async postOrders(@Res() res: Response, @Req() req: Request) {
+    await this.orderService.createOrderFromCart(req.user);
     res.redirect('/shop/orders');
   }
 

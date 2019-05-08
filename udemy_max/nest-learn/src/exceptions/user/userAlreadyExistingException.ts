@@ -1,7 +1,9 @@
+import { UserException } from './userException';
+
 /**
  * UserAlreadyExistingException
  */
-export class UserAlreadyExistingException extends Error {
+export class UserAlreadyExistingException extends UserException {
   constructor() {
     super();
   }

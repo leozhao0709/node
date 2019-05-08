@@ -5,6 +5,7 @@ import { Product } from '../../../mongo-db/schemas/product.schema';
 import { CreateProductDto } from '../../../../dto/product/create-product.dto';
 import { ProductDto } from '../../../../dto/product/product.dto';
 import { UserService } from '../user/user.service';
+import { User } from '../../../mongo-db/schemas/user.schema';
 
 @Injectable()
 export class ProductService {
@@ -21,10 +22,10 @@ export class ProductService {
     return await this.productModel.findById(productId).exec();
   }
 
-  async createProduct(product: CreateProductDto) {
+  async createProduct(user: User, product: CreateProductDto) {
     await this.productModel.create({
       ...product,
-      userId: this.userService.getCurrentUser().id,
+      userId: user.id,
     });
   }
 

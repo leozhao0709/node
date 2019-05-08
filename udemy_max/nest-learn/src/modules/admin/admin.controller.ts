@@ -32,8 +32,12 @@ export class AdminController {
   }
 
   @Post('/add-product')
-  async postAddProduct(@Body() body: CreateProductDto, @Res() res: Response) {
-    await this.productService.createProduct(body);
+  async postAddProduct(
+    @Body() body: CreateProductDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    await this.productService.createProduct(req.user, body);
     res.redirect('/admin/products');
   }
 
