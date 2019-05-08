@@ -12,10 +12,10 @@ import {
 import { Response, Request } from 'express';
 import { ProductService } from '../shared/services/product/product.service';
 import { ApiUseTags } from '@nestjs/swagger';
-import { ProductDto } from '../shared/dto/product/product.dto';
-import { CreateProductDto } from '../shared/dto/product/create-product.dto';
-import { ProductIdDto } from '../shared/dto/product/product-id.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { CreateProductDto } from '../../dto/product/create-product.dto';
+import { ProductDto } from '../../dto/product/product.dto';
+import { ProductIdDto } from '../../dto/product/product-id.dto';
 
 @Controller('admin')
 @UseGuards(AuthGuard)

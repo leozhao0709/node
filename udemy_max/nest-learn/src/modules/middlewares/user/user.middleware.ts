@@ -1,30 +1,20 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { UserService } from '../../shared/services/user/user.service';
 import { User } from '../../mongo-db/schemas/user.schema';
 
 @Injectable()
 export class UserMiddleware implements NestMiddleware {
-  private user: User;
-
   constructor(private readonly userService: UserService) {}
 
-  async use(req: Request, res: any, next: () => void) {
-    if (!this.user) {
-      let user = await this.userService.findUserById(
-        '5ccb76d11702a7a31a8022de',
-      );
-      if (!user) {
-        user = await this.userService.createUser({
-          name: 'Lei',
-          email: 'lzhao@test.com',
-          cart: [],
-        });
-      }
-      this.user = user;
+  async use(req: Request, res: Response, next: () => void) {
+    if (req.session.isLoggedIn) {
+      // this.userService.user = await this.userService.findUserById(
+      //   req.session.user._id,
+      // );
+      this.userService.user = req.session.user;
+      console.log('...middleware id...', req.session.user.id);
     }
-
-    this.userService.user = this.user;
     next();
   }
 }

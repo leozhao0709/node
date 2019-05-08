@@ -2,24 +2,34 @@ import { Injectable } from '@nestjs/common';
 import { User } from '../../../mongo-db/schemas/user.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateUserDto } from '../../dto/user/create-user.dto';
-import { Product } from '../../../mongo-db/schemas/product.schema';
+import { CreateUserDto } from '../../../../dto/user/create-user.dto';
+import { UserAlreadyExistingException } from '../../../../exceptions/user/userAlreadyExistingException';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
   user: User;
 
-  constructor(
-    @InjectModel('User') private readonly userModel: Model<User>,
-    @InjectModel('Product') private readonly productModel: Model<Product>,
-  ) {}
+  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
   async findUserById(id: string) {
     return await this.userModel.findById(id).exec();
   }
 
   async createUser(user: CreateUserDto) {
-    return await this.userModel.create(user);
+    const { email, password, confirmPassword } = user;
+    const existingUser = await this.userModel.findOne({ email }).exec();
+    if (existingUser) {
+      throw new UserAlreadyExistingException();
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    this.user = await this.userModel.create({
+      ...user,
+      password: hashedPassword,
+    });
+
+    return this.user;
   }
 
   getCurrentUser() {
@@ -46,6 +56,7 @@ export class UserService {
     } else {
       this.user.cart[existingProdutIndex].quantity += 1;
     }
+
     await this.user.save();
   }
 

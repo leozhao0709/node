@@ -26,6 +26,9 @@
       <li class="main-header__item">
         <a class="{{ 'active' if path === '/login' else '' }}" href="/login">Login</a>
       </li>
+      <li class="main-header__item">
+        <a class="{{ 'active' if path === '/signup' else '' }}" href="/signup">Signup</a>
+      </li>
     {% else %}
       <li class="main-header__item">
         <form action="/logout" method="post">
@@ -61,6 +64,9 @@
     {% if not isLoggedIn %}
       <li class="mobile-nav__item">
         <a class="{{ 'active' if path === '/login' else '' }}" href="/login">Login</a>
+      </li>
+      <li class="main-header__item">
+        <a class="{{ 'active' if path === '/signup' else '' }}" href="/signup">Signup</a>
       </li>
     {% else %}
       <li class="mobile-nav__item">

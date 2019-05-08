@@ -29,5 +29,5 @@ export interface Product extends Document {
   readonly price: number;
   readonly description: string;
   readonly imageUrl: string;
-  readonly userId: string;
+  readonly userId: Schema.Types.ObjectId;
 }

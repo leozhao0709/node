@@ -4,8 +4,6 @@ declare global {
   namespace Express {
     interface SessionData {
       isLoggedIn: boolean | null;
-    }
-    interface Request {
       user: User;
     }
   }

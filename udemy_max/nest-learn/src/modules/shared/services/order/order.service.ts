@@ -29,7 +29,7 @@ export class OrderService {
     });
     await this.orderModel.create({
       user: {
-        name: this.userService.getCurrentUser().name,
+        email: this.userService.getCurrentUser().email,
         userId: this.userService.getCurrentUser().id,
       },
       products: orderProducts,

@@ -1,31 +1,34 @@
 import { Schema, Document } from 'mongoose';
 
 export const userSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   email: {
     type: String,
     required: true,
   },
-  cart: [
-    {
-      productId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'Product',
+  password: {
+    type: String,
+    required: true,
+  },
+  cart: {
+    type: [
+      {
+        productId: {
+          type: Schema.Types.ObjectId,
+          required: true,
+          ref: 'Product',
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
       },
-      quantity: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
+    ],
+    default: [],
+  },
 });
 
 export interface User extends Document {
-  name: string;
   email: string;
+  password: string;
   cart: Array<{ productId: string; quantity: number }>;
 }

@@ -1,35 +1,35 @@
 {% extends "../layouts/main-layout.njk" %}
 
 {% block title %}
-    cart
+  cart
 {% endblock %}
 
 {% block extraStyles %}
-    <link rel="stylesheet" href="/css/cart.css">
+  <link rel="stylesheet" href="/css/cart.css">
 {% endblock %}
 
 {% block mainContent %}
-    {% if cart.length > 0 %}
-        <ul class="cart__item-list">
-            {% for item in cart %}
-                <li class="cart__item">
-                    <h1>{{ item.product.title }}</h1>
-                    <h2>Quantity:
-                        {{item.quantity}}</h2>
-                    <form action="/shop/delete-product-from-cart" method="POST">
-                        <input type="hidden" name="productId" value="{{item.product.id}}"/>
-                        <button class="btn danger" type="submit">Delete</button>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
-        <hr/>
-        <div class="centered">
-            <form action="/shop/create-order" method="POST">
-                <button type="submit" class="btn">Order Now!</button>
-            </form>
-        </div>
-    {% else %}
-        <h1>No product in cart yet!</h1>
-    {% endif %}
+  {% if cart.length > 0 %}
+    <ul class="cart__item-list">
+      {% for item in cart %}
+        <li class="cart__item">
+          <h1>{{ item.product.title }}</h1>
+          <h2>Quantity:
+            {{item.quantity}}</h2>
+          <form action="/shop/delete-product-from-cart" method="POST">
+            <input type="hidden" name="productId" value="{{item.product.id}}"/>
+            <button class="btn danger" type="submit">Delete</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+    <hr/>
+    <div class="centered">
+      <form action="/shop/create-order" method="POST">
+        <button type="submit" class="btn">Order Now!</button>
+      </form>
+    </div>
+  {% else %}
+    <h1>No product in cart yet!</h1>
+  {% endif %}
 {% endblock %}
