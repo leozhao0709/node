@@ -29,6 +29,7 @@
             <form action="/admin/delte-product" method="POST">
               <button class="btn" type="submit">delete product</button>
               <input type="hidden" name="productId" value="{{item.id}}"/>
+              <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
             </form>
           </div>
         </article>

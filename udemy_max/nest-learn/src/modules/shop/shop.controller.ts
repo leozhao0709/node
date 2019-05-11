@@ -29,11 +29,11 @@ export class ShopController {
 
   @Get()
   @Render('shop/index.njk')
-  async getIndex(@Session() session: Express.Session) {
+  async getIndex(@Session() session: Express.Session, @Req() req: Request) {
     const products = await this.productService.getAllProducts();
     const isLoggedIn = session.isLoggedIn;
     return {
-      isLoggedIn,
+      // isLoggedIn,
       products,
       path: '/shop',
     };

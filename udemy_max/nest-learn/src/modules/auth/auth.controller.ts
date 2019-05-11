@@ -6,9 +6,10 @@ import {
   Res,
   Session,
   Body,
+  Req,
 } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { UserService } from '../shared/services/user/user.service';
 import { UserCreateDto } from '../../dto/user/user-create.dto';
 import { UserAlreadyExistingException } from '../../exceptions/user/userAlreadyExistingException';

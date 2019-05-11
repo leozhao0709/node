@@ -10,5 +10,11 @@ declare global {
     interface Request {
       user: User;
     }
+
+    interface Response {
+      locals: {
+        isLoggedIn: boolean | null;
+      };
+    }
   }
 }

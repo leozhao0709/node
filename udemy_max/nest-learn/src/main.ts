@@ -6,8 +6,10 @@ import * as nunjucks from 'nunjucks';
 import { HttpExceptionFilter } from './exceptionFilters/httpException/http-exception.filter';
 import { swaggerSetup } from './swagger/swaggerSetup';
 import * as session from 'express-session';
+import * as csurf from 'csurf';
 import { environment } from './environment/environment';
 import connectMongodbSession = require('connect-mongodb-session');
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -17,7 +19,7 @@ async function bootstrap() {
     uri: environment.MONGODB_URI,
     collection: 'sessions',
   });
-
+  // app.enableCors();
   app.use(
     session({
       secret: 'secret',
@@ -29,6 +31,9 @@ async function bootstrap() {
       store,
     }),
   );
+
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(csurf());
 
   app.useStaticAssets(path.resolve(__dirname, 'public'));
   nunjucks.configure(path.resolve(__dirname, 'views'), {

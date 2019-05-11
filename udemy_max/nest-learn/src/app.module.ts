@@ -8,6 +8,7 @@ import { MiddlewaresModule } from './modules/middlewares/middlewares.module';
 import { MongoDbModule } from './modules/mongo-db/mongo-db.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserMiddleware } from './modules/middlewares/user/user.middleware';
+import { CsrfMiddleware } from './modules/middlewares/csrf/csrf.middleware';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ export class AppModule implements NestModule {
     consumer: import('@nestjs/common').MiddlewareConsumer,
   ): void | import('@nestjs/common').MiddlewareConsumer {
     consumer
-      .apply(UserMiddleware)
+      .apply(UserMiddleware, CsrfMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
   }
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Order } from '../../../mongo-db/schemas/order.schema';
-import { UserService } from '../user/user.service';
 import { User } from '../../../mongo-db/schemas/user.schema';
 
 @Injectable()
@@ -10,7 +9,6 @@ export class OrderService {
   constructor(
     @InjectModel('Order') private readonly orderModel: Model<Order>,
     @InjectModel('User') private readonly userModel: Model<User>,
-    private readonly userService: UserService,
   ) {}
 
   async getOrders(user: User) {

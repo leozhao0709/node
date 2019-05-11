@@ -8,7 +8,7 @@ export const orderSchema = new Schema({
     },
   ],
   user: {
-    name: {
+    email: {
       type: String,
       required: true,
     },
@@ -24,6 +24,6 @@ export interface Order extends Document {
   products: Array<{ products: Product; quantity: number }>;
   user: {
     userId: string;
-    name: string;
+    email: string;
   };
 }
