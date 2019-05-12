@@ -5,10 +5,13 @@ declare global {
     interface SessionData {
       isLoggedIn: boolean | null;
       userId: string | null;
+      flash: { [key: string]: string[] };
     }
 
     interface Request {
       user: User;
+      flash: (event: string, message: string) => Promise<void>;
+      consumeFlash: (event: string) => Promise<string[] | null>;
     }
 
     interface Response {

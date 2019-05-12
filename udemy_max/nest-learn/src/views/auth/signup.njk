@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="/css/auth.css">
 {% endblock %}
 {% block mainContent %}
+  {% if errorMsg and errorMsg.length > 0 %}
+    <p class="user-message user-message--error">{{errorMsg}}</p>
+  {% endif %}
   <form class="login-form" action="/signup" method="POST">
     <div class="form-control">
       <label for="email">E-Mail</label>

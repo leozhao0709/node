@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="/css/auth.css">
 {% endblock %}
 {% block mainContent %}
-  {% if errorMsg.length > 0 %}
-    <p>{{errorMsg}}</p>
+  {% if errorMsg and errorMsg.length > 0 %}
+    <p class="user-message user-message--error">{{errorMsg}}</p>
   {% endif %}
   <form class="login-form" action="/login" method="POST">
     <div class="form-control">

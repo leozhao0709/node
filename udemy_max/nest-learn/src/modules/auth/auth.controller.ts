@@ -24,8 +24,8 @@ export class AuthController {
 
   @Get('/login')
   @Render('auth/login.njk')
-  getLogin(@Req() req: Request) {
-    const errorMsg = req.flash('error');
+  async getLogin(@Req() req: Request) {
+    const errorMsg = await req.consumeFlash('signinError');
     return {
       path: '/login',
       errorMsg,
@@ -52,12 +52,12 @@ export class AuthController {
       });
     } catch (error) {
       if (error instanceof UserNotFoundException) {
-        req.flash('error', 'user not found!');
+        req.flash('signinError', 'user not found!');
         return res.redirect('/login');
       }
 
       if (error instanceof UserInvalidPasswordException) {
-        req.flash('error', 'invalid password!');
+        await req.flash('signinError', 'invalid password!');
         return res.redirect('/login');
       }
 
@@ -78,9 +78,11 @@ export class AuthController {
 
   @Get('/signup')
   @Render('auth/signup.njk')
-  getSignup() {
+  async getSignup(@Req() req: Request) {
+    const errorMsg = await req.consumeFlash('signupError');
     return {
       path: '/signup',
+      errorMsg,
     };
   }
 
@@ -88,6 +90,7 @@ export class AuthController {
   async postSignup(
     @Body() createUserDto: UserCreateDto,
     @Res() res: Response,
+    @Req() req: Request,
     @Session() session: Express.Session,
   ) {
     try {
@@ -102,7 +105,11 @@ export class AuthController {
       });
     } catch (error) {
       if (error instanceof UserAlreadyExistingException) {
-        res.redirect('/signup');
+        await req.flash(
+          'signupError',
+          'user already exist! please login directly!',
+        );
+        return res.redirect('/signup');
       }
       // tslint:disable-next-line: no-console
       console.log(error);

@@ -10,7 +10,7 @@ import { Request, Response } from 'express';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
+  async catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const req = ctx.getRequest() as Request;
     const res = ctx.getResponse() as Response;
@@ -21,7 +21,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     }
 
     if (exception instanceof UnauthorizedException) {
-      req.flash('error', 'You need to login first!');
+      await req.flash('error', 'You need to login first!');
       return res.redirect('/login');
     }
 
