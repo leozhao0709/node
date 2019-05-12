@@ -24,9 +24,11 @@ export class AuthController {
 
   @Get('/login')
   @Render('auth/login.njk')
-  getLogin() {
+  getLogin(@Req() req: Request) {
+    const errorMsg = req.flash('error');
     return {
       path: '/login',
+      errorMsg,
     };
   }
 
@@ -35,6 +37,7 @@ export class AuthController {
     @Session() session: Express.Session,
     @Body() userLoginDto: UserLoginDto,
     @Res() res: Response,
+    @Req() req: Request,
   ) {
     try {
       const userId = await this.userService.loginUser(userLoginDto);
@@ -43,19 +46,23 @@ export class AuthController {
       // we save session in db, so we need to wait it finish saving, then redirect
       session.save(err => {
         if (err) {
-          // tslint:disable-next-line: no-console
-          console.log(err);
+          throw err;
         }
         res.redirect('/');
       });
     } catch (error) {
       if (error instanceof UserNotFoundException) {
-        res.redirect('/login');
+        req.flash('error', 'user not found!');
+        return res.redirect('/login');
       }
 
       if (error instanceof UserInvalidPasswordException) {
-        res.redirect('/login');
+        req.flash('error', 'invalid password!');
+        return res.redirect('/login');
       }
+
+      // tslint:disable-next-line: no-console
+      console.log(error);
     }
   }
 

@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="/css/auth.css">
 {% endblock %}
 {% block mainContent %}
-  {% if unAuthorized %}
-    <p>You need to login first!</p>
+  {% if errorMsg.length > 0 %}
+    <p>{{errorMsg}}</p>
   {% endif %}
   <form class="login-form" action="/login" method="POST">
     <div class="form-control">

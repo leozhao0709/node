@@ -21,10 +21,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
     }
 
     if (exception instanceof UnauthorizedException) {
-      return res.render('auth/login.njk', {
-        unAuthorized: true,
-        path: '/login',
-      });
+      req.flash('error', 'You need to login first!');
+      return res.redirect('/login');
     }
 
     return res.status(status).json({
