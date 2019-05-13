@@ -10,7 +10,7 @@ import * as csurf from 'csurf';
 import { environment } from './environment/environment';
 import connectMongodbSession = require('connect-mongodb-session');
 import * as bodyParser from 'body-parser';
-import { flash } from './modules/middlewares/flash/flash';
+import { flash } from 'express-flash-message';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -35,7 +35,7 @@ async function bootstrap() {
 
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(csurf());
-  app.use(flash);
+  app.use(flash({ sessionKeyName: 'flashMessage' }));
 
   app.useStaticAssets(path.resolve(__dirname, 'public'));
   nunjucks.configure(path.resolve(__dirname, 'views'), {

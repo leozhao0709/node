@@ -19,18 +19,18 @@
     js-tokens "^4.0.0"
 
 "@nestjs/common@^6.0.0":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-6.1.1.tgz#6f7f0aa0ff45285f9d2b0a66acde1ebeb0c99060"
-  integrity sha512-hwAjk0RUMRFWJktTYovW0LWVRy2oLBwdb4mDcomYUoSGrCYZ9xGS+eeB9B7Lby4xoz01E2NTRmdrIh9gQYAEFA==
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-6.2.0.tgz#edc59fa0b42c5d7b96e88bdc3c52012780758da3"
+  integrity sha512-0svQuCrG6ofMYgHzk/GzJ+vpIkLq4vZmTeww1qLipggS40IjQ0+NzwEBOTr6TeHVDmsM2YDmIU1DJiaGy2o9Hw==
   dependencies:
     axios "0.18.0"
     cli-color "1.4.0"
     uuid "3.3.2"
 
 "@nestjs/core@^6.0.0":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-6.1.1.tgz#10494e8e1a4bcf55059fd114c0934186c2130930"
-  integrity sha512-qIDe+dr+iCuntoewwJgsDBay3JWcCozXKZZLjKwIK5VxWTxT83KHm+1LRR8hSAMCPgQFgRq4639oOSRtceEzNg==
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-6.2.0.tgz#cf716a5b86357a94ddd0419a3560c181d333334e"
+  integrity sha512-K5Wje2unjStkA7AG5sTSD9trx2BEf8asL5xOFT4DwG+ICB04JLebTwqwbQNi3RNZ3buL/pXNXIOOleOgqK7fGw==
   dependencies:
     "@nuxtjs/opencollective" "0.2.1"
     fast-safe-stringify "2.0.6"
@@ -45,11 +45,11 @@
   integrity sha512-BkbkguvaPPGbL/41lK6P22DaQodBC9Yv9rUAmNlQVShChtwss7/cGj68AKC3jEoidrx75wCyDO3P8Tp6pggE4w==
 
 "@nestjs/platform-express@^6.0.0":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-6.1.1.tgz#4d4d4774a65b14c81646d10da9768f4cb6b922d6"
-  integrity sha512-vA1JhKnZp9Ks0hSznzrRZL0neAGDAOpwJz97ttyxc/F0u6thsk7HmXKPziskqnf9diiY7mXeP57nPcDWPt9W0w==
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-6.2.0.tgz#00553c1d762991e3ac238b66c20cf62a4ffa0f60"
+  integrity sha512-SKJA4TO4vTF6awa75IqrRAoY5/IlYwHiFE3KBI6VDQuvTONy3NlVX5Go8wyVkgAwlNqX6ze2CiPuC7OIylcSNQ==
   dependencies:
-    body-parser "1.18.3"
+    body-parser "1.19.0"
     cors "2.8.5"
     express "4.16.4"
     multer "1.4.1"
@@ -63,16 +63,16 @@
     path-to-regexp "3.0.0"
 
 "@nestjs/testing@^6.0.0":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-6.1.1.tgz#cc871867f9bd053069467a5a2f1b429945413313"
-  integrity sha512-EQLRES20n8zWkFRXgwFKjCE0s/WsHvqv3v22umqq2XHiep7WiJub0hNG/FcC00WltXPDPAaEDu0XDPr56UWZhQ==
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-6.2.0.tgz#084573cd635f8f59b434966e35039c616af62208"
+  integrity sha512-sAdXmZugvhYyp6tze5FdcH6tuIoDI0R8l7nI+PFDXuwxUSvfm8eHOloRbmYRD8ULGfY6OEvmO5uzoz/73IcMMw==
   dependencies:
     optional "0.1.4"
 
 "@nestjs/typeorm@^6.0.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@nestjs/typeorm/-/typeorm-6.1.0.tgz#bfc97ab68032d4df4bb9e30495f10957b2d60575"
-  integrity sha512-bKZeL5IXr4Z9ZtPNiiriodF8nEcjoUEAO3ugEQXGRBcYqecMpj+6+1VBCDmTloamzrUiuBil9JxBwQUJ8u0Nag==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/typeorm/-/typeorm-6.1.1.tgz#bf1f45f79a2b498dd33b82c1f5bd04e7797cfec3"
+  integrity sha512-KCtRYiftUfvU4QE0mlhNUHEVfo9LmFHZ7QPcSxgmV00Tf62lGX0P2vJ0Ee6zHrgPuT4TzUn+SkX70ZdeQxio3Q==
   dependencies:
     uuid "3.3.2"
 
@@ -742,7 +742,7 @@ body-parser@1.18.3:
     raw-body "2.3.3"
     type-is "~1.6.16"
 
-body-parser@^1.19.0:
+body-parser@1.19.0, body-parser@^1.19.0:
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.19.0.tgz#96b2709e57c9c4e09a6fd66a8fd979844f69f08a"
   integrity sha512-dhEPs72UPbDnAQJ9ZKMNTP6ptJaionhP5cBb541nXPlW60Jepo9RV/a4fX4XWW9CuFNK22krhrj1+rgzifNCsw==
@@ -1059,9 +1059,9 @@ color-name@1.1.3:
   integrity sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=
 
 combined-stream@^1.0.6, combined-stream@~1.0.6:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.7.tgz#2d1d24317afb8abe95d6d2c0b07b57813539d828"
-  integrity sha512-brWl9y6vOB1xYPZcpZde3N9zDByXTosAeMDo4p1wzo6UMOX4vumB+TP1RZ76sfE6Md68Q0NJSrE/gbezd4Ul+w==
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
+  integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
   dependencies:
     delayed-stream "~1.0.0"
 
@@ -1654,6 +1654,11 @@ expect@^23.6.0:
     jest-matcher-utils "^23.6.0"
     jest-message-util "^23.4.0"
     jest-regex-util "^23.3.0"
+
+express-flash-message@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/express-flash-message/-/express-flash-message-1.0.0.tgz#29796481ba924f4ad9c5a9e7e2e03edd56380ad8"
+  integrity sha512-/7JcpBEnO0sp3rdAgr6ZhKcebUqqhJKjVjBG/vSFsUDtkT9XCgT0a7Wc6xLEsySP5sq4GJNY4CP3Cd48i7hi2w==
 
 express-session@^1.16.1:
   version "1.16.1"
@@ -4265,9 +4270,9 @@ randomatic@^3.0.0:
     math-random "^1.0.1"
 
 range-parser@~1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
-  integrity sha1-9JvmtIeJTdxA3MlKMi9hEJLgDV4=
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
+  integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
 raw-body@2.3.3:
   version "2.3.3"
@@ -5307,9 +5312,9 @@ typescript@^3.2.4:
   integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
 
 uglify-js@^3.1.4:
-  version "3.5.11"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.5.11.tgz#833442c0aa29b3a7d34344c7c63adaa3f3504f6a"
-  integrity sha512-izPJg8RsSyqxbdnqX36ExpbH3K7tDBsAU/VfNv89VkMFy3z39zFjunQGsSHOlGlyIfGLGprGeosgQno3bo2/Kg==
+  version "3.5.12"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.5.12.tgz#6b759cabc08c3e91fe82323d6387019f0c5864cd"
+  integrity sha512-KeQesOpPiZNgVwJj8Ge3P4JYbQHUdZzpx6Fahy6eKAYRSV4zhVmLXoC+JtOeYxcHCHTve8RG1ZGdTvpeOUM26Q==
   dependencies:
     commander "~2.20.0"
     source-map "~0.6.1"

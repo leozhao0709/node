@@ -52,7 +52,7 @@ export class AuthController {
       });
     } catch (error) {
       if (error instanceof UserNotFoundException) {
-        req.flash('signinError', 'user not found!');
+        await req.flash('signinError', 'user not found!');
         return res.redirect('/login');
       }
 

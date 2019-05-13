@@ -21,7 +21,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     }
 
     if (exception instanceof UnauthorizedException) {
-      await req.flash('error', 'You need to login first!');
+      await req.flash('signinError', 'You need to login first!');
       return res.redirect('/login');
     }
 
