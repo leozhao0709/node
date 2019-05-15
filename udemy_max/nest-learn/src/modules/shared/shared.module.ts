@@ -6,6 +6,7 @@ import { UserService } from './services/user/user.service';
 import { userSchema } from '../mongo-db/schemas/user.schema';
 import { orderSchema } from '../mongo-db/schemas/order.schema';
 import { OrderService } from './services/order/order.service';
+import { SendEmailService } from './services/email/send-email/send-email.service';
 
 @Global()
 @Module({
@@ -16,8 +17,8 @@ import { OrderService } from './services/order/order.service';
       { name: 'Order', schema: orderSchema },
     ]),
   ],
-  providers: [ProductService, UserService, OrderService],
+  providers: [ProductService, UserService, OrderService, SendEmailService],
   controllers: [],
-  exports: [ProductService, UserService, OrderService],
+  exports: [ProductService, UserService, OrderService, SendEmailService],
 })
 export class SharedModule {}

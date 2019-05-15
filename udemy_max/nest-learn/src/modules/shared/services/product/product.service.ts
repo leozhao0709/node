@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Schema } from 'mongoose';
 import { Product } from '../../../mongo-db/schemas/product.schema';
 import { CreateProductDto } from '../../../../dto/product/create-product.dto';
 import { ProductDto } from '../../../../dto/product/product.dto';
 import { UserService } from '../user/user.service';
 import { User } from '../../../mongo-db/schemas/user.schema';
+import { UserNotHavePermissionException } from '../../../../exceptions/user/userNotHavePermissionException';
 
 @Injectable()
 export class ProductService {
@@ -13,6 +14,14 @@ export class ProductService {
     @InjectModel('Product') private readonly productModel: Model<Product>,
     private readonly userService: UserService,
   ) {}
+
+  async getAllProductsByUserId(userId: string) {
+    return await this.productModel
+      .find({
+        userId,
+      })
+      .exec();
+  }
 
   async getAllProducts() {
     return await this.productModel.find().exec();
@@ -29,15 +38,23 @@ export class ProductService {
     });
   }
 
-  async updateProduct(product: ProductDto) {
-    try {
-      await this.productModel.findByIdAndUpdate(product.id, product).exec();
-    } catch (error) {
-      throw error;
+  async updateProduct(user: User, productDto: ProductDto) {
+    const product = await this.productModel.findById(productDto.id);
+    if (user.id !== product.userId) {
+      throw new UserNotHavePermissionException();
     }
+
+    return await this.productModel
+      .findByIdAndUpdate(product.id, product)
+      .exec();
   }
 
-  async deleteProductByProductId(productId: string) {
+  async deleteProductByProductId(user: User, productId: string) {
+    const product = await this.productModel.findById(productId);
+    if (user.id !== product.userId) {
+      throw new UserNotHavePermissionException();
+    }
+
     return await this.productModel.findByIdAndRemove(productId).exec();
   }
 }

@@ -9,6 +9,8 @@ export const userSchema = new Schema({
     type: String,
     required: true,
   },
+  resetPasswordToken: String,
+  resetPasswordTokenExpire: Date,
   cart: {
     type: [
       {
@@ -31,4 +33,6 @@ export interface User extends Document {
   email: string;
   password: string;
   cart: Array<{ productId: string; quantity: number }>;
+  resetPasswordToken?: string;
+  resetPasswordTokenExpire?: Date;
 }

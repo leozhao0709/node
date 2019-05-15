@@ -8,6 +8,9 @@ import * as bcrypt from 'bcryptjs';
 import { UserLoginDto } from '../../../../dto/user/user-login.dto';
 import { UserNotFoundException } from '../../../../exceptions/user/userNotFoundException';
 import { UserInvalidPasswordException } from '../../../../exceptions/user/userInvalidPasswordException';
+import * as uuid from 'uuid/v4';
+import { UserResetPasswordTokenExpireException } from '../../../../exceptions/user/userResetPasswordTokenExpireException';
+import { UserUpdatePasswordDto } from '../../../../dto/user/user-update-password.dto';
 @Injectable()
 export class UserService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
@@ -17,7 +20,7 @@ export class UserService {
   }
 
   async createUser(user: UserCreateDto) {
-    const { email, password, confirmPassword } = user;
+    const { email, password } = user;
     const existingUser = await this.userModel.findOne({ email }).exec();
     if (existingUser) {
       throw new UserAlreadyExistingException();
@@ -75,6 +78,49 @@ export class UserService {
     user.cart = user.cart.filter(
       product => product.productId.toString() !== productId,
     );
+    await user.save();
+  }
+
+  async resetPassword(email: string) {
+    const token = uuid();
+    const user = await this.userModel.findOne({ email });
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+
+    user.resetPasswordToken = token;
+    user.resetPasswordTokenExpire = new Date(Date.now() + 1000 * 60 * 60);
+    await user.save();
+    return token;
+  }
+
+  async findUserByResetPasswordToken(token: string) {
+    const user = await this.userModel.findOne({ resetPasswordToken: token });
+    if (user) {
+      if (user.resetPasswordTokenExpire.getTime() < Date.now()) {
+        throw new UserResetPasswordTokenExpireException();
+      }
+      return user;
+    }
+    throw new UserNotFoundException();
+  }
+
+  async updatePassword(updatePasswordDto: UserUpdatePasswordDto) {
+    const user = await this.userModel.findOne({
+      resetPasswordToken: updatePasswordDto.token,
+      _id: updatePasswordDto.userId,
+    });
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+
+    if (user.resetPasswordTokenExpire.getTime() < Date.now()) {
+      throw new UserResetPasswordTokenExpireException();
+    }
+
+    user.password = await bcrypt.hash(updatePasswordDto.password, 12);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordTokenExpire = undefined;
     await user.save();
   }
 }

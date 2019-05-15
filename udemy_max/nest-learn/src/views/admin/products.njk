@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="/css/product.css">
 {% endblock %}
 {% block mainContent %}
+  {% if infoMsg and infoMsg.length > 0 %}
+    <p class="user-message">{{infoMsg}}</p>
+  {% endif %}
   {% if products.length === 0 %}
     <h1>No Product</h1>
   {% else %}
