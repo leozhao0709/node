@@ -8,12 +8,14 @@ import {
   Body,
   Req,
   Param,
+  UsePipes,
+  ValidationPipe,
+  UseFilters,
 } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 import { Response, Request } from 'express';
 import { UserService } from '../shared/services/user/user.service';
 import { UserCreateDto } from '../../dto/user/user-create.dto';
-import { UserAlreadyExistingException } from '../../exceptions/user/userAlreadyExistingException';
 import { UserLoginDto } from '../../dto/user/user-login.dto';
 import { UserNotFoundException } from '../../exceptions/user/userNotFoundException';
 import { UserInvalidPasswordException } from '../../exceptions/user/userInvalidPasswordException';
@@ -21,6 +23,9 @@ import { SendEmailService } from '../shared/services/email/send-email/send-email
 import { environment } from '../../environment/environment';
 import { UserResetPasswordTokenExpireException } from '../../exceptions/user/userResetPasswordTokenExpireException';
 import { UserUpdatePasswordDto } from '../../dto/user/user-update-password.dto';
+import { UserAlreadyExistingException } from '../admin/exceptions/signup-exceptions/user-already-existing.exception';
+import { UserCreateDtoException } from '../admin/exceptions/signup-exceptions/user-createdto.exception';
+import { SignupExceptionFilter } from '../admin/exception-filters/signup-exception.filter';
 
 @ApiUseTags('auth')
 @Controller()
@@ -89,47 +94,43 @@ export class AuthController {
   @Get('/signup')
   @Render('auth/signup.njk')
   async getSignup(@Req() req: Request) {
-    const errorMsg = await req.consumeFlash('signupError');
+    const errorMsg = await req.consumeFlash('signup-error');
     return {
       path: '/signup',
       errorMsg,
+      oldInput: {},
     };
   }
 
   @Post('/signup')
+  @UsePipes(
+    new ValidationPipe({
+      exceptionFactory: errors => {
+        throw new UserCreateDtoException(errors);
+      },
+    }),
+  )
+  @UseFilters(SignupExceptionFilter)
   async postSignup(
     @Body() createUserDto: UserCreateDto,
     @Res() res: Response,
-    @Req() req: Request,
     @Session() session: Express.Session,
   ) {
-    try {
-      const userId = await this.userService.createUser(createUserDto);
-      await this.sendEmailService.sendHtmlEmail({
-        from: 'max-node-shop@shop.com',
-        to: createUserDto.email,
-        subject: 'Signup succeed!',
-        html: '<h1>You successfully signed up at node shop!</h1>',
-      });
-      session.userId = userId;
-      session.isLoggedIn = true;
-      session.save(err => {
-        if (err) {
-          throw err;
-        }
-        res.redirect('/');
-      });
-    } catch (error) {
-      if (error instanceof UserAlreadyExistingException) {
-        await req.flash(
-          'signupError',
-          'user already exist! please login directly!',
-        );
-        return res.redirect('/signup');
+    const userId = await this.userService.createUser(createUserDto);
+    await this.sendEmailService.sendHtmlEmail({
+      from: 'max-node-shop@shop.com',
+      to: createUserDto.email,
+      subject: 'Signup succeed!',
+      html: '<h1>You successfully signed up at node shop!</h1>',
+    });
+    session.userId = userId;
+    session.isLoggedIn = true;
+    session.save(err => {
+      if (err) {
+        throw err;
       }
-      // tslint:disable-next-line: no-console
-      console.log(error);
-    }
+      res.redirect('/');
+    });
   }
 
   @Get('reset-password')

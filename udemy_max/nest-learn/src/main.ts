@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as path from 'path';
 import * as nunjucks from 'nunjucks';
-import { HttpExceptionFilter } from './exceptionFilters/httpException/http-exception.filter';
+import { HttpExceptionFilter } from './exception-filters/httpException/http-exception.filter';
 import { swaggerSetup } from './swagger/swaggerSetup';
 import * as session from 'express-session';
 import * as csurf from 'csurf';
@@ -11,6 +11,7 @@ import { environment } from './environment/environment';
 import connectMongodbSession = require('connect-mongodb-session');
 import * as bodyParser from 'body-parser';
 import { flash } from 'express-flash-message';
+import { GlobalExceptionFilter } from './exception-filters/global-exception/global-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -47,6 +48,7 @@ async function bootstrap() {
   swaggerSetup(app);
 
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new GlobalExceptionFilter());
 
   // app.use(userMiddleware);
 

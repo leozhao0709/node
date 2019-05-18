@@ -3,7 +3,7 @@ import { User } from '../../../mongo-db/schemas/user.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserCreateDto } from '../../../../dto/user/user-create.dto';
-import { UserAlreadyExistingException } from '../../../../exceptions/user/userAlreadyExistingException';
+
 import * as bcrypt from 'bcryptjs';
 import { UserLoginDto } from '../../../../dto/user/user-login.dto';
 import { UserNotFoundException } from '../../../../exceptions/user/userNotFoundException';
@@ -11,6 +11,7 @@ import { UserInvalidPasswordException } from '../../../../exceptions/user/userIn
 import * as uuid from 'uuid/v4';
 import { UserResetPasswordTokenExpireException } from '../../../../exceptions/user/userResetPasswordTokenExpireException';
 import { UserUpdatePasswordDto } from '../../../../dto/user/user-update-password.dto';
+import { UserAlreadyExistingException } from '../../../admin/exceptions/signup-exceptions/user-already-existing.exception';
 @Injectable()
 export class UserService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
