@@ -8,6 +8,8 @@ import {
   Res,
   Req,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { ProductService } from '../shared/services/product/product.service';
@@ -17,6 +19,7 @@ import { CreateProductDto } from '../../dto/product/create-product.dto';
 import { ProductDto } from '../../dto/product/product.dto';
 import { ProductIdDto } from '../../dto/product/product-id.dto';
 import { UserNotHavePermissionException } from '../../exceptions/user/userNotHavePermissionException';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('admin')
 @UseGuards(AuthGuard)
@@ -33,12 +36,14 @@ export class AdminController {
   }
 
   @Post('/add-product')
+  @UseInterceptors(FileInterceptor('image'))
   async postAddProduct(
     @Body() body: CreateProductDto,
     @Req() req: Request,
     @Res() res: Response,
+    @UploadedFile() uploadImage: Express.Multer.File,
   ) {
-    await this.productService.createProduct(req.user, body);
+    await this.productService.createProduct(req.user, body, uploadImage);
     res.redirect('/admin/products');
   }
 

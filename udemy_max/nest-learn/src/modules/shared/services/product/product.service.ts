@@ -31,9 +31,14 @@ export class ProductService {
     return await this.productModel.findById(productId).exec();
   }
 
-  async createProduct(user: User, product: CreateProductDto) {
+  async createProduct(
+    user: User,
+    product: CreateProductDto,
+    uploadedImage: Express.Multer.File,
+  ) {
     await this.productModel.create({
       ...product,
+      imageUrl: uploadedImage.path,
       userId: user.id,
     });
   }

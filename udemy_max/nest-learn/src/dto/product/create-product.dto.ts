@@ -7,7 +7,7 @@ export class CreateProductDto {
   @ApiModelProperty()
   readonly title: string;
   @ApiModelProperty()
-  readonly imageUrl: string;
+  readonly imageUrl?: string;
   @ApiModelProperty()
   readonly description: string;
   @ApiModelProperty()

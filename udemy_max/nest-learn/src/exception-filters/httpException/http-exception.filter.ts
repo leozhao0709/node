@@ -17,7 +17,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
 
     if (exception instanceof NotFoundException) {
-      return res.render('error/404.njk');
+      return res.status(404).render('error/404.njk');
     }
 
     if (exception instanceof UnauthorizedException) {

@@ -12,6 +12,7 @@ import connectMongodbSession = require('connect-mongodb-session');
 import * as bodyParser from 'body-parser';
 import { flash } from 'express-flash-message';
 import { GlobalExceptionFilter } from './exception-filters/global-exception/global-exception.filter';
+import express = require('express');
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -39,6 +40,21 @@ async function bootstrap() {
   app.use(flash({ sessionKeyName: 'flashMessage' }));
 
   app.useStaticAssets(path.resolve(__dirname, 'public'));
+  app.useStaticAssets(
+    '/Users/lzhao/Documents/my_git/node/udemy_max/nest-learn/src/uploads',
+    {
+      prefix: path.resolve(
+        path.dirname(process.mainModule.filename),
+        'uploads',
+      ),
+    },
+  );
+  // app.use(
+  //   '/Users/lzhao/Documents/my_git/node/udemy_max/nest-learn/src/uploads',
+  //   express.static(
+  //     path.resolve(path.dirname(process.mainModule.filename), 'uploads'),
+  //   ),
+  // );
   nunjucks.configure(path.resolve(__dirname, 'views'), {
     autoescape: true,
     express: app,
@@ -47,8 +63,7 @@ async function bootstrap() {
   // swagger setup
   swaggerSetup(app);
 
-  app.useGlobalFilters(new HttpExceptionFilter());
-  app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalFilters(new GlobalExceptionFilter(), new HttpExceptionFilter());
 
   // app.use(userMiddleware);
 
