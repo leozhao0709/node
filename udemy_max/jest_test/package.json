@@ -1,0 +1,39 @@
+{
+  "name": "jest_test",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "lzhao <zhao434@usc.edu>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.2",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.0",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.1.0",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.5"
+  },
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "nodemon",
+    "test": "yarn lint && jest",
+    "test:watch": "jest --watch",
+    "build": "yarn build:clean && yarn build:typescript",
+    "build:clean": "rm -rf dist",
+    "build:typescript": "tsc -p tsconfig.json",
+    "clean": "rm -rf node_modules dist yarn.lock",
+    "lint": "tslint -p tsconfig.json",
+    "prepublishOnly": "yarn lint && yarn test && yarn build",
+    "preversion": "yarn lint && yarn test",
+    "postversion": "git push && git push --tags"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": []
+}
