@@ -49,12 +49,6 @@ async function bootstrap() {
       ),
     },
   );
-  // app.use(
-  //   '/Users/lzhao/Documents/my_git/node/udemy_max/nest-learn/src/uploads',
-  //   express.static(
-  //     path.resolve(path.dirname(process.mainModule.filename), 'uploads'),
-  //   ),
-  // );
   nunjucks.configure(path.resolve(__dirname, 'views'), {
     autoescape: true,
     express: app,

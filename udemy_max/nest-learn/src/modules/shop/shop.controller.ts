@@ -111,6 +111,20 @@ export class ShopController {
     };
   }
 
+  @Get('/orders/:orderId')
+  @UseGuards(AuthGuard)
+  async getInvoice(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param('orderId') orderId: string,
+  ) {
+    await this.orderService.generateInvoiceAndSendToResponse(
+      orderId,
+      req.user,
+      res,
+    );
+  }
+
   @Post('/create-order')
   async postOrders(@Res() res: Response, @Req() req: Request) {
     await this.orderService.createOrderFromCart(req.user);

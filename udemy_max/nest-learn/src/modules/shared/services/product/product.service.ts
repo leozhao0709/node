@@ -43,14 +43,26 @@ export class ProductService {
     });
   }
 
-  async updateProduct(user: User, productDto: ProductDto) {
+  async updateProduct(
+    user: User,
+    productDto: ProductDto,
+    image: Express.Multer.File,
+  ) {
     const product = await this.productModel.findById(productDto.id);
-    if (user.id !== product.userId) {
+    if (user.id !== product.userId.toString()) {
       throw new UserNotHavePermissionException();
     }
 
+    let newProduct = productDto;
+    if (image) {
+      newProduct = {
+        ...productDto,
+        imageUrl: image.path,
+      };
+    }
+
     return await this.productModel
-      .findByIdAndUpdate(product.id, product)
+      .findByIdAndUpdate(product.id, newProduct)
       .exec();
   }
 

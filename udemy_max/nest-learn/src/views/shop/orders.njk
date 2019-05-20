@@ -15,8 +15,11 @@
     <ul class="orders">
       {% for order in orders %}
         <li class="orders__item">
-          <h1>#
-            {{order.id}}</h1>
+          <h1>Order - #
+            {{order.id}}
+            -
+            <a href="/shop/orders/{{order.id}}">Invoice</a>
+          </h1>
           <ul class="orders__products">
             {% for orderItem in order.products %}
               <li class="orders__products-item">

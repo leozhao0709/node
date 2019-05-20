@@ -71,13 +71,15 @@ export class AdminController {
   }
 
   @Post('/edit-product')
+  @UseInterceptors(FileInterceptor('image'))
   async postEditProduct(
     @Body() body: ProductDto,
     @Req() req: Request,
     @Res() res: Response,
+    @UploadedFile() image: Express.Multer.File,
   ) {
     try {
-      await this.productService.updateProduct(req.user, body);
+      await this.productService.updateProduct(req.user, body, image);
       return res.redirect('/admin/products');
     } catch (error) {
       if (error instanceof UserNotHavePermissionException) {
