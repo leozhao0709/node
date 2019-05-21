@@ -7,10 +7,8 @@
   "devDependencies": {
     "@types/jest": "^24.0.13",
     "@types/node": "^12.0.2",
-    "@types/supertest": "^2.0.7",
     "jest": "^24.8.0",
     "nodemon": "^1.19.0",
-    "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
@@ -20,7 +18,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "nodemon",
-    "test": "yarn lint && jest --coverage",
+    "test": "yarn lint && jest",
     "test:watch": "jest --watch",
     "build": "yarn build:clean && yarn build:typescript",
     "build:clean": "rm -rf dist",
