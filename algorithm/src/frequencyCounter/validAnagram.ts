@@ -18,25 +18,16 @@ export const validAnagram = (str1: string, str2: string) => {
   }
 
   const frequcy1 = {};
-  const frequcy2 = {};
 
   for (const char of str1) {
     frequcy1[char] = (frequcy1[char] || 0) + 1;
   }
 
   for (const char of str2) {
-    frequcy2[char] = (frequcy2[char] || 0) + 1;
-  }
-
-  for (const key in frequcy1) {
-    if (frequcy1.hasOwnProperty(key)) {
-      if (!(key in frequcy2)) {
-        return false;
-      }
-      if (frequcy1[key] !== frequcy2[key]) {
-        return false;
-      }
+    if (!(char in frequcy1) || frequcy1[char] === 0) {
+      return false;
     }
+    frequcy1[char]--;
   }
   return true;
 };

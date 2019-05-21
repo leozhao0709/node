@@ -11,25 +11,17 @@ export const same = (arr1: number[], arr2: number[]) => {
     return false;
   }
 
-  const frequency1 = {};
   const frequency2 = {};
-
-  for (const val of arr1) {
-    frequency1[val] = (frequency1[val] || 0) + 1;
-  }
 
   for (const val of arr2) {
     frequency2[val] = (frequency2[val] || 0) + 1;
   }
 
-  for (const key of Object.keys(frequency1)) {
-    if (!((+key) ** 2 in frequency2)) {
+  for (const val of arr1) {
+    if (!(val ** 2 in frequency2) || frequency2[val ** 2] === 0) {
       return false;
     }
-    if (frequency2[(+key) ** 2] !== frequency1[key]) {
-      return false;
-    }
+    frequency2[val ** 2]--;
   }
-
   return true;
 };
