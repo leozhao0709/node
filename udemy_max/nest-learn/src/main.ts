@@ -40,15 +40,9 @@ async function bootstrap() {
   app.use(flash({ sessionKeyName: 'flashMessage' }));
 
   app.useStaticAssets(path.resolve(__dirname, 'public'));
-  app.useStaticAssets(
-    '/Users/lzhao/Documents/my_git/node/udemy_max/nest-learn/src/uploads',
-    {
-      prefix: path.resolve(
-        path.dirname(process.mainModule.filename),
-        'uploads',
-      ),
-    },
-  );
+  app.useStaticAssets(path.resolve(__dirname, 'uploads'), {
+    prefix: '/uploads',
+  });
   nunjucks.configure(path.resolve(__dirname, 'views'), {
     autoescape: true,
     express: app,

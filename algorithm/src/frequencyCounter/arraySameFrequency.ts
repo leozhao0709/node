@@ -1,12 +1,12 @@
 /**
  * give 2 arrays and write a function to return true if every value in the array has its corresponding value squared in the second array. The order doesn't need to match but the frequency should match.
  *
- * same([1, 2, 3], [4, 1, 9]) // true
- * same([1, 2, 3], [4, 9]) // false
- * same([1, 2, 1], [4, 4,, 1]) // false
+ * arraySameFrequency([1, 2, 3], [4, 1, 9]) // true
+ * arraySameFrequency([1, 2, 3], [4, 9]) // false
+ * arraySameFrequency([1, 2, 1], [4, 4,, 1]) // false
  */
 
-export const same = (arr1: number[], arr2: number[]) => {
+export const arraySameFrequency = (arr1: number[], arr2: number[]) => {
   if (arr1.length !== arr2.length) {
     return false;
   }

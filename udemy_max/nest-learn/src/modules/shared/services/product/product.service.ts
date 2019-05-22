@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Schema } from 'mongoose';
+import { Model } from 'mongoose';
+import * as path from 'path';
 import { Product } from '../../../mongo-db/schemas/product.schema';
 import { CreateProductDto } from '../../../../dto/product/create-product.dto';
 import { ProductDto } from '../../../../dto/product/product.dto';
@@ -38,7 +39,12 @@ export class ProductService {
   ) {
     await this.productModel.create({
       ...product,
-      imageUrl: uploadedImage.path,
+      imageUrl:
+        '/' +
+        path.relative(
+          path.dirname(process.mainModule.filename),
+          uploadedImage.path,
+        ),
       userId: user.id,
     });
   }
@@ -68,7 +74,7 @@ export class ProductService {
 
   async deleteProductByProductId(user: User, productId: string) {
     const product = await this.productModel.findById(productId);
-    if (user.id !== product.userId) {
+    if (user.id !== product.userId.toString()) {
       throw new UserNotHavePermissionException();
     }
 
