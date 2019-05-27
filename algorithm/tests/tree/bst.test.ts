@@ -39,8 +39,28 @@ describe('binary search tree insert and traversal', () => {
     expect(bst.preOrderDfs()).toEqual([10, 6, 3, 8, 15, 20]);
   });
 
-  it('should give correct value during pre order dfs', () => {
+  it('should give correct value during pre order iterative dfs', () => {
     expect(new BinarySearchTree().preOrderDfsIterative()).toEqual([]);
     expect(bst.preOrderDfsIterative()).toEqual([10, 6, 3, 8, 15, 20]);
+  });
+
+  it('should give correct value during in order recursively dfs', () => {
+    expect(new BinarySearchTree().inOrderDfs()).toEqual([]);
+    expect(bst.inOrderDfs()).toEqual([3, 6, 8, 10, 15, 20]);
+  });
+
+  it('should give correct value during in order iterative dfs', () => {
+    expect(new BinarySearchTree().inOrderDfsIterative()).toEqual([]);
+    expect(bst.inOrderDfsIterative()).toEqual([3, 6, 8, 10, 15, 20]);
+  });
+
+  it('should give correct value during post order recursively dfs', () => {
+    expect(new BinarySearchTree().postOrderDfs()).toEqual([]);
+    expect(bst.postOrderDfs()).toEqual([3, 8, 6, 20, 15, 10]);
+  });
+
+  it('should give correct value during post order iterative dfs', () => {
+    expect(new BinarySearchTree().postOrderDfsIterative()).toEqual([]);
+    expect(bst.postOrderDfsIterative()).toEqual([3, 8, 6, 20, 15, 10]);
   });
 });
