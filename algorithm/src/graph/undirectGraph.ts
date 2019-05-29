@@ -56,4 +56,52 @@ export class UndirectGraph {
       delete this.adjacencyList[v];
     }
   }
+
+  /**
+   * dfsRecursive
+   */
+  public dfsRecursive(vertex) {
+    if (!this.isVertexInGraph(vertex)) {
+      return [];
+    }
+    const data: string[] = [];
+    const visited: { [key: string]: boolean } = {};
+
+    const dfs = v => {
+      if (!visited[v]) {
+        visited[v] = true;
+        data.push(v);
+        this.adjacencyList[v].forEach(neighbor => dfs(neighbor));
+      }
+    };
+
+    dfs(vertex);
+    return data;
+  }
+
+  /**
+   * dfsIterative
+   */
+  public dfsIterative(vertex) {
+    if (!this.isVertexInGraph(vertex)) {
+      return [];
+    }
+    const data: string[] = [];
+    const stack: string[] = [];
+    const visited: { [key: string]: boolean } = {};
+    stack.push(vertex);
+
+    while (stack.length > 0) {
+      const curr = stack.pop()!;
+      data.push(curr);
+      visited[curr] = true;
+      this.adjacencyList[curr].forEach(v => {
+        if (!visited[v]) {
+          stack.push(v);
+          visited[v] = true;
+        }
+      });
+    }
+    return data;
+  }
 }

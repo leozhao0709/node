@@ -1,8 +1,9 @@
 import { UndirectGraph } from '../../src/graph/undirectGraph';
 
-describe('undirect graph', () => {
-  const graph = new UndirectGraph();
-  beforeAll(() => {
+describe('undirect graph insert and remove', () => {
+  let graph;
+  beforeEach(() => {
+    graph = new UndirectGraph();
     graph.addVertex('Dallas');
     graph.addVertex('Tokyo');
     graph.addVertex('Aspen');
@@ -45,5 +46,42 @@ describe('undirect graph', () => {
       Aspen: ['Dallas', 'Los Angeles'],
       'Los Angeles': ['Aspen']
     });
+  });
+});
+
+describe('undirect graph dfs and bfs', () => {
+  let g: UndirectGraph;
+  beforeEach(() => {
+    //          A
+    //        /   \
+    //       B     C
+    //       |     |
+    //       D --- E
+    //        \   /
+    //          F
+    g = new UndirectGraph();
+
+    g.addVertex('A');
+    g.addVertex('B');
+    g.addVertex('C');
+    g.addVertex('D');
+    g.addVertex('E');
+    g.addVertex('F');
+
+    g.addEdge('A', 'B');
+    g.addEdge('A', 'C');
+    g.addEdge('B', 'D');
+    g.addEdge('C', 'E');
+    g.addEdge('D', 'E');
+    g.addEdge('D', 'F');
+    g.addEdge('E', 'F');
+  });
+
+  it('dfs recursively should give correct val', () => {
+    expect(g.dfsRecursive('A')).toEqual(['A', 'B', 'D', 'E', 'C', 'F']);
+  });
+
+  it('dfs iteratively should give correct val', () => {
+    expect(g.dfsIterative('A')).toEqual(['A', 'C', 'E', 'F', 'D', 'B']);
   });
 });

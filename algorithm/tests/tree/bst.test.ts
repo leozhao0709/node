@@ -3,7 +3,7 @@ import { BinarySearchTree } from '../../src/tree/bst';
 describe('binary search tree insert and traversal', () => {
   let bst: BinarySearchTree;
 
-  beforeAll(() => {
+  beforeEach(() => {
     /**
      *       10
      *    6       15
