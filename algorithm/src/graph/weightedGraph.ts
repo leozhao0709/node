@@ -33,7 +33,7 @@ export class WeightedGraph {
 
     // 2. start track
     while (Object.keys(visited).length < Object.keys(this.adjacentList).length) {
-      let nextVertex: string;
+      let nextVertex: string | undefined;
 
       // get the current next smallest distance vertex which has the shortest path from start vertex
       Object.keys(distance).forEach(node => {
@@ -53,9 +53,9 @@ export class WeightedGraph {
         shortestPath.push(start);
         return { path: shortestPath.reverse(), distance: distance[end] };
       } else {
-        this.adjacentList[nextVertex].forEach(v => {
-          if (!visited[v.node] && distance[nextVertex] + v.weight < distance[v.node]) {
-            distance[v.node] = distance[nextVertex] + v.weight;
+        this.adjacentList[nextVertex!].forEach(v => {
+          if (!visited[v.node] && distance[nextVertex!] + v.weight < distance[v.node]) {
+            distance[v.node] = distance[nextVertex!] + v.weight;
             path[v.node] = nextVertex;
           }
         });
