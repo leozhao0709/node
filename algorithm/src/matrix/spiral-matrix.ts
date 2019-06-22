@@ -54,6 +54,6 @@ export const matrix = (n: number) => {
     }
     startColumn++;
   }
-  console.log(result);
+
   return result;
 };
