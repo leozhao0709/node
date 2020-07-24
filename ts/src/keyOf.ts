@@ -13,3 +13,5 @@ const getInfo = <T extends keyof Person>(key: T) => {
 };
 
 console.log(getInfo('name'));
+
+export {};
