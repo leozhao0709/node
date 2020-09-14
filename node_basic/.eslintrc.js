@@ -10,7 +10,7 @@ module.exports = {
     'plugin:react/recommended',
   ],
   rules: {
-    'no-console': 1,
+    'no-console': 0,
     quotes: [2, 'single', { allowTemplateLiterals: true }],
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-empty-function': 0,
