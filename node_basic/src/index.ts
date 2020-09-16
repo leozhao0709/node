@@ -1,6 +1,8 @@
 // import listen from './http';
 // listen();
 
-import listen from './netServer';
+// import listen from './netServer';
+// listen();
 
-listen();
+import os from 'os';
+console.log(os.cpus().length);
