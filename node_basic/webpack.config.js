@@ -5,10 +5,11 @@ module.exports = {
   entry: {
     index: './src/index.ts',
   },
+  target: 'node',
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: 'umd',
+    // libraryTarget: 'umd',
   },
   resolve: {
     alias: {
