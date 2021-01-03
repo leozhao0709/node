@@ -30,7 +30,7 @@
     "webpack-dev-server": "^2.9.2"
   },
   "dependencies": {
-    "electron": "^1.7.9",
+    "electron": "^7.2.4",
     "fluent-ffmpeg": "^2.1.2"
   },
   "description": ""
