@@ -1,0 +1,66 @@
+{
+  "name": "github_clone",
+  "version": "1.0.0",
+  "main": "",
+  "author": "Lei Zhao <lei.zhao@coupa.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.8",
+    "@testing-library/react": "^11.2.2",
+    "@types/classnames": "^2.2.11",
+    "@types/jest": "^26.0.19",
+    "@types/koa": "^2.11.6",
+    "@types/koa__router": "^8.0.3",
+    "@types/node": "^14.14.19",
+    "@types/react": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-react": "^7.22.0",
+    "husky": "^4.3.6",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.6.3",
+    "lodash": "^4.17.20",
+    "nodemon": "^2.0.6",
+    "sass": "^1.32.0",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.1.3",
+    "typescript-transform-paths": "^2.1.0"
+  },
+  "types": "",
+  "scripts": {
+    "start": "nodemon",
+    "test": "yarn typeCheck && yarn lint && jest",
+    "typeCheck": "tsc --noEmit",
+    "test:watch": "jest --watch --coverage=false",
+    "build": "yarn build:clean && next build && ttsc -p tsconfig.build.json",
+    "build:clean": "rm -rf dist",
+    "clean": "rm -rf node_modules .next coverage yarn.lock",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prepublishOnly": "yarn test  && yarn build",
+    "preversion": "yarn test",
+    "postversion": "git push && git push --tags",
+    "next": "next start"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [],
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
+  },
+  "dependencies": {
+    "@koa/router": "^10.0.0",
+    "classnames": "^2.2.6",
+    "koa": "^2.13.0",
+    "next": "^10.0.4",
+    "normalize-scss": "^7.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
