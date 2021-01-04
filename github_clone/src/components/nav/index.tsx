@@ -9,8 +9,8 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
       <Link href="/" as="/">
         <a>Home</a>
       </Link>
-      <Link href="/about" as="/about">
-        <a>About</a>
+      <Link href="/a?id=1" as="/a/1">
+        <a>A</a>
       </Link>
     </nav>
   );
