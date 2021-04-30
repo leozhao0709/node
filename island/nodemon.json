@@ -1,0 +1,10 @@
+{
+  "watch": [
+    "src"
+  ],
+  "ext": "*",
+  "ignore": [
+    "src/**/*.spec.ts"
+  ],
+  "exec": "ttsc -p tsconfig.build.json && node dist/index.js"
+}
