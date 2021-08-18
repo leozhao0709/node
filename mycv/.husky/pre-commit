@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+unset NO_COLOR && yarn lint-staged --config .lint-staged.config.js
