@@ -5,7 +5,7 @@
     "baseUrl": ".",
     "paths": {
       "@app/*": ["src/*"],
-      "@tests/*": ["tests/*"]
+      "@tests/*": ["e2e_tests/*"]
     },
     // Note: In order to transform *both* js and d.ts files, you need to add both of the below lines to plugins
     "plugins": [
