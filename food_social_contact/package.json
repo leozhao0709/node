@@ -1,0 +1,21 @@
+{
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "start": "lerna run --parallel start",
+    "start:dev": "lerna run --parallel start:dev",
+    "build": "lerna run build",
+    "clean": "lerna clean && rm -rf node_modules",
+    "install": "lerna bootstrap",
+    "test": "lerna run test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "workspaces": [
+    "packages/**/*"
+  ]
+}

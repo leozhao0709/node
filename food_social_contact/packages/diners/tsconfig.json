@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.basic.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/*"],
+      "@tests/*": ["tests/*"]
+    },
+    // Note: In order to transform *both* js and d.ts files, you need to add both of the below lines to plugins
+    "plugins": [
+      // Transform paths in output .js files
+      { "transform": "typescript-transform-paths" },
+
+      // Transform paths in output .d.ts files (Include this line if you output declarations files)
+      { "transform": "typescript-transform-paths", "afterDeclarations": true },
+      { "name": "typescript-plugin-css-modules" }
+    ]
+  },
+  "exclude": ["node_modules"],
+  "include": ["src", "tests"]
+}
