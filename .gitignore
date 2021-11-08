@@ -4,3 +4,5 @@ node_modules
 build
 dist
 bower_components
+*-error.log
+*-debug.log
