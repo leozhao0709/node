@@ -1,6 +1,5 @@
-import _ from 'lodash';
-import wrap from '../../../utils/wrap';
-import { sleep } from '../user/UserController';
+import { sleep } from '../user/UserService';
+import enhancement from 'js-enhancement';
 
 const logger1 = () => {
   return async function (fn, ...args) {
@@ -18,7 +17,7 @@ const logger2 = () => {
   };
 };
 
-const get = wrap(
+const get = enhancement.asyncWrap(
   async function (text1: string, text2: number) {
     console.log('within func');
     await sleep(3000);

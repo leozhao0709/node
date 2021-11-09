@@ -1,37 +1,14 @@
-import { method } from 'lodash';
-import { createMethodDecorator } from '../utils/decorator';
+import enhancement from 'js-enhancement';
 
-// export const logger1 = (enable?) =>
-//   createMethodDecorator(async (method) => {
-//     if (!enable) {
-//       await method();
-//       return;
-//     }
-//     console.log('logger1 before');
-//     await method();
-//     console.log('logger1 after');
-//   });
-
-// export const logger2 = (enable?) =>
-//   createMethodDecorator(async (method) => {
-//     if (!enable) {
-//       await method();
-//       return;
-//     }
-//     console.log('logger2 before');
-//     await method();
-//     console.log('logger2 after');
-//   });
-
-export const logger1 = (enable?: boolean) => {
+export const logger1: enhancement.AsyncEnhanceWrapper = (enable?: boolean) => {
   return async function (fn, ...args) {
     if (!enable) {
-      await fn(...args);
-      return;
+      const res = await fn(...args);
+      return res;
     }
     console.log('logger1 before');
     const res = await fn(...args);
-    console.log('logger1 after');
+    console.log('logger1 after', res);
     return res;
   };
 };
@@ -39,8 +16,8 @@ export const logger1 = (enable?: boolean) => {
 export const logger2 = (enable?: boolean) => {
   return async function (fn, ...args) {
     if (!enable) {
-      await fn(...args);
-      return;
+      const res = await fn(...args);
+      return res;
     }
     console.log('logger2 before');
     const res = await fn(...args);
