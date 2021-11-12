@@ -1,0 +1,51 @@
+{
+  "name": "wdio_udemy",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/lodash": "^4.14.176",
+    "@types/node": "^16.11.7",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.27.0",
+    "jest": "^27.3.1",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.4.1",
+    "ts-jest": "^27.0.7",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.4.4",
+    "typescript-plugin-css-modules": "^3.4.0",
+    "typescript-transform-paths": "^3.3.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "",
+    "test": "yarn typeCheck && yarn lint && jest",
+    "typeCheck": "tsc --noEmit",
+    "test:watch": "jest --watch --coverage=false",
+    "build": "NODE_ENV=production yarn build:clean && ttsc -p tsconfig.build.json",
+    "build:clean": "rm -rf dist",
+    "clean": "rm -rf node_modules dist coverage yarn.lock",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prepublishOnly": "yarn lint && yarn test && yarn build",
+    "preversion": "yarn lint && yarn test",
+    "postversion": "git push && git push --tags",
+    "start:dev": "nodemon",
+    "start:prod": "NODE_ENV=production node --enable-source-maps dist/index.js",
+    "start:debug": "nodemon --inspect-brk"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [],
+  "engines": {
+    "node": ">=v16.13.0"
+  }
+}
