@@ -8,7 +8,8 @@ export const logger1: enhancement.AsyncEnhanceWrapper = (enable?: boolean) => {
     }
     console.log('logger1 before');
     const res = await fn(...args);
-    console.log('logger1 after', res);
+    console.log(res);
+    console.log('logger1 after');
     return res;
   };
 };
