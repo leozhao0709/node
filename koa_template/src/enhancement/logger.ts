@@ -1,6 +1,6 @@
-import enhancement from 'js-enhancement';
+import { AsyncEnhanceWrapper } from '@app/utils/wrap';
 
-export const logger1: enhancement.AsyncEnhanceWrapper = (enable?: boolean) => {
+export const logger1: AsyncEnhanceWrapper = (enable?: boolean) => {
   return async function (fn, ...args) {
     if (!enable) {
       const res = await fn(...args);
