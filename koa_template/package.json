@@ -33,6 +33,7 @@
     "lodash": "^4.17.21"
   },
   "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "start": "",
     "test": "yarn typeCheck && yarn lint && jest",
@@ -46,7 +47,7 @@
     "preversion": "yarn lint && yarn test",
     "postversion": "git push && git push --tags",
     "start:dev": "nodemon",
-    "start:prod": "NODE_ENV=production node --enable-source-maps dist/index.js",
+    "start:prod": "NODE_ENV=production node --experimental-specifier-resolution=node --enable-source-maps dist/index.js",
     "start:debug": "nodemon --inspect-brk"
   },
   "files": [

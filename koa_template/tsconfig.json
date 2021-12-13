@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.basic.json",
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "baseUrl": ".",
     "paths": {
       "@app/*": ["src/*"],

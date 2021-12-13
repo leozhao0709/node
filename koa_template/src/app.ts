@@ -17,7 +17,7 @@ onerror(app, {
 });
 app.use(koaBody());
 app.use(logger());
-app.use(koaStatic(path.resolve(__dirname, '../public')));
+app.use(koaStatic(path.resolve('./', '../public')));
 
 app.use(welcomeRouter.routes());
 app.use(welcomeRouter.allowedMethods());
