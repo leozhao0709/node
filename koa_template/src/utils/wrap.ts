@@ -1,35 +1,5 @@
 import _ from 'lodash';
 
-// export type AsyncEnhanceWrapper = <
-//   T extends (...args: any[]) => Promise<any | undefined>
-// >(
-//   ...args
-// ) => AsyncEnhanceWrapFunc<T>;
-
-// export type AsyncEnhanceWrapFunc<
-//   T extends (...args: any[]) => Promise<any | undefined>
-// > = (
-//   fn: (...args: any[]) => Promise<T | undefined>,
-//   ...args: Parameters<typeof fn>
-// ) => Promise<T | undefined>;
-
-// export const asyncWrap = <
-//   T extends (...args: any[]) => Promise<any | undefined>
-// >(
-//   ...fns: [...AsyncEnhanceWrapFunc<T>[], T]
-// ): T => {
-//   const fnReverse = fns.reverse();
-//   if (fns.length <= 1) {
-//     throw 'At least needs 2 functions';
-//   }
-//   const coreFn = fnReverse[0] as T;
-//   const wraps = fnReverse.slice(1) as AsyncEnhanceWrapFunc<T>[];
-//   return wraps.reduce((res, wrap) => {
-//     res = _.wrap(res, wrap) as T;
-//     return res;
-//   }, coreFn);
-// };
-
 type WrapFunc = (...args: unknown[]) => Promise<unknown> | undefined;
 
 export type AsyncEnhanceWrapper = (...args) => AsyncEnhanceWrapFunc;
