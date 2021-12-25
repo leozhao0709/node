@@ -39,6 +39,7 @@
     "test": "yarn typeCheck && yarn lint && jest",
     "typeCheck": "tsc --noEmit",
     "test:watch": "jest --watch --coverage=false",
+    "console": "node --experimental-specifier-resolution=node dist/console/console.js",
     "build": "NODE_ENV=production yarn build:clean && ttsc -p tsconfig.build.json",
     "build:clean": "rm -rf dist",
     "clean": "rm -rf node_modules dist coverage yarn.lock",
