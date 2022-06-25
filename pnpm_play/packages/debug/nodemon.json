@@ -1,0 +1,11 @@
+{
+  "watch": [
+    "src",
+    "../utils/src"
+  ],
+  "ext": "*",
+  "ignore": [
+    "src/**/*.spec.ts"
+  ],
+  "exec": "tsc -b && tsc-alias && node --enable-source-maps dist/index.js"
+}
