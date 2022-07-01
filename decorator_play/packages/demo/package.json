@@ -1,0 +1,51 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "pnpm typeCheck && pnpm lint && pnpm jest",
+    "start": "",
+    "jest": "jest",
+    "typeCheck": "tsc --noEmit",
+    "test:watch": "jest --watch --coverage=false",
+    "build": "NODE_ENV=production pnpm build:clean && tsc -p tsconfig.build.json && tsc-alias",
+    "build:clean": "rm -rf dist",
+    "clean": "rm -rf node_modules dist coverage",
+    "lint": "eslint {src,tests} --ext .js,.jsx,.ts,.tsx",
+    "lintStaged": "lint-staged --config .lint-staged.config.js",
+    "start:dev": "nodemon",
+    "start:prod": "NODE_ENV=production node --enable-source-maps dist/index.js",
+    "start:debug": "nodemon --inspect-brk"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^28.1.4",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "jest": "^28.1.2",
+    "lint-staged": "^13.0.3",
+    "nodemon": "^2.0.18",
+    "prettier": "^2.7.1",
+    "ts-jest": "^28.0.5",
+    "tsc-alias": "^1.6.11",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "engines": {
+    "node": ">=v16.13.0"
+  }
+}

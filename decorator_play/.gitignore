@@ -5,7 +5,7 @@ dist
 lib
 tmp
 coverage
-.vscode
 *-error.log
 *-debug.log
 .idea
+*-local.*

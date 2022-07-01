@@ -1,7 +1,7 @@
-const basicConfig = require('./jest.config.basic.cjs');
+const baseConfig = require('../../config/node/jest.config');
 
 module.exports = {
-  ...basicConfig,
+  ...baseConfig,
   preset: 'ts-jest/presets/default-esm',
   globals: {
     'ts-jest': {
