@@ -1,0 +1,19 @@
+{
+  "extends": "../../config/common/typescript/tsconfig.json",
+  "compilerOptions": {
+    "target": "es5",
+    "jsxImportSource": "@emotion/react",
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/*"],
+      "@tests/*": ["tests/*"]
+    },
+    "outDir": "./dist",
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
+    "composite": true,
+    // Note: In order to transform *both* js and d.ts files, you need to add both of the below lines to plugins
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+  },
+  "include": ["src", "tests"],
+  "references": []
+}

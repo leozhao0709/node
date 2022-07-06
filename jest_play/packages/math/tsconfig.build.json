@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src"
+  },
+  "exclude": ["tests"],
+  "references": [] // reference is not inherited: https://github.com/microsoft/TypeScript/issues/27098
+}
