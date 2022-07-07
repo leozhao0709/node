@@ -25,6 +25,7 @@
     "@types/jest": "^28.1.4",
     "@types/lodash": "^4.14.182",
     "@types/node": "^18.0.2",
+    "@types/superagent": "^4.1.15",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "eslint": "^8.19.0",
@@ -41,8 +42,10 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "classnames": "^2.3.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "superagent": "^8.0.0"
   },
   "types": "dist/index.d.ts",
   "files": [
