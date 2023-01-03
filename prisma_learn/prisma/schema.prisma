@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  BASIC
+  ADMIN
+}
+
+model User {
+  id            Int    @id @default(autoincrement())
+  age           Int
+  name          String @unique
+  email         String @unique
+  role          Role   @default(BASIC)
+  writtenPosts  Post[] @relation("writtenPosts")
+  favoritePosts Post[] @relation("favoritePosts")
+
+  // 1 to 1
+  userPreference   UserPreference? @relation(fields: [userPreferenceId], references: [id])
+  userPreferenceId Int?            @unique // must be uniq as this is 1 on 1 relationship
+
+  @@index([email])
+}
+
+model UserPreference {
+  id           Int     @id @default(autoincrement())
+  emailUpdates Boolean
+  User         User?
+
+  // @@map("user_preference") // map table name
+}
+
+model Post {
+  id            String   @id @default(uuid())
+  title         String
+  averageRating Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  // many to 1
+  author        User     @relation("writtenPosts", fields: [authorId], references: [id])
+  authorId      Int
+  favoritedBy   User?    @relation("favoritePosts", fields: [favoritedById], references: [id])
+  favoritedById Int
+
+  // many to many
+  categories Category[]
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[]
+}

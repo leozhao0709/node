@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    user: mysql # must have this, otherwise may get permission error
+    cap_add:
+      - SYS_NICE # silence mbind: Operation not permitted error
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      # - ./mysql/conf/mycustom.conf:/etc/mysql/conf.d/custom.cnf # merge with default conf
+      - ~/Documents/mysql:/var/lib/mysql
