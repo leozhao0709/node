@@ -1,0 +1,11 @@
+### update user
+POST http://localhost:3000/users/update/2 HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "email12@123.com"
+}
+
+
+### Get one user
+GET http://localhost:3000/users/2 HTTP/1.1
