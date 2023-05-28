@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { UsersService } from './users.service.js';
-import { UpdateUserDto } from './dto/UpdateUser.dto.js';
-import { GetUserResp } from './resp/GetUserResp.js';
-import Serialize from '../decorators/Serialize.decorator.js';
+import { UsersService } from './users.service';
+import { UpdateUserDto } from './dto/UpdateUser.dto';
+import { GetUserResp } from './resp/GetUserResp';
+import Serialize from '../decorators/Serialize.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -10,7 +10,6 @@ export class UsersController {
 
   @Get()
   create() {
-    console.log('---creating----');
     return this.userService.create();
   }
 
@@ -28,7 +27,6 @@ export class UsersController {
     return user;
   }
 
-  // @UseInterceptors(new SerializeInterceptor(GetUserResp))
   @Get('/:id')
   @Serialize(GetUserResp)
   async getOne(@Param('id') id: number) {

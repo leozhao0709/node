@@ -1,8 +1,9 @@
-import { EntityManager, EntityRepository } from '@mikro-orm/core';
+import { EntityRepository } from '@mikro-orm/core';
+import { EntityManager } from '@mikro-orm/mysql';
 import { Injectable } from '@nestjs/common';
-import { User } from './user.entity.js';
+import { User } from './user.entity';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { UpdateUserDto } from './dto/UpdateUser.dto.js';
+import { UpdateUserDto } from './dto/UpdateUser.dto';
 
 const Transactional = (): MethodDecorator => {
   return function (

@@ -1,6 +1,6 @@
 import { Factory, Faker } from '@mikro-orm/seeder';
 import { EntityData } from '@mikro-orm/core';
-import { User } from '../../../users/user.entity.js';
+import { User } from '../../../users/user.entity';
 
 export class UserFactory extends Factory<User> {
   model = User;

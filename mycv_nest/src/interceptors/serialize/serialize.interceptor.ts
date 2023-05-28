@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Observable, map } from 'rxjs';
-import { Constructor } from '../../types/helper.js';
+import { Constructor } from '../../types/helper';
 
 @Injectable()
 export class SerializeInterceptor implements NestInterceptor {
@@ -14,11 +14,11 @@ export class SerializeInterceptor implements NestInterceptor {
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
-      map((resp) => {
-        return plainToInstance(this.respClass, resp, {
+      map((resp) =>
+        plainToInstance(this.respClass, resp, {
           excludeExtraneousValues: true,
-        });
-      })
+        })
+      )
     );
   }
 }

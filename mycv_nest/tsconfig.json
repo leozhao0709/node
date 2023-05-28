@@ -7,9 +7,8 @@
     "jsx": "react-jsx",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "useDefineForClassFields": false,
     "jsxImportSource": "@emotion/react",
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
@@ -22,11 +21,11 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "dist",
-    "strictNullChecks": true,
     "removeComments": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "strictNullChecks": true,
     "noImplicitAny": false,
     "noImplicitThis": false,
     "skipLibCheck": true,
@@ -34,7 +33,7 @@
   },
   "include": ["src", "tests", "src/**/*.json", "src/**/*.scss"],
   "ts-node": {
-    "esm": true,
+    // "esm": true,
     "files": true,
     "transpileOnly": true
   }

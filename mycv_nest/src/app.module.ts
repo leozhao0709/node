@@ -1,10 +1,12 @@
-import { Module } from '@nestjs/common';
-import { ReportsModule } from './reports/reports.module.js';
-import { UsersModule } from './users/users.module.js';
+import { Module, ValidationPipe } from '@nestjs/common';
+import { ReportsModule } from './reports/reports.module';
+import { UsersModule } from './users/users.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller.js';
-import mikroConfig from './db/mikro-orm.config.js';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import mikroConfig from '@app/db/mikro-orm.config';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -16,6 +18,12 @@ import mikroConfig from './db/mikro-orm.config.js';
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({ whitelist: true }),
+    },
+  ],
 })
 export class AppModule {}
