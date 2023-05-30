@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    // "composite": true,
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "jsxImportSource": "@emotion/react",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/*"],
+      "@tests/*": ["tests/*"]
+    },
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "removeComments": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "skipLibCheck": true,
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+  },
+  "include": ["src", "tests", "src/**/*.json", "src/**/*.scss"],
+  "ts-node": {
+    // "esm": true,
+    "files": true,
+    "transpileOnly": true
+  }
+}

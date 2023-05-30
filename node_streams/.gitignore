@@ -1,0 +1,15 @@
+node_modules
+.DS_Store
+dist
+.nyc_output
+lib
+tmp
+coverage
+*-error.log
+*-debug.log
+.idea
+*-local.*
+log
+.env
+.env.*
+.vscode
