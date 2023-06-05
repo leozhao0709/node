@@ -5,7 +5,7 @@ import { Readable, Transform } from 'node:stream';
 
 const readable = new Readable({
   read() {
-    for (let i = 1; i <= 1e6; i++) {
+    for (let i = 1; i <= 10; i++) {
       const person = {
         id: randomUUID(),
         name: `Lei-${i}`,
@@ -22,8 +22,9 @@ const readable = new Readable({
 let insertCsvHeader = true;
 
 const mapFields = new Transform({
-  transform(chunk, encoding, callback) {
-    const person = JSON.parse(chunk) as { id: string; name: string };
+  transform(chunk: Buffer, encoding, callback) {
+    console.log(chunk.toString(), chunk.toString().length);
+    const person = JSON.parse(chunk.toString()) as { id: string; name: string };
     let result = `${person.id},${person.name}\n`;
     if (insertCsvHeader) {
       result = `id,name\n${result}`;

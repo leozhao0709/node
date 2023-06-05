@@ -26,17 +26,14 @@ server.push('[duplex] this is readable');
 const transformToUppercase = new Transform({
   // objectMode: true,
   transform(chunk: Buffer, encoding, callback) {
-    callback(null, chunk.toString().toUpperCase());
+    callback(null, 'on transform' + chunk.toString().toUpperCase());
   },
 });
 
 // on('data') will start the read stream and pipe the queued data.
 server.on('data', (chunk: Buffer) => {
-  console.log(chunk.toString());
+  console.log('on data', chunk.toString());
 });
 
 // server.pipe or server.on('data') will start the read stream and pipe the queued data.
-server
-  .pipe(transformToUppercase)
-  // pipe(server) will call server write again
-  .pipe(server);
+server.pipe(transformToUppercase).pipe(server); // will call server write again

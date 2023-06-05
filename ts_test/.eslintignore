@@ -1,0 +1,14 @@
+node_modules
+.DS_Store
+dist
+.nyc_output
+lib
+tmp
+coverage
+.vscode
+*-error.log
+*-debug.log
+.idea
+/*.js
+/*.ts
+/*.cjs
