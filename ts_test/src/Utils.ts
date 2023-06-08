@@ -1,6 +1,6 @@
 export function toUpperCase(args: string) {
-  if (!args) {
-    throw new Error('invalid arguments');
+  if (args.length === 0) {
+    throw new Error('Invalid arguments');
   }
   return args.toUpperCase();
 }

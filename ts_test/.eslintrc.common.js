@@ -30,7 +30,10 @@ module.exports = {
     'import/no-named-as-default-member': 0,
     'import/namespace': 0,
     'import/no-cycle': [2, { ignoreExternal: true }],
-    '@typescript-eslint/strict-boolean-expressions': 1,
+    '@typescript-eslint/strict-boolean-expressions': [
+      1,
+      { allowNumber: false, allowString: false },
+    ],
   },
 
   ignorePatterns: [

@@ -1,5 +1,10 @@
 import { toCharArray, toUpperCase } from '../src/Utils.js';
 
+jest.mock('axios', () => ({
+  ...jest.requireActual('axios'),
+  get: (url) => ({ data: url }),
+}));
+
 describe('Utils', () => {
   // it('should return uppercase', () => {
   //   const actual = toUpperCase('abc');
@@ -23,5 +28,12 @@ describe('Utils', () => {
     expect(actual).toEqual(['a', 'b', 'c']); // array equal check
     expect(actual).toContain('c'); // array contains check
     expect(actual).toEqual(expect.arrayContaining(['c', 'b'])); // array contains check
+  });
+
+  it.only('should throw error when empty string', () => {
+    // we need create a function to test throw error case
+    const actual = () => toUpperCase('');
+    expect(actual).toThrow();
+    expect(actual).toThrowError('Invalid arguments');
   });
 });
