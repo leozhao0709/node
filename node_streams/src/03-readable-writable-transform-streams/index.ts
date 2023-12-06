@@ -5,7 +5,7 @@ import { Readable, Transform } from 'node:stream';
 
 const readable = new Readable({
   read() {
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 1000000; i++) {
       const person = {
         id: randomUUID(),
         name: `Lei-${i}`,
@@ -35,9 +35,17 @@ const mapFields = new Transform({
   },
 });
 
+// readable
+//   .pipe(mapFields)
+//   .pipe(createWriteStream(path.resolve(__dirname, '../../tmp/03-my.csv')))
+//   .on('finish', () => {
+//     console.log('task finished...');
+//   });
+
 readable
-  .pipe(mapFields)
-  .pipe(createWriteStream(path.resolve(__dirname, '../../tmp/03-my.csv')))
+  .pipe(
+    createWriteStream(path.resolve(__dirname, '../../tmp/08-web-readable.json'))
+  )
   .on('finish', () => {
     console.log('task finished...');
   });
