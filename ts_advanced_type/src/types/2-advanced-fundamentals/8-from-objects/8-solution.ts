@@ -10,4 +10,6 @@ export const programmingLanguages = {
   },
 };
 
-type ProgrammingLanguage = keyof typeof programmingLanguages;
+type UpperCaseUnion<T> = T extends string ? Capitalize<T> : never;
+
+type ProgrammingLanguage = UpperCaseUnion<keyof typeof programmingLanguages>;
