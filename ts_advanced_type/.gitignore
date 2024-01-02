@@ -1,0 +1,36 @@
+node_modules
+.DS_Store
+dist
+.nyc_output
+lib
+tmp
+coverage
+*-error.log
+*-debug.log
+.idea
+*-local.*
+log
+
+.env
+.env.*
+.vscode
+
+/.next/
+/out/
+/.pnp
+.pnp.js
+*.pem
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# python
+.venv
+__pycache__
