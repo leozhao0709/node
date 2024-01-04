@@ -1,6 +1,6 @@
-import { Brand } from "./utils/brand";
+import { Brand } from './utils/brand';
 
-export type Approved<T> = Brand<T, "Approved">;
+export type Approved<T> = Brand<T, 'Approved'>;
 
 interface PurchaseDetails {
   item: string;
@@ -8,10 +8,10 @@ interface PurchaseDetails {
 }
 
 function assertAmount(
-  details: PurchaseDetails
+  details: PurchaseDetails,
 ): asserts details is Approved<PurchaseDetails> {
   if (details.price > 1000) {
-    throw new Error("Amount exceeds the max limit.");
+    throw new Error('Amount exceeds the max limit.');
   }
 }
 

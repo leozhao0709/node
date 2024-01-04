@@ -1,5 +1,5 @@
 export const submitData = <T extends { id: number; title: string }>(
-  data: T
+  data: T,
 ) => {
   return {
     ...data,
@@ -10,7 +10,7 @@ export const submitData = <T extends { id: number; title: string }>(
 const data = [
   {
     id: 123,
-    title: "This is a fake title!",
+    title: 'This is a fake title!',
   },
 ];
 

@@ -10,17 +10,17 @@ interface ManagerPermissions extends EmployeePermissions {
   approvals: string[];
 }
 
-function getPermissions(role: "manager"): ManagerPermissions;
-function getPermissions(role: "employee"): EmployeePermissions;
+function getPermissions(role: 'manager'): ManagerPermissions;
+function getPermissions(role: 'employee'): EmployeePermissions;
 function getPermissions(role: string): CustomerPermissions {
   switch (role) {
-    case "manager":
+    case 'manager':
       return {
         approvals: [],
         tasks: [],
         actions: [],
       };
-    case "employee":
+    case 'employee':
       return {
         tasks: [],
         actions: [],

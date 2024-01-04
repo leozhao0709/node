@@ -1,13 +1,13 @@
 export const getUser = async (id: number) => {
   const user = await fetch(`"/users"/${id}`).then((response) =>
-    response.json()
+    response.json(),
   );
   return user;
 };
 
 /*
   Your job:
-  Make the getUser functino accept generic type arguments so the data infers 
+  Make the getUser function accept generic type arguments so the data infers 
   the proper type that is
 */
 

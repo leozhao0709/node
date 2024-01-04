@@ -1,14 +1,17 @@
-type Greeting = `Hi${string}`;
+type Greeting = `hi${string}`;
 
 const pringGreeting = (greeting: Greeting) => {
   console.log(greeting);
 };
 
 //No errors:
-pringGreeting("Hi, John!");
-pringGreeting("Hi!");
-pringGreeting("Hi, everybody");
+pringGreeting('hi, John!');
+pringGreeting('hi!');
+pringGreeting('hi, everybody');
 
 //This should have errors:
-pringGreeting("Hey, dude!");
-pringGreeting("Dude, hi!");
+pringGreeting('hey, dude!');
+pringGreeting('👋');
+pringGreeting('dude, hi!');
+
+export {};

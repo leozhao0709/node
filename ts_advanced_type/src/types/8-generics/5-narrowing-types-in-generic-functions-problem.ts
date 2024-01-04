@@ -6,9 +6,9 @@ type Post = {
 
 export const bla = <Key extends keyof Post>(
   key: Key,
-  value: Post[Key]
+  value: Post[Key],
 ): Post[Key] => {
-  if (key === "ts") {
+  if (key === 'ts') {
     return new Date();
   }
 

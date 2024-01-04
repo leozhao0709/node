@@ -1,4 +1,4 @@
-export type Color = "red" | "green" | "blue";
+export type Color = 'red' | 'green' | 'blue';
 
 type Colors = unknown;
 

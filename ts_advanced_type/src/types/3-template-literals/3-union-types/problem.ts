@@ -1,5 +1,5 @@
-type FrameWork = "NodeJS" | "Spring" | ".Net";
-type Database = "GraphQL" | "MongoDB" | "PostgreSQL";
+type FrameWork = 'NodeJS' | 'Spring' | '.Net';
+type Database = 'GraphQL' | 'MongoDB' | 'PostgreSQL';
 
 type Backend = any;
 // "NodeJS with GraphQL"    |

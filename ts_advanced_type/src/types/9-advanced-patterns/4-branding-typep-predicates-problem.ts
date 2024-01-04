@@ -1,6 +1,6 @@
-import { Brand } from "./utils/brand";
+import { Brand } from './utils/brand';
 
-export type Approved<T> = Brand<T, "Approved">;
+export type Approved<T> = Brand<T, 'Approved'>;
 
 interface PurchaseDetails {
   item: string;

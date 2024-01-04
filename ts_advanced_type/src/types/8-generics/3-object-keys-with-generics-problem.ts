@@ -3,7 +3,7 @@ export function getObjKeys(object: unknown) {
 }
 
 const test = getObjKeys({
-  key1: "value 1",
+  key1: 'value 1',
   kay2: 123,
 });
 

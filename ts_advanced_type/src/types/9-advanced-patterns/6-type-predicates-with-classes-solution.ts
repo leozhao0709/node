@@ -11,7 +11,7 @@ export class Task<T> {
   check(): this is Task<T> & { counter: number } {
     const countResult = this.countTasks(this.tasks);
 
-    if (typeof countResult == "number") {
+    if (typeof countResult == 'number') {
       this.counter = countResult;
       return true;
     }
@@ -21,7 +21,7 @@ export class Task<T> {
   }
 }
 
-const task = new Task(["task1", "task2", "task3"], (tasks) => {
+const task = new Task(['task1', 'task2', 'task3'], (tasks) => {
   if (tasks.length > 0) {
     return tasks.length - 1;
   }

@@ -1,5 +1,6 @@
-const bulidStat = <T extends string>(stats: T[]) => {
-  return stats;
+const buildStat = <T extends string>(stats: T[]) => {
+  return stats.map<`set${T}`>((d) => `set${d}`);
+  // return stats;
 };
 
-export const stats = bulidStat(["PENDING", "FAILED", "SUCCESS"]);
+export const stats = buildStat(['PENDING', 'FAILED', 'SUCCESS']);

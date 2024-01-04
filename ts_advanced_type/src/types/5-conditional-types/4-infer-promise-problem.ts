@@ -1,6 +1,6 @@
 export const fakeFetch = async () => {
   return {
-    id: "test_id",
+    id: 'test_id',
   };
 };
 

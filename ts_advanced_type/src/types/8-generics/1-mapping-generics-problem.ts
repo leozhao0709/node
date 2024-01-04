@@ -8,7 +8,7 @@ export const submitData = (data: unknown) => {
 const data = [
   {
     id: 123,
-    title: "This is a fake title!",
+    title: 'This is a fake title!',
   },
 ];
 

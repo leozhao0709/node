@@ -1,5 +1,5 @@
-const bulidStat = <T extends string[]>(stats: T) => {
+const buildStat = <T extends string[]>(stats: T) => {
   return stats;
 };
 
-export const stats = bulidStat(["PENDING", "FAILED", "SUCCESS"]);
+export const stats = buildStat(['PENDING', 'FAILED', 'SUCCESS']);

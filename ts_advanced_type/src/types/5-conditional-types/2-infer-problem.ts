@@ -3,7 +3,7 @@ export interface CustomInterface<E, C, P> {
   fetchC: () => C;
   acquireP: () => P;
 }
-type NewType = CustomInterface<"E value", "C value", "P value">;
+type NewType = CustomInterface<'E value', 'C value', 'P value'>;
 
 type Values<T> = any;
 

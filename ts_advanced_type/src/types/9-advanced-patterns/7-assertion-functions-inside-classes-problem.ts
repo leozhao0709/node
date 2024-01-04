@@ -11,7 +11,7 @@ export class VehicleController {
 
   assertHasVehicle() {
     if (!this.currentVehicle) {
-      throw new Error("No vehicle selected");
+      throw new Error('No vehicle selected');
     }
   }
 

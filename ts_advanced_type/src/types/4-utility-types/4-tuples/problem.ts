@@ -1,9 +1,9 @@
-type Arr = any;
+type Arr<T> = any;
 
 const processArray = (input: Arr<string>) => {};
 
-processArray(["bla"]);
-processArray(["bla", "blabla", "blablabla"]);
+processArray(['bla']);
+processArray(['bla', 'blabla', 'blablabla']);
 
 //This should error
 processArray([]);

@@ -7,7 +7,7 @@ export interface Obj {
 }
 
 type KeysEndingWithName<T> = {
-  [K in keyof T as K extends `${string}${"name" | "Name"}` ? K : never]: T[K];
+  [K in keyof T as K extends `${string}${'name' | 'Name'}` ? K : never]: T[K];
 };
 
 type test = KeysEndingWithName<Obj>;
