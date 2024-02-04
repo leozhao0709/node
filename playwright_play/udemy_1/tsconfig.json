@@ -1,0 +1,14 @@
+{
+  "extends": "./build-common-config/tsconfig.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@tests/*": ["tests/*"],
+      "@root/*": ["./*"]
+    }
+  },
+  "include": ["src", "tests", "e2e", "build-common-config", "build-tools"]
+}
