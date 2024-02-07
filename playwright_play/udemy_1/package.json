@@ -4,11 +4,11 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "pnpm typeCheck && pnpm eslint && pnpm vitest && pnpm vitest:e2e",
+    "test": "pnpm typeCheck && pnpm eslint && pnpm vitest && pnpm test:e2e",
     "vitest": "vitest --config build-tools/vitest.config.mts run --coverage",
     "vitest:dev": "vitest --config build-tools/vitest.config.mts dev",
-    "vitest:e2e": "vitest --config build-tools/vitest.e2e.config.mts run --coverage",
-    "vitest:e2e:dev": "vitest --config build-tools/vitest.e2e.config.mts",
+    "test:e2e": "playwright test --config build-tools/playwright.config.ts",
+    "test:e2e:dev": "playwright test --config build-tools/playwright.config.ts --ui",
     "typeCheck": "tsc --noEmit",
     "build": "vite --config build-tools/vite.config.mts build",
     "build:clean": "rm -rf dist",
@@ -25,6 +25,7 @@
   "license": "MIT",
   "devDependencies": {
     "@csstools/css-tokenizer": "^2.2.3",
+    "@playwright/test": "^1.41.2",
     "@swc/core": "^1.3.107",
     "@testing-library/jest-dom": "^6.4.1",
     "@testing-library/react": "^14.2.1",
