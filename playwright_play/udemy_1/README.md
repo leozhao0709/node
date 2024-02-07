@@ -22,7 +22,7 @@ The project dependency is as follows:
 flowchart TD
   src(src: electron related code)
   src-ui(src-ui: the electron ui container)
-  core-ui(@pdf-extractor/core-ui package)
+  core-ui(pdf-extractor/core-ui package)
   jar(repoRoot/core/kotlin builded jar)
 
   src --depends on-->src-ui
@@ -51,7 +51,7 @@ The project dependency is as follows:
 flowchart TD
   src(src: tauri related code)
   src-ui(src-ui: the tauri ui container)
-  core-ui(@pdf-extractor/core-ui package)
+  core-ui(pdf-extractor/core-ui package)
   jar(repoRoot/core/kotlin builded jar)
 
   src-ui --depends on-->core-ui
